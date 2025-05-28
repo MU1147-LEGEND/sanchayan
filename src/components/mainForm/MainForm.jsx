@@ -360,7 +360,7 @@ const MemberForm1 = () => {
                         required
                     />
                     <label className="block font-semibold">
-                        ছবি (পাসপোর্ট টাইপ):
+                        ছবি (সদস্যের):
                     </label>
                     <input
                         type="file"
@@ -374,7 +374,7 @@ const MemberForm1 = () => {
                     {form.photo && (
                         <img
                             src={form.photo}
-                            alt="ছবি প্রিভিউ"
+                            alt="সদস্যের ছবি"
                             className="w-24 h-24 object-cover mt-2"
                         />
                     )}
@@ -384,7 +384,7 @@ const MemberForm1 = () => {
                         name="signature"
                         value={form.signature || form.nameEn}
                         onChange={handleChange}
-                        placeholder="স্বাক্ষর (ইংরেজিতে)"
+                        placeholder="স্বাক্ষর"
                         className="w-full border p-2"
                     />
 
@@ -547,7 +547,7 @@ const MemberForm1 = () => {
                     {form.nominee.photo && (
                         <img
                             src={form.nominee.photo}
-                            alt="নমিনির ছবি প্রিভিউ"
+                            alt="নমিনির ছবি"
                             className="w-24 h-24 object-cover mt-2"
                         />
                     )}
