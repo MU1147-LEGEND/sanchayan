@@ -24,7 +24,7 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
             <form
                 onSubmit={handleLogin}
                 className="bg-white p-6 rounded shadow-md w-full max-w-sm"
@@ -55,7 +55,22 @@ export default function Login() {
                 >
                     লগইন
                 </button>
-            </form>
+            </form> <hr />
+            {/* go home */}
+            <div className="mt-4 text-center block">
+                <a
+                    href="/sanchayan"
+                    className="text-blue-500 hover:underline"
+                >
+                    হোমে ফিরে যান
+                </a>
+            </div>
+            {/* Footer */}
+            <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-center py-2">
+                <p>
+                    © {new Date().getFullYear()} Sanchayan. All rights reserved.
+                </p>
+            </footer>
         </div>
     );
 }

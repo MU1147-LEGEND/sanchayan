@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./components/AuthContext";
 import Dashboard from "./components/Dashboard";
 import ErrorPage from "./components/ErrorPage";
@@ -10,9 +10,15 @@ const App = () => {
     return (
         <>
             <AuthProvider>
-                <HashRouter>
+                <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<FullPage />} />
+                        {/* when ./ redirect to sanchayan */}
+                        <Route
+                            path="/"
+                            element={<FullPage />}
+                        />
+                        
+                        <Route path="/sanchayan" element={<FullPage />} />
                         <Route path="/login" element={<Login />} />
                         <Route
                             path="/dashboard"
@@ -24,8 +30,15 @@ const App = () => {
                         />
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
-                </HashRouter>
+                </BrowserRouter>
             </AuthProvider>
+
+            {/* <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<FullPage />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+            </BrowserRouter> */}
         </>
     );
 };
