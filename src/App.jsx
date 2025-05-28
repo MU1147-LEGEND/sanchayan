@@ -1,13 +1,21 @@
-import AnnouncementBar from "./components/announcement-bar/AnnouncementBar";
-import Header from "./components/header/Header";
-import MemberForm from "./components/mainForm/MainForm";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import FullPage from "./components/FullPage";
 
 const App = () => {
     return (
         <>
-            <AnnouncementBar />
+            {/* <AnnouncementBar />
             <Header />
-            <MemberForm />
+            <MemberForm1 /> */}
+
+            {/* private */}
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<FullPage />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+            </BrowserRouter>
         </>
     );
 };

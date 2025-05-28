@@ -7,13 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDXlAe80dWFbtzVaCPPjd_25oTmZP5MIF0",
-    authDomain: "sanchayan-member-form.firebaseapp.com",
-    projectId: "sanchayan-member-form",
-    storageBucket: "sanchayan-member-form.firebasestorage.app",
-    messagingSenderId: "347168629092",
-    appId: "1:347168629092:web:a9d20c149f897bcd675a71",
-    measurementId: "G-9LMT3MVJQG",
+    apiKey: "AIzaSyCpKBAWYCoJK_-Iv_AQHMwQRKN-zfwa61M",
+    authDomain: "react-form-submit-5b02c.firebaseapp.com",
+    projectId: "react-form-submit-5b02c",
+    storageBucket: "react-form-submit-5b02c.firebasestorage.app",
+    messagingSenderId: "302038726748",
+    appId: "1:302038726748:web:5a507c9503d9c431904e99",
 };
 
 // Initialize Firebase
