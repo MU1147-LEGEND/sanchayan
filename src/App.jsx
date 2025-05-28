@@ -21,6 +21,7 @@ const App = () => {
                                 </ProtectedRoute>
                             }
                         />
+                        <Route path="*" element={<ErrorPage />} />
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>
