@@ -18,7 +18,7 @@ export default function Login() {
             await signInWithEmailAndPassword(auth, email, password);
             navigate("/dashboard"); // ✅ লগইন হলে ড্যাশবোর্ডে নিয়ে যাবে
         } catch (err) {
-            console.error(err);
+            // console.error(err);
             setError("ইমেইল বা পাসওয়ার্ড ভুল!");
         }
     };
