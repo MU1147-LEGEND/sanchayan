@@ -1,12 +1,17 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
+import Header from "./header/Header";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
 
 const Dashboard = () => {
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedMember, setSelectedMember] = useState(null);
+    const navigate = useNavigate();
 
+    // fetch members from Firestore
     useEffect(() => {
         const fetchMembers = async () => {
             try {
@@ -25,11 +30,23 @@ const Dashboard = () => {
 
         fetchMembers();
     }, []);
-
+// setting up the loading state
     if (loading) return <div className="text-center p-4">Loading...</div>;
+// loggin out from account
 
+const handleLogout = async () => {
+    try {
+        await signOut(auth);
+        alert("✅ লগ আউট সফল হয়েছে");
+        navigate("/login");
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("❌ লগ আউট ব্যর্থ");
+    }
+};
     return (
         <div className="p-4">
+            <Header />
             <h1 className="text-2xl font-bold mb-4">সদস্য তালিকা</h1>
 
             <div className="overflow-x-auto">
@@ -45,40 +62,60 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {members.sort((a,b)=>a.accountNumber - b.accountNumber).map((member) => (
-                            <tr
-                                key={member.id}
-                                className="hover:bg-gray-100 cursor-pointer"
-                                onClick={() => setSelectedMember(member)}
-                            >
-                                <td className="p-2 border">
-                                    {member.accountNumber}
-                                </td>
-                                <td className="p-2 border text-blue-600 hover:underline">
-                                    {member.nameBn}
-                                </td>
-                                <td className="p-2 border">
-                                    {member.memberType}
-                                </td>
-                                <td className="p-2 border">{member.mobile}</td>
-                                <td className="p-2 border">
-                                    {member.verified? "✅" : "❌"}
-                                </td>
-                                <td className="p-2 border">
-                                    {member.photo ? (
-                                        <img
-                                            src={member.photo}
-                                            alt={member.photo}
-                                            className="h-12 w-12 object-cover rounded"
-                                        />
-                                    ) : (
-                                        "❌"
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
+                        {members
+                            .sort((a, b) => a.accountNumber - b.accountNumber)
+                            .map((member) => (
+                                <tr
+                                    key={member.id}
+                                    className="hover:bg-gray-100 cursor-pointer"
+                                    onClick={() => setSelectedMember(member)}
+                                >
+                                    <td className="p-2 border">
+                                        {member.accountNumber}
+                                    </td>
+                                    <td className="p-2 border text-blue-600 hover:underline">
+                                        {member.nameBn}
+                                    </td>
+                                    <td className="p-2 border">
+                                        {member.memberType}
+                                    </td>
+                                    <td className="p-2 border">
+                                        {member.mobile}
+                                    </td>
+                                    <td className="p-2 border">
+                                        {member.verified ? "✅" : "❌"}
+                                    </td>
+                                    <td className="p-2 border">
+                                        {member.photo ? (
+                                            <img
+                                                src={member.photo}
+                                                alt={member.photo}
+                                                className="h-12 w-12 object-cover rounded"
+                                            />
+                                        ) : (
+                                            "❌"
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
+                {/* log out */}
+
+                <div className="mt-4 text-center flex items-center justify-center space-x-4">
+                    <a
+                        href="/sanchayan"
+                        className="text-blue-500 hover:underline"
+                    >
+                        হোমে ফিরে যান
+                    </a>
+                    <button
+                        onClick={handleLogout}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    >
+                        🔓 Logout
+                    </button>
+                </div>
             </div>
 
             {/* Modal */}

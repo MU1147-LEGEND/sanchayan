@@ -1,6 +1,7 @@
-const NavLink = ({ linkTitle }) => {
+const NavLink = ({ linkTitle, handleClick }) => {
+
     return (
-        <a href="#" className="hover:text-gray-500 transition-colors">
+        <a className="hover:text-gray-500 transition-colors cursor-pointer" onClick={() => handleClick(linkTitle)}>
             {linkTitle}
         </a>
     );

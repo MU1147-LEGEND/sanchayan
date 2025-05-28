@@ -1,15 +1,18 @@
 // src/pages/Login.jsx
 
-import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useContext, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import Header from "./header/Header";
+import { AuthContext } from "./loginAuthContext";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const { user, loading } = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -22,9 +25,20 @@ export default function Login() {
             setError("ইমেইল বা পাসওয়ার্ড ভুল!");
         }
     };
-
+    if (user) return <Navigate to="/dashboard" />;
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-100">
+            <Header />
+            <div className="w-full max-w-md p-4">
+                <h1 className="text-3xl font-bold text-center mb-6">
+                    Sanchayan লগইন
+                </h1>
+                <p className="text-center text-gray-600 mb-4">
+                    আপনার Sanchayan অ্যাকাউন্টে প্রবেশ করতে ইমেইল এবং পাসওয়ার্ড
+                    ব্যবহার করুন।
+                </p>
+            </div>
+            {/* Login Form */}
             <form
                 onSubmit={handleLogin}
                 className="bg-white p-6 rounded shadow-md w-full max-w-sm"
@@ -55,13 +69,11 @@ export default function Login() {
                 >
                     লগইন
                 </button>
-            </form> <hr />
+            </form>{" "}
+            <hr />
             {/* go home */}
             <div className="mt-4 text-center block">
-                <a
-                    href="/sanchayan"
-                    className="text-blue-500 hover:underline"
-                >
+                <a href="/sanchayan" className="text-blue-500 hover:underline">
                     হোমে ফিরে যান
                 </a>
             </div>
