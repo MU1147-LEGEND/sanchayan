@@ -11,7 +11,7 @@ const App = () => {
             <AuthProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<FullPage />} />
+                        <Route path="/sanchayan" element={<FullPage />} />
                         <Route path="/login" element={<Login />} />
                         <Route
                             path="/dashboard"
