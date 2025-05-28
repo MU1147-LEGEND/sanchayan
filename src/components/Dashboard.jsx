@@ -45,7 +45,7 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {members.map((member) => (
+                        {members.sort((a,b)=>a.accountNumber - b.accountNumber).map((member) => (
                             <tr
                                 key={member.id}
                                 className="hover:bg-gray-100 cursor-pointer"
