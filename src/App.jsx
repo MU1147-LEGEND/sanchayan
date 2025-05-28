@@ -1,18 +1,18 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./components/AuthContext";
 import Dashboard from "./components/Dashboard";
+import ErrorPage from "./components/ErrorPage";
 import FullPage from "./components/FullPage";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
     return (
         <>
             <AuthProvider>
-                <BrowserRouter>
+                <HashRouter>
                     <Routes>
-                        <Route path="/sanchayan" element={<FullPage />} />
+                        <Route path="/" element={<FullPage />} />
                         <Route path="/login" element={<Login />} />
                         <Route
                             path="/dashboard"
@@ -24,15 +24,8 @@ const App = () => {
                         />
                         <Route path="*" element={<ErrorPage />} />
                     </Routes>
-                </BrowserRouter>
+                </HashRouter>
             </AuthProvider>
-
-            {/* <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<FullPage />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
-            </BrowserRouter> */}
         </>
     );
 };
