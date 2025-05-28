@@ -4,6 +4,7 @@ import Dashboard from "./components/Dashboard";
 import FullPage from "./components/FullPage";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
     return (
