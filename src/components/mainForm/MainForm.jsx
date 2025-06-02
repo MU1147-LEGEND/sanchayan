@@ -1,13 +1,17 @@
 import {
     addDoc,
     collection,
+    doc,
     getDocs,
     limit,
     orderBy,
     query,
+    setDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase"; // firebase config path
+import { getAuth } from "firebase/auth";
+import { Navigate } from "react-router-dom";
 
 const MemberForm1 = () => {
     const initialForm = {
@@ -48,6 +52,9 @@ const MemberForm1 = () => {
     };
     const [form, setForm] = useState(initialForm);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const auth = getAuth();
+    const user = auth.currentUser;
+    console.log(user);
 
     const subOptions = {
         "কার্যনির্বাহী পরিষদের সদস্য": ["কার্যনির্বাহী পরিষদের সদস্য"],
@@ -140,7 +147,10 @@ const MemberForm1 = () => {
                 createdAt: new Date().toISOString(),
             };
 
-            await addDoc(collection(db, "members"), formDataToSave);
+            // await addDoc(collection(db, "members"), formDataToSave);
+            await setDoc(doc(db, "members", user.uid), formDataToSave, {
+                merge: true,
+            });
             setIsSubmitted(true);
             // console.log("Form data saved successfully:", formDataToSave);
         } catch (error) {
@@ -196,28 +206,30 @@ const MemberForm1 = () => {
     // handle uploading image
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="p-6 max-w-3xl mx-auto space-y-4"
-        >
-            {isSubmitted ? (
-                <p className="text-green-600 font-semibold mt-4">
-                    ✅ ফর্ম সফলভাবে জমা হয়েছে! ভেরিফিকেশনের জন্য দয়া করে অপেক্ষা
-                    করুন। ১২-২৪ ঘন্টার মধ্যে প্রোফাইল ভেরিফাই করা হবে।
-                </p>
-            ) : (
-                <>
-                    <p className="text-lg font-semibold">
-                        এই মর্মে প্রত্যয়ন করছি যে, আমি নিম্ন স্বাক্ষরকারী
-                        <span className="bg-yellow-400 text-black px-1 py-1">
-                            {form.nameBn || "নাম (বাংলায়)"}
-                        </span>{" "}
-                        সজ্ঞানে ও সেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত ও নিয়ম-নীতি
-                        মেনে সদস্য ফর্ম পূরণ করছি।
+        <div className="relative min-h-screen bg-gray-100">
+            <form
+                onSubmit={handleSubmit}
+                className="p-6 max-w-3xl mx-auto space-y-4"
+            >
+                {isSubmitted ? (
+                    <p className="text-green-600 font-semibold mt-4">
+                        ✅ ফর্ম সফলভাবে জমা হয়েছে! ভেরিফিকেশনের জন্য দয়া করে
+                        অপেক্ষা করুন। ১২-২৪ ঘন্টার মধ্যে প্রোফাইল ভেরিফাই করা
+                        হবে।
                     </p>
+                ) : (
+                    <>
+                        <p className="text-lg font-semibold">
+                            এই মর্মে প্রত্যয়ন করছি যে, আমি নিম্ন স্বাক্ষরকারী
+                            <span className="bg-yellow-400 text-black px-1 py-1">
+                                {form.nameBn || "নাম (বাংলায়)"}
+                            </span>{" "}
+                            সজ্ঞানে ও সেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত ও
+                            নিয়ম-নীতি মেনে সদস্য ফর্ম পূরণ করছি।
+                        </p>
 
-                    {/* old member selectbox */}
-                    {/* <div>
+                        {/* old member selectbox */}
+                        {/* <div>
                         <label className="block font-semibold">
                             সদস্যের ধরন:
                         </label>
@@ -234,449 +246,480 @@ const MemberForm1 = () => {
                             <option>সঞ্চয়ী সদস্য</option>
                         </select>
                     </div> */}
-                    {/* new member selectbox */}
-                    <div className="space-y-4">
-                        {/* মূল সদস্য ধরন */}
-                        <div>
-                            <label className="block font-semibold">
-                                সদস্যের ধরন:
-                            </label>
-                            <select
-                                name="memberType"
-                                value={form.memberType}
-                                onChange={handleChange}
-                                required
-                                className="w-full border p-2"
-                            >
-                                <option value="">
-                                    -- ধরন নির্বাচন করুন --
-                                </option>
-                                <option value="কার্যনির্বাহী পরিষদের সদস্য">
-                                    কার্যনির্বাহী পরিষদের সদস্য
-                                </option>
-                                <option value="সাধারণ সদস্য">
-                                    সাধারণ সদস্য
-                                </option>
-                                <option value="সঞ্চয়ী সদস্য">
-                                    সঞ্চয়ী সদস্য
-                                </option>
-                            </select>
-                        </div>
-
-                        {/* সাব-মেম্বার ধরন, যদি প্রযোজ্য হয় */}
-                        {form.memberType && (
+                        {/* new member selectbox */}
+                        <div className="space-y-4">
+                            {/* মূল সদস্য ধরন */}
                             <div>
                                 <label className="block font-semibold">
-                                    সদস্যের উপ-ধরন:
+                                    সদস্যের ধরন:
                                 </label>
                                 <select
-                                    name="subMemberType"
-                                    value={form.subMemberType}
+                                    name="memberType"
+                                    value={form.memberType}
                                     onChange={handleChange}
                                     required
                                     className="w-full border p-2"
                                 >
                                     <option value="">
-                                        -- উপ-ধরন নির্বাচন করুন --
+                                        -- ধরন নির্বাচন করুন --
                                     </option>
-                                    {subOptions[form.memberType].map(
-                                        (sub, index) => (
-                                            <option key={index} value={sub}>
-                                                {sub}
-                                            </option>
-                                        )
-                                    )}
+                                    <option value="কার্যনির্বাহী পরিষদের সদস্য">
+                                        কার্যনির্বাহী পরিষদের সদস্য
+                                    </option>
+                                    <option value="সাধারণ সদস্য">
+                                        সাধারণ সদস্য
+                                    </option>
+                                    <option value="সঞ্চয়ী সদস্য">
+                                        সঞ্চয়ী সদস্য
+                                    </option>
                                 </select>
                             </div>
+
+                            {/* সাব-মেম্বার ধরন, যদি প্রযোজ্য হয় */}
+                            {form.memberType && (
+                                <div>
+                                    <label className="block font-semibold">
+                                        সদস্যের উপ-ধরন:
+                                    </label>
+                                    <select
+                                        name="subMemberType"
+                                        value={form.subMemberType}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full border p-2"
+                                    >
+                                        <option value="">
+                                            -- উপ-ধরন নির্বাচন করুন --
+                                        </option>
+                                        {subOptions[form.memberType].map(
+                                            (sub, index) => (
+                                                <option key={index} value={sub}>
+                                                    {sub}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </div>
+                            )}
+                        </div>
+                        <input
+                            type="text"
+                            name="accountNumber"
+                            onChange={handleChange}
+                            value={form.accountNumber}
+                            readOnly
+                            placeholder="সদস্য/হিসাব নম্বর"
+                            className="w-full border p-2"
+                        />
+
+                        <h3 className="text-md font-bold mt-4">
+                            সদস্যের ব্যক্তিগত তথ্য
+                        </h3>
+                        <label className="block font-semibold">
+                            সদস্যের নাম (বাংলায়):
+                        </label>
+                        <input
+                            type="text"
+                            name="nameBn"
+                            value={form.nameBn}
+                            onChange={handleChange}
+                            placeholder="নাম (বাংলায়)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            সদস্যের নাম (ইংরেজিতে):
+                        </label>
+                        <input
+                            type="text"
+                            name="nameEn"
+                            value={form.nameEn}
+                            onChange={handleChange}
+                            placeholder="Name (in English)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            পিতার নাম:
+                        </label>
+                        <input
+                            type="text"
+                            name="fatherNameEn"
+                            value={form.fatherNameEn}
+                            onChange={handleChange}
+                            placeholder="Father's Name (English)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            মাতার নাম:
+                        </label>
+                        <input
+                            type="text"
+                            name="motherNameEn"
+                            value={form.motherNameEn}
+                            onChange={handleChange}
+                            placeholder="Mother's Name (English)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            জন্ম তারিখ:
+                        </label>
+                        <input
+                            type="date"
+                            name="dob"
+                            value={form.dob}
+                            onChange={handleChange}
+                            className="w-full border p-2"
+                            required
+                        />
+
+                        <div>
+                            <label className="block font-semibold">
+                                লিঙ্গ:
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="পুরুষ"
+                                    onChange={handleChange}
+                                    checked={form.gender === "পুরুষ"}
+                                />{" "}
+                                পুরুষ
+                            </label>
+                            <label className="ml-4">
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="মহিলা"
+                                    onChange={handleChange}
+                                    checked={form.gender === "মহিলা"}
+                                />{" "}
+                                মহিলা
+                            </label>
+                        </div>
+                        <label className="block font-semibold">ধর্ম:</label>
+                        <input
+                            type="text"
+                            name="religion"
+                            value={form.religion}
+                            onChange={handleChange}
+                            placeholder="ধর্ম"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            এনআইডি/জন্মনিবন্ধন নম্বর:
+                        </label>
+                        <input
+                            type="text"
+                            name="nid"
+                            value={form.nid}
+                            onChange={handleChange}
+                            placeholder="এনআইডি/জন্মনিবন্ধন নম্বর"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            মোবাইল নম্বর:
+                        </label>
+                        <input
+                            type="text"
+                            name="mobile"
+                            value={form.mobile}
+                            onChange={handleChange}
+                            placeholder="মোবাইল নম্বর"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            ইমেইল (যদি থাকে):
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder="ইমেইল (যদি থাকে)"
+                            className="w-full border p-2"
+                        />
+                        <label className="block font-semibold">
+                            বর্তমান ঠিকানা:
+                        </label>
+                        <textarea
+                            name="presentAddress"
+                            value={form.presentAddress}
+                            onChange={handleChange}
+                            placeholder="বর্তমান ঠিকানা"
+                            className="w-full border p-2"
+                            required
+                        ></textarea>
+                        <label className="block font-semibold">
+                            স্থায়ী ঠিকানা:
+                        </label>
+                        <textarea
+                            name="permanentAddress"
+                            value={form.permanentAddress}
+                            onChange={handleChange}
+                            placeholder="স্থায়ী ঠিকানা"
+                            className="w-full border p-2"
+                            required
+                        ></textarea>
+                        <label className="block font-semibold">জাতীয়তা:</label>
+
+                        <input
+                            type="text"
+                            name="nationality"
+                            value={form.nationality}
+                            onChange={handleChange}
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            ছবি (সদস্যের):
+                        </label>
+                        <input
+                            type="file"
+                            name="photo"
+                            onChange={(e) => {
+                                handleUpload(e, "photo");
+                            }}
+                            className="w-full border p-2"
+                            // required
+                        />
+                        {form.photo && (
+                            <img
+                                src={form.photo}
+                                alt="সদস্যের ছবি"
+                                className="w-24 h-24 object-cover mt-2"
+                            />
                         )}
-                    </div>
-                    <input
-                        type="text"
-                        name="accountNumber"
-                        onChange={handleChange}
-                        value={form.accountNumber}
-                        readOnly
-                        placeholder="সদস্য/হিসাব নম্বর"
-                        className="w-full border p-2"
-                    />
-
-                    <h3 className="text-md font-bold mt-4">
-                        সদস্যের ব্যক্তিগত তথ্য
-                    </h3>
-                    <label className="block font-semibold">
-                        সদস্যের নাম (বাংলায়):
-                    </label>
-                    <input
-                        type="text"
-                        name="nameBn"
-                        value={form.nameBn}
-                        onChange={handleChange}
-                        placeholder="নাম (বাংলায়)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        সদস্যের নাম (ইংরেজিতে):
-                    </label>
-                    <input
-                        type="text"
-                        name="nameEn"
-                        value={form.nameEn}
-                        onChange={handleChange}
-                        placeholder="Name (in English)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">পিতার নাম:</label>
-                    <input
-                        type="text"
-                        name="fatherNameEn"
-                        value={form.fatherNameEn}
-                        onChange={handleChange}
-                        placeholder="Father's Name (English)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">মাতার নাম:</label>
-                    <input
-                        type="text"
-                        name="motherNameEn"
-                        value={form.motherNameEn}
-                        onChange={handleChange}
-                        placeholder="Mother's Name (English)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">জন্ম তারিখ:</label>
-                    <input
-                        type="date"
-                        name="dob"
-                        value={form.dob}
-                        onChange={handleChange}
-                        className="w-full border p-2"
-                        required
-                    />
-
-                    <div>
-                        <label className="block font-semibold">লিঙ্গ:</label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="পুরুষ"
-                                onChange={handleChange}
-                                checked={form.gender === "পুরুষ"}
-                            />{" "}
-                            পুরুষ
-                        </label>
-                        <label className="ml-4">
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="মহিলা"
-                                onChange={handleChange}
-                                checked={form.gender === "মহিলা"}
-                            />{" "}
-                            মহিলা
-                        </label>
-                    </div>
-                    <label className="block font-semibold">ধর্ম:</label>
-                    <input
-                        type="text"
-                        name="religion"
-                        value={form.religion}
-                        onChange={handleChange}
-                        placeholder="ধর্ম"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        এনআইডি/জন্মনিবন্ধন নম্বর:
-                    </label>
-                    <input
-                        type="text"
-                        name="nid"
-                        value={form.nid}
-                        onChange={handleChange}
-                        placeholder="এনআইডি/জন্মনিবন্ধন নম্বর"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">মোবাইল নম্বর:</label>
-                    <input
-                        type="text"
-                        name="mobile"
-                        value={form.mobile}
-                        onChange={handleChange}
-                        placeholder="মোবাইল নম্বর"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        ইমেইল (যদি থাকে):
-                    </label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="ইমেইল (যদি থাকে)"
-                        className="w-full border p-2"
-                    />
-                    <label className="block font-semibold">
-                        বর্তমান ঠিকানা:
-                    </label>
-                    <textarea
-                        name="presentAddress"
-                        value={form.presentAddress}
-                        onChange={handleChange}
-                        placeholder="বর্তমান ঠিকানা"
-                        className="w-full border p-2"
-                        required
-                    ></textarea>
-                    <label className="block font-semibold">
-                        স্থায়ী ঠিকানা:
-                    </label>
-                    <textarea
-                        name="permanentAddress"
-                        value={form.permanentAddress}
-                        onChange={handleChange}
-                        placeholder="স্থায়ী ঠিকানা"
-                        className="w-full border p-2"
-                        required
-                    ></textarea>
-                    <label className="block font-semibold">জাতীয়তা:</label>
-
-                    <input
-                        type="text"
-                        name="nationality"
-                        value={form.nationality}
-                        onChange={handleChange}
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        ছবি (সদস্যের):
-                    </label>
-                    <input
-                        type="file"
-                        name="photo"
-                        onChange={(e) => {
-                            handleUpload(e, "photo");
-                        }}
-                        className="w-full border p-2"
-                        // required
-                    />
-                    {form.photo && (
-                        <img
-                            src={form.photo}
-                            alt="সদস্যের ছবি"
-                            className="w-24 h-24 object-cover mt-2"
+                        <label className="block font-semibold">স্বাক্ষর:</label>
+                        <input
+                            type="text"
+                            name="signature"
+                            value={form.signature || form.nameEn}
+                            onChange={handleChange}
+                            placeholder="স্বাক্ষর"
+                            className="w-full border p-2"
                         />
-                    )}
-                    <label className="block font-semibold">স্বাক্ষর:</label>
-                    <input
-                        type="text"
-                        name="signature"
-                        value={form.signature || form.nameEn}
-                        onChange={handleChange}
-                        placeholder="স্বাক্ষর"
-                        className="w-full border p-2"
-                    />
 
-                    <h3 className="text-lg font-bold mt-4">নমিনির তথ্য</h3>
-                    <label className="block font-semibold">
-                        নমিনির নাম (বাংলায়):
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.nameBn"
-                        value={form.nominee.nameBn}
-                        onChange={handleChange}
-                        placeholder="নাম (বাংলায়)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        নমিনির নাম (ইংরেজিতে):
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.nameEn"
-                        value={form.nominee.nameEn}
-                        onChange={handleChange}
-                        placeholder="Name (English)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        নমিনির পিতার নাম:
-                    </label>
-
-                    <input
-                        type="text"
-                        name="nominee.fatherNameEn"
-                        value={form.nominee.fatherNameEn}
-                        onChange={handleChange}
-                        placeholder="Father's Name (English)"
-                        className="w-full border p-2"
-                        required
-                    />
-
-                    <label className="block font-semibold">
-                        নমিনির মাতার নাম:
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.motherNameEn"
-                        value={form.nominee.motherNameEn}
-                        onChange={handleChange}
-                        placeholder="Mother's Name (English)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        নমিনির সাথে সদস্যের সম্পর্ক:
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.relation"
-                        value={form.nominee.relation}
-                        onChange={handleChange}
-                        placeholder="Relation with Member"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        নমিনির জন্ম তারিখ:
-                    </label>
-
-                    <input
-                        type="date"
-                        name="nominee.dob"
-                        value={form.nominee.dob}
-                        onChange={handleChange}
-                        className="w-full border p-2"
-                        required
-                    />
-
-                    <div>
-                        <label className="block font-semibold">লিঙ্গ:</label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="nominee.gender"
-                                value="পুরুষ"
-                                onChange={handleChange}
-                                checked={form.nominee.gender === "পুরুষ"}
-                            />{" "}
-                            পুরুষ
+                        <h3 className="text-lg font-bold mt-4">নমিনির তথ্য</h3>
+                        <label className="block font-semibold">
+                            নমিনির নাম (বাংলায়):
                         </label>
-                        <label className="ml-4">
-                            <input
-                                type="radio"
-                                name="nominee.gender"
-                                value="মহিলা"
-                                onChange={handleChange}
-                                checked={form.nominee.gender === "মহিলা"}
-                            />{" "}
-                            মহিলা
-                        </label>
-                    </div>
-
-                    <label className="block font-semibold">
-                        নমিনির এনআইডি/জন্মনিবন্ধন নম্বর:
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.nid"
-                        value={form.nominee.nid}
-                        onChange={handleChange}
-                        placeholder="এনআইডি/জন্মনিবন্ধন নম্বর"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <label className="block font-semibold">
-                        নমিনির মোবাইল নম্বর (যদি থাকে):
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.mobile"
-                        value={form.nominee.mobile}
-                        onChange={handleChange}
-                        placeholder="মোবাইল নম্বর"
-                        className="w-full border p-2"
-                    />
-
-                    <label className="block font-semibold">
-                        নমিনির বর্তমান ঠিকানা:
-                    </label>
-                    <textarea
-                        name="nominee.presentAddress"
-                        value={form.nominee.presentAddress}
-                        onChange={handleChange}
-                        placeholder="বর্তমান ঠিকানা"
-                        className="w-full border p-2"
-                        required
-                    ></textarea>
-                    <label className="block font-semibold">
-                        নমিনির স্থায়ী ঠিকানা:
-                    </label>
-                    <textarea
-                        name="nominee.permanentAddress"
-                        value={form.nominee.permanentAddress}
-                        onChange={handleChange}
-                        placeholder="স্থায়ী ঠিকানা"
-                        className="w-full border p-2"
-                        required
-                    ></textarea>
-
-                    <label className="block font-semibold">নমিনির ছবি:</label>
-                    <input
-                        type="file"
-                        name="nominee.photo"
-                        onChange={(e) => {
-                            handleUpload(e, "nominee.photo");
-                        }}
-                        className="w-full border p-2"
-                    />
-                    {form.nominee.photo && (
-                        <img
-                            src={form.nominee.photo}
-                            alt="নমিনির ছবি"
-                            className="w-24 h-24 object-cover mt-2"
+                        <input
+                            type="text"
+                            name="nominee.nameBn"
+                            value={form.nominee.nameBn}
+                            onChange={handleChange}
+                            placeholder="নাম (বাংলায়)"
+                            className="w-full border p-2"
+                            required
                         />
-                    )}
-                    <label className="block font-semibold">
-                        নমিনির স্বাক্ষর:
-                    </label>
-                    <input
-                        type="text"
-                        name="nominee.signature"
-                        value={form.nominee.signature || form.nominee.nameEn}
-                        onChange={handleChange}
-                        placeholder="নমিনির স্বাক্ষর (ইংরেজিতে)"
-                        className="w-full border p-2"
-                        required
-                    />
-                    <div>
-                        <button
-                            type="submit"
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200 cursor-pointer w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            জমা দিন
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => window.location.reload()}
-                            className="bg-red-600 text-white px-4 py-2 rounded ml-2 hover:bg-blue-700 transition-colors duration-200 cursor-pointer w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            বাতিল করুন
-                        </button>
-                    </div>
-                </>
+                        <label className="block font-semibold">
+                            নমিনির নাম (ইংরেজিতে):
+                        </label>
+                        <input
+                            type="text"
+                            name="nominee.nameEn"
+                            value={form.nominee.nameEn}
+                            onChange={handleChange}
+                            placeholder="Name (English)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            নমিনির পিতার নাম:
+                        </label>
+
+                        <input
+                            type="text"
+                            name="nominee.fatherNameEn"
+                            value={form.nominee.fatherNameEn}
+                            onChange={handleChange}
+                            placeholder="Father's Name (English)"
+                            className="w-full border p-2"
+                            required
+                        />
+
+                        <label className="block font-semibold">
+                            নমিনির মাতার নাম:
+                        </label>
+                        <input
+                            type="text"
+                            name="nominee.motherNameEn"
+                            value={form.nominee.motherNameEn}
+                            onChange={handleChange}
+                            placeholder="Mother's Name (English)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            নমিনির সাথে সদস্যের সম্পর্ক:
+                        </label>
+                        <input
+                            type="text"
+                            name="nominee.relation"
+                            value={form.nominee.relation}
+                            onChange={handleChange}
+                            placeholder="Relation with Member"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            নমিনির জন্ম তারিখ:
+                        </label>
+
+                        <input
+                            type="date"
+                            name="nominee.dob"
+                            value={form.nominee.dob}
+                            onChange={handleChange}
+                            className="w-full border p-2"
+                            required
+                        />
+
+                        <div>
+                            <label className="block font-semibold">
+                                লিঙ্গ:
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="nominee.gender"
+                                    value="পুরুষ"
+                                    onChange={handleChange}
+                                    checked={form.nominee.gender === "পুরুষ"}
+                                />{" "}
+                                পুরুষ
+                            </label>
+                            <label className="ml-4">
+                                <input
+                                    type="radio"
+                                    name="nominee.gender"
+                                    value="মহিলা"
+                                    onChange={handleChange}
+                                    checked={form.nominee.gender === "মহিলা"}
+                                />{" "}
+                                মহিলা
+                            </label>
+                        </div>
+
+                        <label className="block font-semibold">
+                            নমিনির এনআইডি/জন্মনিবন্ধন নম্বর:
+                        </label>
+                        <input
+                            type="text"
+                            name="nominee.nid"
+                            value={form.nominee.nid}
+                            onChange={handleChange}
+                            placeholder="এনআইডি/জন্মনিবন্ধন নম্বর"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <label className="block font-semibold">
+                            নমিনির মোবাইল নম্বর (যদি থাকে):
+                        </label>
+                        <input
+                            type="text"
+                            name="nominee.mobile"
+                            value={form.nominee.mobile}
+                            onChange={handleChange}
+                            placeholder="মোবাইল নম্বর"
+                            className="w-full border p-2"
+                        />
+
+                        <label className="block font-semibold">
+                            নমিনির বর্তমান ঠিকানা:
+                        </label>
+                        <textarea
+                            name="nominee.presentAddress"
+                            value={form.nominee.presentAddress}
+                            onChange={handleChange}
+                            placeholder="বর্তমান ঠিকানা"
+                            className="w-full border p-2"
+                            required
+                        ></textarea>
+                        <label className="block font-semibold">
+                            নমিনির স্থায়ী ঠিকানা:
+                        </label>
+                        <textarea
+                            name="nominee.permanentAddress"
+                            value={form.nominee.permanentAddress}
+                            onChange={handleChange}
+                            placeholder="স্থায়ী ঠিকানা"
+                            className="w-full border p-2"
+                            required
+                        ></textarea>
+
+                        <label className="block font-semibold">
+                            নমিনির ছবি:
+                        </label>
+                        <input
+                            type="file"
+                            name="nominee.photo"
+                            onChange={(e) => {
+                                handleUpload(e, "nominee.photo");
+                            }}
+                            className="w-full border p-2"
+                        />
+                        {form.nominee.photo && (
+                            <img
+                                src={form.nominee.photo}
+                                alt="নমিনির ছবি"
+                                className="w-24 h-24 object-cover mt-2"
+                            />
+                        )}
+                        <label className="block font-semibold">
+                            নমিনির স্বাক্ষর:
+                        </label>
+                        <input
+                            type="text"
+                            name="nominee.signature"
+                            value={
+                                form.nominee.signature || form.nominee.nameEn
+                            }
+                            onChange={handleChange}
+                            placeholder="নমিনির স্বাক্ষর (ইংরেজিতে)"
+                            className="w-full border p-2"
+                            required
+                        />
+                        <div>
+                            <button
+                                type="submit"
+                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200 cursor-pointer w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                জমা দিন
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => window.location.reload()}
+                                className="bg-red-600 text-white px-4 py-2 rounded ml-2 hover:bg-blue-700 transition-colors duration-200 cursor-pointer w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                বাতিল করুন
+                            </button>
+                        </div>
+                    </>
+                )}
+            </form>
+
+            {!user && (
+                <div className="absolute inset-0 bg-white bg-opacity-50 backdrop-blur-sm flex flex-col items-center justify-center z-10 text-center p-6 rounded">
+                    <p className="text-xl font-semibold mb-4 text-red-600">
+                        You must login to fill the form
+                    </p>
+                    <button
+                        onClick={() => Navigate("/login")}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    >
+                        Go to Login
+                    </button>
+                </div>
             )}
-        </form>
+        </div>
     );
 };
 

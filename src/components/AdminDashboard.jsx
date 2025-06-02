@@ -1,8 +1,8 @@
-import { signOut } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
+import { handleLogout } from "../utils/handleLogOut";
 
 const Dashboard = () => {
     const [members, setMembers] = useState([]);
@@ -33,16 +33,17 @@ const Dashboard = () => {
     if (loading) return <div className="text-center p-4">Loading...</div>;
     // loggin out from account
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            // alert("✅ লগ আউট সফল হয়েছে");
-            navigate("/login");
-        } catch (error) {
-            console.error("Logout error:", error);
-            alert("❌ লগ আউট ব্যর্থ");
-        }
-    };
+    // const handleLogout = async () => {
+    //     try {
+    //         await signOut(auth);
+    //         // alert("✅ লগ আউট সফল হয়েছে");
+    //         navigate("/login");
+    //     } catch (error) {
+    //         console.error("Logout error:", error);
+    //         alert("❌ লগ আউট ব্যর্থ");
+    //     }
+    // };
+    const logOut = handleLogout;
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">সদস্য তালিকা</h1>
@@ -110,7 +111,7 @@ const Dashboard = () => {
                         হোমে ফিরে যান
                     </a>
                     <button
-                        onClick={handleLogout}
+                        onClick={() => logOut(auth, navigate)}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                     >
                         🔓 Logout

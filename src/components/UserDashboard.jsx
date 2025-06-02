@@ -1,20 +1,124 @@
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
+import { handleLogout } from "../utils/handleLogOut";
+import { useNavigate } from "react-router-dom";
 const UserDashboard = () => {
+    const [user, setUser] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const logOut = handleLogout;
+    const navigate = useNavigate();
+    useEffect(() => {
+        const auth = getAuth();
+
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                setUser(firebaseUser);
+
+                const docRef = doc(db, "members", firebaseUser.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setUserData(docSnap.data());
+                } else {
+                    console.log("❌ কোনো ডেটা পাওয়া যায়নি");
+                }
+            }
+            setLoading(false); // ✅ যেকোনো অবস্থায় loading বন্ধ করো
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    if (loading) {
+        return <p className="text-center mt-10">লোড হচ্ছে...</p>;
+    }
+
+    if (!userData) {
+        return (
+            <p className="text-center mt-10 text-red-600 font-semibold">
+                সদস্য তথ্য পাওয়া যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।
+            </p>
+        );
+    }
+
+    const {
+        nameBn,
+        nameEn,
+        email,
+        mobile,
+        accountNumber,
+        memberType,
+        photo,
+        nominee,
+    } = userData;
+
     return (
-        <div className="h-screen flex items-center justify-center">
-            {/* user dashboard - show user info */}
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <h2 className="text-2xl font-bold mb-4">User Dashboard</h2>
-                <div className="mb-2">
-                    <span className="font-semibold">Name:</span> John Doe
-                </div>
-                <div className="mb-2">
-                    <span className="font-semibold">Email:</span> johndoe@example.com
-                </div>
-                <div className="mb-2">
-                    <span className="font-semibold">Member Since:</span> January 2023
-                </div>
+        <div className="max-w-3xl mx-auto p-4 border rounded-lg shadow">
+            <h1 className="text-2xl font-bold mb-4">🧾 সদস্য তথ্য</h1>
+
+            <div className="space-y-2">
+                <p>
+                    <strong>নাম (বাংলা):</strong> {nameBn}
+                </p>
+                <p>
+                    <strong>নাম (ইংরেজি):</strong> {nameEn}
+                </p>
+                <p>
+                    <strong>ইমেইল:</strong> {email}
+                </p>
+                <p>
+                    <strong>মোবাইল:</strong> {mobile}
+                </p>
+                <p>
+                    <strong>সদস্য নম্বর:</strong> {accountNumber}
+                </p>
+                <p>
+                    <strong>সদস্যের ধরন:</strong> {memberType}
+                </p>
+                {photo && (
+                    <img
+                        src={photo}
+                        alt="Photo"
+                        className="w-32 rounded mt-2"
+                    />
+                )}
+
+                <h2 className="text-xl font-semibold mt-6">
+                    🧑 মনোনীত ব্যক্তির তথ্য
+                </h2>
+                <p>
+                    <strong>নাম (বাংলা):</strong> {nominee.nameBn}
+                </p>
+                <p>
+                    <strong>নাম (ইংরেজি):</strong> {nominee.nameEn}
+                </p>
+                <p>
+                    <strong>সম্পর্ক:</strong> {nominee.relation}
+                </p>
+                <p>
+                    <strong>মোবাইল:</strong> {nominee.mobile}
+                </p>
+                {nominee.photo && (
+                    <img
+                        src={nominee.photo}
+                        alt="Nominee"
+                        className="w-32 rounded mt-2"
+                    />
+                )}
             </div>
-            
+
+            <div className="mt-6">
+                <button
+                    onClick={() => logOut(auth, navigate)}
+                    className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                    লগ আউট
+                </button>
+            </div>
         </div>
     );
 };
