@@ -1,17 +1,18 @@
+import { getAuth } from "firebase/auth";
 import {
-    addDoc,
     collection,
     doc,
+    getDoc,
     getDocs,
     limit,
     orderBy,
     query,
     setDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase"; // firebase config path
-import { getAuth } from "firebase/auth";
-import { Navigate } from "react-router-dom";
+import { AuthContext } from "../loginAuthContext";
 
 const MemberForm1 = () => {
     const initialForm = {
@@ -52,10 +53,11 @@ const MemberForm1 = () => {
     };
     const [form, setForm] = useState(initialForm);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [alreadySubmitted, setAlreadySubmitted] = useState(false); // for preventing the again submission
+    const { loading } = useContext(AuthContext);
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log(user);
-
+    const navigate = useNavigate();
     const subOptions = {
         "কার্যনির্বাহী পরিষদের সদস্য": ["কার্যনির্বাহী পরিষদের সদস্য"],
         "সাধারণ সদস্য": ["সাধারণ সদস্য"],
@@ -67,32 +69,64 @@ const MemberForm1 = () => {
             "হজ্জ্ব আমানত হিসাব",
         ],
     };
-      
-    // find the max account number in the database
-    const getNextAccountNumber = async () => {
-        const q = query(
-            collection(db, "members"),
-            orderBy("accountNumber", "desc"),
-            limit(1)
-        );
-
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-            const maxAccount = querySnapshot.docs[0].data().accountNumber;
-            return Number(maxAccount) + 1;
-        } else {
-            return 1001; // যদি database ফাঁকা থাকে
-        }
-    };
 
     // set the initial account number when the component mounts
+
     useEffect(() => {
-        const setInitialAccountNumber = async () => {
-            const nextAccount = await getNextAccountNumber();
-            setForm((prev) => ({ ...prev, accountNumber: nextAccount }));
+        const setAccountNumber = async () => {
+            if (loading || !user) return;
+
+            const docRef = doc(db, "members", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                // 🔁 আগের accountNumber আছে, ওটাই বসবে
+                const existingAccountNumber = docSnap.data().accountNumber;
+                setForm((prev) => ({
+                    ...prev,
+                    accountNumber: existingAccountNumber,
+                }));
+            } else {
+                // 🔢 নতুন accountNumber calculate করবে
+                const q = query(
+                    collection(db, "members"),
+                    orderBy("accountNumber", "desc"),
+                    limit(1)
+                );
+
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    const maxAccount =
+                        querySnapshot.docs[0].data().accountNumber;
+                    setForm((prev) => ({
+                        ...prev,
+                        accountNumber: Number(maxAccount) + 1,
+                    }));
+                } else {
+                    setForm((prev) => ({
+                        ...prev,
+                        accountNumber: 1001,
+                    }));
+                }
+            }
         };
-        setInitialAccountNumber();
-    }, []);
+
+        setAccountNumber();
+    }, [user]);
+
+    // finding if the user sumitted already
+    useEffect(() => {
+        const checkSubmission = async () => {
+            if (user) {
+                const docRef = doc(db, "members", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setAlreadySubmitted(true);
+                }
+            }
+        };
+        checkSubmission();
+    }, [user]);
     // find the max account number in the database
 
     // const handleChange = (e) => {
@@ -135,7 +169,7 @@ const MemberForm1 = () => {
             });
         }
     };
-    
+
     // submitting and saving form data
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -707,15 +741,38 @@ const MemberForm1 = () => {
             </form>
 
             {!user && (
-                <div className="absolute inset-0 bg-white bg-opacity-50 backdrop-blur-sm flex flex-col items-center justify-center z-10 text-center p-6 rounded">
+                <div className="fixed inset-0 bg-black/5 backdrop-blur-[1.5px] flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen overflow-hidden">
                     <p className="text-xl font-semibold mb-4 text-red-600">
                         You must login to fill the form
                     </p>
                     <button
-                        onClick={() => Navigate("/login")}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        onClick={() => navigate("/login")}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"
                     >
                         Go to Login
+                    </button>
+                </div>
+            )}
+            {/* if user exists and submitted form */}
+            {alreadySubmitted && (
+                <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen">
+                    <p className="text-xl font-semibold mb-4 text-red-600">
+                        আপনি একটি ফর্ম জমা দিয়েছেন।
+                    </p>
+                    <button
+                        onClick={() => navigate("/login")}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"
+                    >
+                        ড্যাশবোর্ডে যান।
+                    </button>
+                    <br />
+                    {" অথবা "} <br /> <br />
+                    <button
+                        onClick={() => setAlreadySubmitted(false)}
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"
+                    >
+                        ফর্ম এডিট করুন (সতর্কবার্তাঃ ফর্মের কোনো বক্স খালি রাখলে
+                        সেটি ফাকা থাকবে। )
                     </button>
                 </div>
             )}

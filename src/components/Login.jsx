@@ -81,7 +81,7 @@ export default function Login() {
             );
             window.confirmationResult = confirmation;
             setOtpSent(true);
-        // eslint-disable-next-line no-unused-vars
+            // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setError("OTP পাঠাতে ব্যর্থ! নম্বরটি সঠিক কিনা দেখুন");
         }
@@ -93,7 +93,7 @@ export default function Login() {
         try {
             await window.confirmationResult.confirm(otp);
             navigate("/dashboard");
-        // eslint-disable-next-line no-unused-vars
+            // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setError("ভুল OTP!");
         }
@@ -161,6 +161,17 @@ export default function Login() {
                             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                         >
                             লগইন
+                        </button>
+                        <span className="flex mt-4 items-center justify-center">
+                            <hr className="w-1/3" />
+                            <span className="w-1/3 text-center">অথবা</span>
+                            <hr className="w-1/3" />
+                        </span>
+                        <button
+                            onClick={() => navigate("/signup")}
+                            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-2"
+                        >
+                            সাইন আপ করুন
                         </button>
                     </form>
                 ) : (

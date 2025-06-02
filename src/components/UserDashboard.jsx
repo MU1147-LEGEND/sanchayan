@@ -1,9 +1,9 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { handleLogout } from "../utils/handleLogOut";
-import { useNavigate } from "react-router-dom";
 const UserDashboard = () => {
     const [user, setUser] = useState(null);
     const [userData, setUserData] = useState(null);
@@ -48,6 +48,15 @@ const UserDashboard = () => {
     const {
         nameBn,
         nameEn,
+        dob,
+        fatherNameEn,
+        gender,
+        motherNameEn,
+        nationality,
+        nid,
+        presentAddress,
+        permanentAddress,
+        subMemberType,
         email,
         mobile,
         accountNumber,
@@ -55,12 +64,19 @@ const UserDashboard = () => {
         photo,
         nominee,
     } = userData;
-
+    console.log(userData);
     return (
         <div className="max-w-3xl mx-auto p-4 border rounded-lg shadow">
             <h1 className="text-2xl font-bold mb-4">🧾 সদস্য তথ্য</h1>
 
             <div className="space-y-2">
+                {photo && (
+                    <img
+                        src={photo}
+                        alt="Photo"
+                        className="w-32 rounded mt-2"
+                    />
+                )}
                 <p>
                     <strong>নাম (বাংলা):</strong> {nameBn}
                 </p>
@@ -78,18 +94,11 @@ const UserDashboard = () => {
                 </p>
                 <p>
                     <strong>সদস্যের ধরন:</strong> {memberType}
+                    {" > "}
+                    {subMemberType}
                 </p>
-                {photo && (
-                    <img
-                        src={photo}
-                        alt="Photo"
-                        className="w-32 rounded mt-2"
-                    />
-                )}
 
-                <h2 className="text-xl font-semibold mt-6">
-                    🧑 মনোনীত ব্যক্তির তথ্য
-                </h2>
+                <h2 className="text-xl font-semibold mt-6">নমিনির তথ্য</h2>
                 <p>
                     <strong>নাম (বাংলা):</strong> {nominee.nameBn}
                 </p>

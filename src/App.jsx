@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./components/AuthContext";
 import Dashboard from "./components/AdminDashboard";
+import { AuthProvider } from "./components/AuthContext";
 import ErrorPage from "./components/ErrorPage";
 import FullPage from "./components/FullPage";
 import HeaderLayout from "./components/header/HeaderLayout";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Unauthorized from "./components/UserDashboard";
+import SignUp from "./components/SignUp";
 import UserDashboard from "./components/UserDashboard";
 
 const App = () => {
@@ -34,6 +34,7 @@ const App = () => {
                     </Route>
 
                     {/* Routes that do not show Header */}
+                    <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<Login />} />
 
                     {/* Fallback */}
