@@ -36,7 +36,9 @@ const MyAccount = () => {
             }`}
             // disabled={user}
         >
-            {user ? `Hi, ${displayName || "User"}` : "Login"}
+            {user
+                ? `Hi, ${displayName || user.displayName.split(" ")[0]}`
+                : "Login"}
         </button>
     );
 };

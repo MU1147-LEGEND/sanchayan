@@ -240,7 +240,7 @@ const MemberForm1 = () => {
     // handle uploading image
 
     return (
-        <div className="relative min-h-screen bg-gray-100">
+        <div className="relative min-h-screen bg-gray-100 mb-10">
             <form
                 onSubmit={handleSubmit}
                 className="p-6 max-w-3xl mx-auto space-y-4"

@@ -45,7 +45,7 @@ const Dashboard = () => {
     // };
     const logOut = handleLogout;
     return (
-        <div className="p-4">
+        <div className="p-4 mb-10">
             <h1 className="text-2xl font-bold mb-4">সদস্য তালিকা</h1>
 
             <div className="overflow-x-auto">

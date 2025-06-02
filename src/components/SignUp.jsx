@@ -37,13 +37,13 @@ const SignUp = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
             <form
                 onSubmit={handleSubmit}
                 className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm space-y-4"
             >
                 <h2 className="text-2xl font-bold text-center text-gray-700">
-                    Sign Up
+                    সঞ্চয়ন রেজিস্ট্রেশন ফর্ম
                 </h2>
 
                 {error && <p className="text-red-600 text-sm">{error}</p>}
@@ -84,15 +84,23 @@ const SignUp = () => {
                 >
                     Sign Up
                 </button>
-                <div className="mt-4 text-center block">
-                    <a
-                        href="/sanchayan"
-                        className="text-blue-500 hover:underline"
-                    >
-                        হোমে ফিরে যান
-                    </a>
-                </div>
+                <span className="flex mt-4 items-center justify-center">
+                    <hr className="w-1/3" />
+                    <span className="w-1/3 text-center">অথবা</span>
+                    <hr className="w-1/3" />
+                </span>
+                <button
+                    onClick={() => navigate("/login")}
+                    className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-2"
+                >
+                    লগইন করুন
+                </button>
             </form>
+            <div className="mt-4 text-center block">
+                <a href="/sanchayan" className="text-blue-500 hover:underline">
+                    হোমে ফিরে যান
+                </a>
+            </div>
             <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-center py-2">
                 <p>
                     © {new Date().getFullYear()} Sanchayan. All rights reserved.

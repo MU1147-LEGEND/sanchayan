@@ -40,7 +40,7 @@ const UserDashboard = () => {
     if (!userData) {
         return (
             <p className="text-center mt-10 text-red-600 font-semibold">
-                সদস্য তথ্য পাওয়া যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।
+                সদস্য তথ্য পাওয়া যায়নি। পেইজটি রিফ্রেশ করুন অথবা ফর্ম পূরণ করুন।
             </p>
         );
     }
@@ -66,7 +66,7 @@ const UserDashboard = () => {
     } = userData;
     console.log(userData);
     return (
-        <div className="max-w-3xl mx-auto p-4 border rounded-lg shadow">
+        <div className="max-w-3xl mx-auto p-4 mb-10 border rounded-lg shadow">
             <h1 className="text-2xl font-bold mb-4">🧾 সদস্য তথ্য</h1>
 
             <div className="space-y-2">

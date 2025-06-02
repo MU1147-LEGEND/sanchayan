@@ -181,6 +181,9 @@ export default function Login() {
                         }
                         className="bg-white p-6 rounded shadow-md"
                     >
+                        <p className="text-xl text-red-500">
+                            এখনো কাজ চলমান। দয়া করে ইমেইল লগিন ব্যবহার করুন।
+                        </p>
                         <input
                             type="tel"
                             placeholder="+8801XXXXXXXXX"
