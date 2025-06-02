@@ -1,13 +1,12 @@
 // src/pages/Login.jsx
-import { useContext, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import {
-    signInWithEmailAndPassword,
     RecaptchaVerifier,
+    signInWithEmailAndPassword,
     signInWithPhoneNumber,
 } from "firebase/auth";
+import { useContext, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import Header from "./header/Header";
 import { AuthContext } from "./loginAuthContext";
 
 export default function Login() {
@@ -20,8 +19,6 @@ export default function Login() {
     const [otpSent, setOtpSent] = useState(false);
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
-    auth.settings.appVerificationDisabledForTesting = true;
-    if (user) return <Navigate to="/dashboard" />;
 
     const handleEmailLogin = async (e) => {
         e.preventDefault();
@@ -31,32 +28,49 @@ export default function Login() {
             navigate("/dashboard");
         } catch (err) {
             setError("ইমেইল বা পাসওয়ার্ড ভুল!");
+            console.log(err);
         }
     };
 
     const setUpRecaptcha = () => {
-        console.log("AUTH:", auth); // 👉 এখানে যদি undefined আসে, firebase.js ভুল
-
+        if (!auth) {
+            console.error("Firebase Auth not initialized");
+            return;
+        }
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(
                 "recaptcha-container",
                 {
                     size: "invisible",
                     callback: (response) => {
-                        console.log("reCAPTCHA solved");
+                        console.log("reCAPTCHA Solved", response);
                     },
                 },
-                auth // ✅ auth object পাঠানো হচ্ছে
+                auth
             );
         }
     };
 
+    useEffect(() => {
+        if (loginMethod === "phone") {
+            // Wait for the DOM to update
+            setTimeout(() => {
+                if (
+                    !window.recaptchaVerifier &&
+                    document.getElementById("recaptcha-container")
+                ) {
+                    setUpRecaptcha();
+                }
+            }, 0);
+        }
+    }, [loginMethod]);
+
     const handlePhoneSendCode = async (e) => {
         e.preventDefault();
-        setError("");
         if (!phone) return setError("ফোন নাম্বার দিন");
 
-        setUpRecaptcha();
+        setError("");
+
         const appVerifier = window.recaptchaVerifier;
 
         try {
@@ -67,6 +81,7 @@ export default function Login() {
             );
             window.confirmationResult = confirmation;
             setOtpSent(true);
+        // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setError("OTP পাঠাতে ব্যর্থ! নম্বরটি সঠিক কিনা দেখুন");
         }
@@ -78,15 +93,14 @@ export default function Login() {
         try {
             await window.confirmationResult.confirm(otp);
             navigate("/dashboard");
+        // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setError("ভুল OTP!");
         }
     };
-
+    if (user) return <Navigate to="/dashboard" />;
     return (
         <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-100">
-            <Header />
-
             <div className="w-full max-w-md p-4">
                 <h1 className="text-3xl font-bold text-center mb-4">
                     Sanchayan লগইন

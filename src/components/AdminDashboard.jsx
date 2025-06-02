@@ -1,9 +1,8 @@
+import { signOut } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { auth, db } from "../firebase";
-import Header from "./header/Header";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { auth, db } from "../firebase";
 
 const Dashboard = () => {
     const [members, setMembers] = useState([]);
@@ -30,23 +29,22 @@ const Dashboard = () => {
 
         fetchMembers();
     }, []);
-// setting up the loading state
+    // setting up the loading state
     if (loading) return <div className="text-center p-4">Loading...</div>;
-// loggin out from account
+    // loggin out from account
 
-const handleLogout = async () => {
-    try {
-        await signOut(auth);
-        alert("✅ লগ আউট সফল হয়েছে");
-        navigate("/login");
-    } catch (error) {
-        console.error("Logout error:", error);
-        alert("❌ লগ আউট ব্যর্থ");
-    }
-};
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            // alert("✅ লগ আউট সফল হয়েছে");
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout error:", error);
+            alert("❌ লগ আউট ব্যর্থ");
+        }
+    };
     return (
         <div className="p-4">
-            <Header />
             <h1 className="text-2xl font-bold mb-4">সদস্য তালিকা</h1>
 
             <div className="overflow-x-auto">
@@ -78,6 +76,8 @@ const handleLogout = async () => {
                                     </td>
                                     <td className="p-2 border">
                                         {member.memberType}
+                                        {" > "}
+                                        {member?.subMemberType}
                                     </td>
                                     <td className="p-2 border">
                                         {member.mobile}
@@ -147,6 +147,8 @@ const handleLogout = async () => {
                             <p>
                                 <strong>মেম্বার টাইপ:</strong>{" "}
                                 {selectedMember.memberType}
+                                {" > "}
+                                {selectedMember?.subMemberType}
                             </p>
                             <p>
                                 <strong>পিতা:</strong>{" "}
@@ -155,6 +157,10 @@ const handleLogout = async () => {
                             <p>
                                 <strong>মাতা:</strong>{" "}
                                 {selectedMember.motherNameEn}
+                            </p>
+                            <p>
+                                <strong>নমিনি:</strong>{" "}
+                                {selectedMember.nominee.nameEn}
                             </p>
                             <p>
                                 <strong>মোবাইল:</strong> {selectedMember.mobile}

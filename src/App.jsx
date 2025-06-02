@@ -1,25 +1,28 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./components/AuthContext";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/AdminDashboard";
 import ErrorPage from "./components/ErrorPage";
 import FullPage from "./components/FullPage";
+import HeaderLayout from "./components/header/HeaderLayout";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./components/UserDashboard";
+import UserDashboard from "./components/UserDashboard";
 
 const App = () => {
     return (
-        <>
-            <AuthProvider>
-                <BrowserRouter>
-                    <Routes>
-                        {/* when ./ redirect to sanchayan */}
-                        <Route
-                            path="/"
-                            element={<FullPage />}
-                        />
-                        
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    {/* Routes that show Header */}
+                    <Route element={<HeaderLayout />}>
+                        <Route path="/" element={<FullPage />} />
                         <Route path="/sanchayan" element={<FullPage />} />
-                        <Route path="/login" element={<Login />} />
+                        <Route
+                            path="/userdashboard"
+                            element={<UserDashboard />}
+                        />
+
                         <Route
                             path="/dashboard"
                             element={
@@ -28,18 +31,17 @@ const App = () => {
                                 </ProtectedRoute>
                             }
                         />
-                        <Route path="*" element={<ErrorPage />} />
-                    </Routes>
-                </BrowserRouter>
-            </AuthProvider>
+                    </Route>
 
-            {/* <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<FullPage />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    {/* Routes that do not show Header */}
+                    <Route path="/login" element={<Login />} />
+
+                    {/* Fallback */}
+                    <Route path="*" element={<ErrorPage />} />
                 </Routes>
-            </BrowserRouter> */}
-        </>
+            </BrowserRouter>
+        </AuthProvider>
     );
 };
+
 export default App;

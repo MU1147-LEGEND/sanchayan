@@ -5,8 +5,6 @@ import MemberForm1 from "./mainForm/MainForm";
 const FullPage = () => {
     return (
         <>
-            <AnnouncementBar />
-            <Header />
             <MemberForm1 />
         </>
     );

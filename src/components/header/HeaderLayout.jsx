@@ -1,0 +1,22 @@
+import React from "react";
+import Header from "./Header"; // আপনার Header component
+
+import { Outlet, useLocation } from "react-router-dom";
+
+const HeaderLayout = () => {
+    const location = useLocation();
+
+    
+    const hideHeaderRoutes = ["/login"];
+
+    const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+
+    return (
+        <>
+            {!shouldHideHeader && <Header />}
+            <Outlet />
+        </>
+    );
+};
+
+export default HeaderLayout;

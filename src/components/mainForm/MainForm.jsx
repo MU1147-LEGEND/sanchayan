@@ -12,6 +12,7 @@ import { db } from "../../firebase"; // firebase config path
 const MemberForm1 = () => {
     const initialForm = {
         memberType: "",
+        subMemberType: "",
         accountNumber: "",
         nameBn: "",
         nameEn: "",
@@ -48,6 +49,18 @@ const MemberForm1 = () => {
     const [form, setForm] = useState(initialForm);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
+    const subOptions = {
+        "কার্যনির্বাহী পরিষদের সদস্য": ["কার্যনির্বাহী পরিষদের সদস্য"],
+        "সাধারণ সদস্য": ["সাধারণ সদস্য"],
+        "সঞ্চয়ী সদস্য": [
+            "সাপ্তাহিক সঞ্চয় হিসাব",
+            "মাসিক সঞ্চয় হিসাব (DPS)",
+            "স্থায়ী সঞ্চয় হিসাব (FDR)",
+            "শিক্ষার্থী সঞ্চয় হিসাব",
+            "হজ্জ্ব আমানত হিসাব",
+        ],
+    };
+      
     // find the max account number in the database
     const getNextAccountNumber = async () => {
         const q = query(
@@ -75,8 +88,24 @@ const MemberForm1 = () => {
     }, []);
     // find the max account number in the database
 
+    // const handleChange = (e) => {
+    //     const { name, value, files } = e.target;
+    //     if (name.includes("nominee.")) {
+    //         const key = name.split(".")[1];
+    //         setForm((prev) => ({
+    //             ...prev,
+    //             nominee: { ...prev.nominee, [key]: files ? files[0] : value },
+    //         }));
+    //     } else {
+    //         setForm((prev) => ({
+    //             ...prev,
+    //             [name]: files ? files[0] : value,
+    //         }));
+    //     }
+    // };
     const handleChange = (e) => {
         const { name, value, files } = e.target;
+
         if (name.includes("nominee.")) {
             const key = name.split(".")[1];
             setForm((prev) => ({
@@ -84,12 +113,22 @@ const MemberForm1 = () => {
                 nominee: { ...prev.nominee, [key]: files ? files[0] : value },
             }));
         } else {
-            setForm((prev) => ({
-                ...prev,
-                [name]: files ? files[0] : value,
-            }));
+            setForm((prev) => {
+                const updatedForm = {
+                    ...prev,
+                    [name]: files ? files[0] : value,
+                };
+
+                // যদি সদস্য ধরন চেঞ্জ হয়, তাহলে সাব-মেম্বার রিসেট করবে
+                if (name === "memberType") {
+                    updatedForm.subMemberType = "";
+                }
+
+                return updatedForm;
+            });
         }
     };
+    
     // submitting and saving form data
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -163,7 +202,8 @@ const MemberForm1 = () => {
         >
             {isSubmitted ? (
                 <p className="text-green-600 font-semibold mt-4">
-                    ✅ ফর্ম সফলভাবে জমা হয়েছে!
+                    ✅ ফর্ম সফলভাবে জমা হয়েছে! ভেরিফিকেশনের জন্য দয়া করে অপেক্ষা
+                    করুন। ১২-২৪ ঘন্টার মধ্যে প্রোফাইল ভেরিফাই করা হবে।
                 </p>
             ) : (
                 <>
@@ -176,7 +216,8 @@ const MemberForm1 = () => {
                         মেনে সদস্য ফর্ম পূরণ করছি।
                     </p>
 
-                    <div>
+                    {/* old member selectbox */}
+                    {/* <div>
                         <label className="block font-semibold">
                             সদস্যের ধরন:
                         </label>
@@ -192,8 +233,63 @@ const MemberForm1 = () => {
                             <option>সাধারণ সদস্য</option>
                             <option>সঞ্চয়ী সদস্য</option>
                         </select>
-                    </div>
+                    </div> */}
+                    {/* new member selectbox */}
+                    <div className="space-y-4">
+                        {/* মূল সদস্য ধরন */}
+                        <div>
+                            <label className="block font-semibold">
+                                সদস্যের ধরন:
+                            </label>
+                            <select
+                                name="memberType"
+                                value={form.memberType}
+                                onChange={handleChange}
+                                required
+                                className="w-full border p-2"
+                            >
+                                <option value="">
+                                    -- ধরন নির্বাচন করুন --
+                                </option>
+                                <option value="কার্যনির্বাহী পরিষদের সদস্য">
+                                    কার্যনির্বাহী পরিষদের সদস্য
+                                </option>
+                                <option value="সাধারণ সদস্য">
+                                    সাধারণ সদস্য
+                                </option>
+                                <option value="সঞ্চয়ী সদস্য">
+                                    সঞ্চয়ী সদস্য
+                                </option>
+                            </select>
+                        </div>
 
+                        {/* সাব-মেম্বার ধরন, যদি প্রযোজ্য হয় */}
+                        {form.memberType && (
+                            <div>
+                                <label className="block font-semibold">
+                                    সদস্যের উপ-ধরন:
+                                </label>
+                                <select
+                                    name="subMemberType"
+                                    value={form.subMemberType}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full border p-2"
+                                >
+                                    <option value="">
+                                        -- উপ-ধরন নির্বাচন করুন --
+                                    </option>
+                                    {subOptions[form.memberType].map(
+                                        (sub, index) => (
+                                            <option key={index} value={sub}>
+                                                {sub}
+                                            </option>
+                                        )
+                                    )}
+                                </select>
+                            </div>
+                        )}
+                    </div>
                     <input
                         type="text"
                         name="accountNumber"
