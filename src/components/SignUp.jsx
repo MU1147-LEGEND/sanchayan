@@ -97,9 +97,9 @@ const SignUp = () => {
                 </button>
             </form>
             <div className="mt-4 text-center block">
-                <a href="/sanchayan" className="text-blue-500 hover:underline">
+                <button onClick={()=> navigate('/')} className="text-blue-500 hover:underline">
                     হোমে ফিরে যান
-                </a>
+                </button>
             </div>
             <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-center py-2">
                 <p>

@@ -1,23 +1,25 @@
+import { useNavigate } from "react-router-dom";
 import Header from "./header/Header";
+import Footer from "./Footer";
 
 const ErrorPage = () => {
+    const navigate = useNavigate();
+
     return (
         <>
-        <Header />
-            <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+            {/* height: 100vh minus header's height */}
+            <div
+                className="flex flex-col items-center justify-center bg-gray-100"
+                style={{ minHeight: "calc(100vh - 64px)" }} // adjust 64px to your Header's height
+            >
                 <h1 className="text-6xl font-bold text-red-600">404</h1>
                 <p className="mt-4 text-xl text-gray-700">Page Not Found</p>
-                <a
-                    href="/sanchayan"
+                <button
+                    onClick={() => navigate("/")}
                     className="mt-6 text-blue-500 hover:underline"
                 >
                     Go to Home
-                </a>
-            </div>
-            <div className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-center py-2">
-                <p>
-                    © {new Date().getFullYear()} Sanchayan. All rights reserved.
-                </p>
+                </button>
             </div>
         </>
     );

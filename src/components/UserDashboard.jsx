@@ -47,7 +47,7 @@ const UserDashboard = () => {
                     <button>
                         <span
                             className="text-blue-500 hover:underline"
-                            onClick={() => navigate("/sanchayan")}
+                            onClick={() => navigate("/registration-form")}
                         >
                             এখানে ক্লিক করুন
                         </span>
@@ -89,7 +89,7 @@ const UserDashboard = () => {
         photo,
         nominee,
     } = userData;
-    console.log(userData);
+
     return (
         <div className="max-w-3xl mx-auto p-4 mb-10 border rounded-lg shadow">
             <h1 className="text-2xl font-bold mb-4">🧾 সদস্য তথ্য</h1>

@@ -104,12 +104,12 @@ const Dashboard = () => {
                 {/* log out */}
 
                 <div className="mt-4 text-center flex items-center justify-center space-x-4">
-                    <a
-                        href="/sanchayan"
+                    <p
+                        onClick={() => navigate("/")}
                         className="text-blue-500 hover:underline"
                     >
                         হোমে ফিরে যান
-                    </a>
+                    </p>
                     <button
                         onClick={() => logOut(auth, navigate)}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"

@@ -9,7 +9,7 @@ import {
     query,
     setDoc,
 } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase"; // firebase config path
 import { AuthContext } from "../loginAuthContext";
@@ -19,6 +19,7 @@ const MemberForm1 = () => {
         memberType: "",
         subMemberType: "",
         accountNumber: "",
+        refarenceNumber: "",
         nameBn: "",
         nameEn: "",
         fatherNameEn: "",
@@ -51,13 +52,17 @@ const MemberForm1 = () => {
             signature: "",
         },
     };
+
     const [form, setForm] = useState(initialForm);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [alreadySubmitted, setAlreadySubmitted] = useState(false); // for preventing the again submission
+    const [isAgreed, setIsAgreed] = useState(false);
+    const [error, setError] = useState(null);
     const { loading } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const formRef = useRef(null);
     const auth = getAuth();
     const user = auth.currentUser;
-    const navigate = useNavigate();
     const subOptions = {
         "কার্যনির্বাহী পরিষদের সদস্য": ["কার্যনির্বাহী পরিষদের সদস্য"],
         "সাধারণ সদস্য": ["সাধারণ সদস্য"],
@@ -70,8 +75,16 @@ const MemberForm1 = () => {
         ],
     };
 
+    useEffect(() => {
+        if (user) {
+            setForm((prev) => ({
+                ...prev,
+                email: user.email,
+                nameEn: user.displayName,
+            }));
+        }
+    }, [user]);
     // set the initial account number when the component mounts
-
     useEffect(() => {
         const setAccountNumber = async () => {
             if (loading || !user) return;
@@ -129,21 +142,6 @@ const MemberForm1 = () => {
     }, [user]);
     // find the max account number in the database
 
-    // const handleChange = (e) => {
-    //     const { name, value, files } = e.target;
-    //     if (name.includes("nominee.")) {
-    //         const key = name.split(".")[1];
-    //         setForm((prev) => ({
-    //             ...prev,
-    //             nominee: { ...prev.nominee, [key]: files ? files[0] : value },
-    //         }));
-    //     } else {
-    //         setForm((prev) => ({
-    //             ...prev,
-    //             [name]: files ? files[0] : value,
-    //         }));
-    //     }
-    // };
     const handleChange = (e) => {
         const { name, value, files } = e.target;
 
@@ -173,6 +171,32 @@ const MemberForm1 = () => {
     // submitting and saving form data
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!isAgreed) {
+            setError("আপনাকে নিরাপত্তা নীতিসমুহের সাথে একমত হতে হবে।");
+            return;
+        }
+
+        // Submit button hide
+        const submitButton = document.getElementById("submit-discard");
+        submitButton.style.display = "none";
+        // Header and announcementbar hide
+        const header = document.getElementById("header");
+        header.style.display = "none";
+        // Footer hide
+        const footer = document.getElementById("footer");
+        footer.style.display = "none";
+
+        // Wait a moment to ensure button is hidden before capture
+        setTimeout(() => {
+            window.print();
+
+            // Show it back after print (optional)
+            setTimeout(() => {
+                submitButton.style.display = "block";
+                header.style.display = "block";
+                footer.style.display = "block";
+            }, 500);
+        }, 300);
 
         try {
             // Save all data to Firestore
@@ -185,16 +209,15 @@ const MemberForm1 = () => {
             await setDoc(doc(db, "members", user.uid), formDataToSave, {
                 merge: true,
             });
-            setIsSubmitted(true);
+            setTimeout(() => setIsSubmitted(true), 700);
             // console.log("Form data saved successfully:", formDataToSave);
         } catch (error) {
             console.error("Form submission error:", error);
             alert("❌ ফর্ম জমা দিতে সমস্যা হয়েছে।");
         }
     };
-    // submitting and saving form data
 
-    // handle uploading image
+    // { handle uploading image
     const handleUpload = async (e, fieldName) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -237,61 +260,39 @@ const MemberForm1 = () => {
             alert("❌ Upload error");
         }
     };
-    // handle uploading image
+    // handle uploading image }
 
-    // Disable scroll when user is not logged in
-    useEffect(() => {
-        if (!user) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-        }
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, [user]);
+    // Disable scroll when submitted
+    // useEffect(() => {
+    //     if (!user) {
+    //         document.body.style.overflow = "hidden";
+    //     } else {
+    //         document.body.style.overflow = "";
+    //     }
+    //     return () => {
+    //         document.body.style.overflow = "";
+    //     };
+    // }, [user]);
 
     return (
-        <div className="relative min-h-screen bg-gray-100 mb-10">
+        <div className="relative h-full mb-10">
             <form
+                ref={formRef}
                 onSubmit={handleSubmit}
                 className="p-6 max-w-3xl mx-auto space-y-4"
             >
+                <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+                    {/* Sanchayan Registration Form */}
+                    সঞ্চয়ন রেজিস্ট্রেশন ফর্ম
+                </h2>
                 {isSubmitted ? (
-                    <p className="text-green-600 font-semibold mt-4">
+                    <p className="text-green-600 font-semibold mt-4 ">
                         ✅ ফর্ম সফলভাবে জমা হয়েছে! ভেরিফিকেশনের জন্য দয়া করে
                         অপেক্ষা করুন। ১২-২৪ ঘন্টার মধ্যে প্রোফাইল ভেরিফাই করা
                         হবে।
                     </p>
                 ) : (
                     <>
-                        <p className="text-lg font-semibold">
-                            এই মর্মে প্রত্যয়ন করছি যে, আমি নিম্ন স্বাক্ষরকারী
-                            <span className="bg-yellow-400 text-black px-1 py-1">
-                                {form.nameBn || "নাম (বাংলায়)"}
-                            </span>{" "}
-                            সজ্ঞানে ও সেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত ও
-                            নিয়ম-নীতি মেনে সদস্য ফর্ম পূরণ করছি।
-                        </p>
-
-                        {/* old member selectbox */}
-                        {/* <div>
-                        <label className="block font-semibold">
-                            সদস্যের ধরন:
-                        </label>
-                        <select
-                            name="memberType"
-                            value={form.memberType}
-                            onChange={handleChange}
-                            required
-                            className="w-full border p-2"
-                        >
-                            <option value="">-- ধরন নির্বাচন করুন --</option>
-                            <option>কার্যনির্বাহী পরিষদের সদস্য</option>
-                            <option>সাধারণ সদস্য</option>
-                            <option>সঞ্চয়ী সদস্য</option>
-                        </select>
-                    </div> */}
                         {/* new member selectbox */}
                         <div className="space-y-4">
                             {/* মূল সদস্য ধরন */}
@@ -348,6 +349,9 @@ const MemberForm1 = () => {
                                 </div>
                             )}
                         </div>
+                        <label className="block font-semibold">
+                            হিসাব নং / একাউন্ট নম্বর:
+                        </label>
                         <input
                             type="text"
                             name="accountNumber"
@@ -355,6 +359,17 @@ const MemberForm1 = () => {
                             value={form.accountNumber}
                             readOnly
                             placeholder="সদস্য/হিসাব নম্বর"
+                            className="w-full border p-2"
+                        />
+                        <label className="block font-semibold">
+                            রেফারেন্স নম্বর:
+                        </label>
+                        <input
+                            type="text"
+                            name="refarenceNumber"
+                            onChange={handleChange}
+                            value={form.refarenceNumber}
+                            placeholder="রেফারেন্স নম্বর"
                             className="w-full border p-2"
                         />
 
@@ -480,15 +495,13 @@ const MemberForm1 = () => {
                             className="w-full border p-2"
                             required
                         />
-                        <label className="block font-semibold">
-                            ইমেইল (যদি থাকে):
-                        </label>
+                        <label className="block font-semibold">ইমেইল:</label>
                         <input
                             type="email"
                             name="email"
                             value={form.email}
                             onChange={handleChange}
-                            placeholder="ইমেইল (যদি থাকে)"
+                            placeholder="ইমেইল"
                             className="w-full border p-2"
                         />
                         <label className="block font-semibold">
@@ -719,9 +732,7 @@ const MemberForm1 = () => {
                                 className="w-24 h-24 object-cover mt-2"
                             />
                         )}
-                        <label className="block font-semibold">
-                            নমিনির স্বাক্ষর:
-                        </label>
+                        <label className="block font-semibold">স্বাক্ষর:</label>
                         <input
                             type="text"
                             name="nominee.signature"
@@ -729,11 +740,56 @@ const MemberForm1 = () => {
                                 form.nominee.signature || form.nominee.nameEn
                             }
                             onChange={handleChange}
-                            placeholder="নমিনির স্বাক্ষর (ইংরেজিতে)"
+                            placeholder="নমিনির স্বাক্ষর"
                             className="w-full border p-2"
                             required
                         />
-                        <div>
+                        {/* animated checkbox agree terms and conditions */}
+
+                        <label className="flex items-center gap-2 cursor-pointer select-none">
+                            <div className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center transition-all duration-300 ">
+                                <input
+                                    type="checkbox"
+                                    className="peer hidden"
+                                    checked={isAgreed}
+                                    onChange={(e) => {
+                                        setError("");
+                                        setIsAgreed(e.target.checked);
+                                    }}
+                                    name="checkTerms"
+                                />
+                                <svg
+                                    className="z-50 w-4 h-4 text-black transition-all duration-300 -translate-x-4 translate-y-4 opacity-0 peer-checked:translate-x-0 peer-checked:translate-y-0 peer-checked:opacity-100"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={3}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M5 13l4 4L19 7"
+                                    />
+                                </svg>
+                            </div>
+                            <p className="text-lg font-semibold">
+                                এই মর্মে প্রত্যয়ন করছি যে, আমি নিম্ন
+                                স্বাক্ষরকারী
+                                <span className="bg-yellow-400 text-black px-1 py-1">
+                                    {form.nameBn || "নাম (বাংলায়)"}
+                                </span>{" "}
+                                সজ্ঞানে ও সেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত ও
+                                নিয়ম-নীতি মেনে সদস্য ফর্ম পূরণ করছি।
+                            </p>
+                            <br />
+                        </label>
+                        {error && (
+                            <p className="text-red-500 text-sm block">
+                                {error}
+                            </p>
+                        )}
+                        <div id="submit-discard">
                             <button
                                 type="submit"
                                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200 cursor-pointer w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -753,16 +809,18 @@ const MemberForm1 = () => {
             </form>
 
             {!user && (
-                <div className="fixed top-35 left-0 right-0 bottom-0 bg-black/5 backdrop-blur-[1.5px] flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen ">
-                    <p className="text-xl font-semibold mb-4 text-red-600">
-                        You must login to fill the form
-                    </p>
-                    <button
-                        onClick={() => navigate("/login")}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"
-                    >
-                        Go to Login
-                    </button>
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/5 backdrop-blur-[1.5px] flex flex-col items-center justify-center z-10 text-center p-6 rounded h-full ">
+                    <div className="absolute top-0 left-0 right-0 bottom-0 h-[70vh] z-10 text-center p-6 rounded flex flex-col items-center justify-center">
+                        <p className="text-xl font-semibold mb-4 text-red-600">
+                            You must login to fill the form
+                        </p>
+                        <button
+                            onClick={() => navigate("/login")}
+                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"
+                        >
+                            Go to Login
+                        </button>
+                    </div>
                 </div>
             )}
             {/* if user exists and submitted form */}

@@ -5,13 +5,23 @@ import MyAccount from "./MyAccount";
 import NavLink from "./NavLink";
 
 const NavBar = () => {
-    const navLinks = ["Home", "About", "Contact", "Dashboard"];
+    const navLinks = [
+        "Home",
+        "About",
+        "Contact",
+        "Gallery",
+        "Registration Form",
+        "Dashboard",
+    ];
     const navigate = useNavigate();
     const user = auth.currentUser;
-    console.log(user);
     const handleClick = (linkTitle) => {
         if (linkTitle === "Home") {
-            navigate("/sanchayan");
+            navigate("/");
+            return;
+        }
+        if (linkTitle === "Registration Form") {
+            navigate("/registration-form");
             return;
         }
         navigate(`/${linkTitle.toLowerCase()}`);

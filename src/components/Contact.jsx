@@ -10,11 +10,11 @@ const Contact = () => {
                 <p className="text-lg text-gray-700 mb-4">
                     ইমেইল:{" "}
                     <a
-                        href="mailto:ullahmohammad314@gmail.com"
+                        href="mailto:contact@sanchayanbd.com"
                         className="text-blue-600 hover:underline"
                     >
                         {" "}
-                        ullahmohammad314@gmail.com{" "}
+                        contact@sanchayanbd.com{" "}
                     </a>
                 </p>
                 <p className="text-lg text-gray-700 mb-4">
@@ -30,8 +30,8 @@ const Contact = () => {
                     ঠিকানা: আখাউড়া, ব্রাহ্মণবাড়িয়া, বাংলাদেশ।
                 </p>
                 <p className="text-lg text-gray-700 mb-4">
-                    আমাদের অফিসের সময়: শনি থেকে বৃহস্পতিবার, সকাল ৯টা থেকে বিকাল
-                    ৫টা পর্যন্ত।
+                    আমাদের অফিসের সময়: শনিবার থেকে বৃহস্পতিবার, সকাল ৯টা থেকে
+                    বিকাল ৫টা পর্যন্ত।
                 </p>
                 <p className="text-lg text-gray-700 mb-4">
                     আপনার যেকোনো প্রশ্ন বা পরামর্শ থাকলে, আমাদের সাথে যোগাযোগ

@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SignUp from "./components/SignUp";
 import UserDashboard from "./components/UserDashboard";
+import Gallery from "./components/Gallery";
 
 const App = () => {
     return (
@@ -19,13 +20,17 @@ const App = () => {
                     {/* Routes that show Header */}
                     <Route element={<HeaderLayout />}>
                         <Route path="/" element={<FullPage />} />
-                        <Route path="/sanchayan" element={<FullPage />} />
+                        <Route
+                            path="/registration-form"
+                            element={<FullPage />}
+                        />
                         <Route
                             path="/userdashboard"
                             element={<UserDashboard />}
                         />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/gallery" element={<Gallery />} />
 
                         <Route
                             path="/dashboard"
@@ -39,14 +44,15 @@ const App = () => {
                         {/* login signup */}
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/login" element={<Login />} />
+
+                        {/* Fallback */}
+                        <Route path="*" element={<ErrorPage />} />
                     </Route>
 
                     {/* Routes that do not show Header */}
+                    
                     {/* <Route path="/signup" element={<SignUp />} />
                     <Route path="/login" element={<Login />} /> */}
-
-                    {/* Fallback */}
-                    <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

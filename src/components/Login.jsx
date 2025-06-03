@@ -70,7 +70,6 @@ export default function Login() {
     if (user) return <Navigate to="/dashboard" />;
     // If user is not logged in, show the login form
     return (
-
         <div className="min-h-[70vh] w-full flex flex-col items-center justify-center bg-gray-100">
             <div className="w-full max-w-md p-4">
                 <h1 className="text-3xl font-bold text-center mb-4">
@@ -201,12 +200,12 @@ export default function Login() {
                 )}
 
                 <div className="mt-4 text-center block">
-                    <a
-                        href="/sanchayan"
+                    <button
+                        onClick={() => navigate("/")}
                         className="text-blue-500 hover:underline"
                     >
                         হোমে ফিরে যান
-                    </a>
+                    </button>
                 </div>
             </div>
 
