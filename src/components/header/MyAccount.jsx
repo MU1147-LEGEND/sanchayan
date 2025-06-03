@@ -17,7 +17,7 @@ const MyAccount = () => {
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                setDisplayName(docSnap.data().nameBn.split(" ")[0] || "User");
+                setDisplayName(docSnap?.data()?.nameBn?.split(" ")[0] || "User");
             }
         };
 
@@ -37,8 +37,8 @@ const MyAccount = () => {
             // disabled={user}
         >
             {user
-                ? `Hi, ${displayName || user.displayName.split(" ")[0]}`
-                : "Login"}
+                ? `Hi, ${displayName || user?.displayName?.split(" ")[0]}`
+                : ""}
         </button>
     );
 };

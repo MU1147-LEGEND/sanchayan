@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 // src/pages/Login.jsx
 import {
     RecaptchaVerifier,
     signInWithEmailAndPassword,
     signInWithPhoneNumber,
 } from "firebase/auth";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { AuthContext } from "./loginAuthContext";
@@ -17,6 +18,7 @@ export default function Login() {
     const [otp, setOtp] = useState("");
     const [error, setError] = useState("");
     const [otpSent, setOtpSent] = useState(false);
+    const [confirmationResult, setConfirmationResult] = useState(null);
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
 
@@ -31,82 +33,51 @@ export default function Login() {
             console.log(err);
         }
     };
-
-    const setUpRecaptcha = () => {
-        if (!auth) {
-            console.error("Firebase Auth not initialized");
-            return;
-        }
-        if (!window.recaptchaVerifier) {
-            window.recaptchaVerifier = new RecaptchaVerifier(
-                "recaptcha-container",
-                {
-                    size: "invisible",
-                    callback: (response) => {
-                        console.log("reCAPTCHA Solved", response);
-                    },
-                },
-                auth
-            );
-        }
-    };
-
-    useEffect(() => {
-        if (loginMethod === "phone") {
-            // Wait for the DOM to update
-            setTimeout(() => {
-                if (
-                    !window.recaptchaVerifier &&
-                    document.getElementById("recaptcha-container")
-                ) {
-                    setUpRecaptcha();
-                }
-            }, 0);
-        }
-    }, [loginMethod]);
-
-    const handlePhoneSendCode = async (e) => {
-        e.preventDefault();
-        if (!phone) return setError("ফোন নাম্বার দিন");
-
-        setError("");
-
-        const appVerifier = window.recaptchaVerifier;
-
+    // Function to set up reCAPTCHA and send OTP
+    const setUpRecaptcha = async (event) => {
+        event.preventDefault();
         try {
-            const confirmation = await signInWithPhoneNumber(
-                auth,
-                phone,
-                appVerifier
-            );
-            window.confirmationResult = confirmation;
+            if (!window.recaptchaVerifier) {
+                const recaptcha = new RecaptchaVerifier(
+                    auth,
+                    "recaptcha-container",
+                    {}
+                );
+                const confirmation = await signInWithPhoneNumber(
+                    auth,
+                    phone,
+                    recaptcha
+                );
+                setConfirmationResult(confirmation);
+            }
             setOtpSent(true);
-            // eslint-disable-next-line no-unused-vars
         } catch (err) {
-            setError("OTP পাঠাতে ব্যর্থ! নম্বরটি সঠিক কিনা দেখুন");
+            console.error("Recaptcha setup failed:", err);
+            setError("Recaptcha সেটআপ করতে ব্যর্থ!");
         }
     };
-
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
         setError("");
         try {
-            await window.confirmationResult.confirm(otp);
+            await confirmationResult.confirm(otp);
             navigate("/dashboard");
-            // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setError("ভুল OTP!");
         }
     };
+    // If user is already logged in, redirect to dashboard
     if (user) return <Navigate to="/dashboard" />;
+    // If user is not logged in, show the login form
     return (
-        <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-100">
+
+        <div className="min-h-[70vh] w-full flex flex-col items-center justify-center bg-gray-100">
             <div className="w-full max-w-md p-4">
                 <h1 className="text-3xl font-bold text-center mb-4">
                     Sanchayan লগইন
                 </h1>
 
-                <div className="flex justify-center mb-4 gap-4">
+                {/* <div className="flex justify-center mb-4 gap-4">
                     <button
                         onClick={() => setLoginMethod("email")}
                         className={`px-4 py-2 rounded ${
@@ -127,7 +98,17 @@ export default function Login() {
                     >
                         ফোন লগইন
                     </button>
-                </div>
+                    <button
+                        onClick={() => setLoginMethod("google")}
+                        className={`px-4 py-2 rounded ${
+                            loginMethod === "google"
+                                ? "bg-blue-600 text-white"
+                                : "bg-white border"
+                        }`}
+                    >
+                        গুগল লগইন
+                    </button>
+                </div> */}
 
                 {error && (
                     <p className="text-red-600 text-sm mb-2 text-center">
@@ -175,43 +156,48 @@ export default function Login() {
                         </button>
                     </form>
                 ) : (
-                    <form
-                        onSubmit={
-                            otpSent ? handleVerifyOtp : handlePhoneSendCode
-                        }
-                        className="bg-white p-6 rounded shadow-md"
-                    >
-                        <p className="text-xl text-red-500">
-                            এখনো কাজ চলমান। দয়া করে ইমেইল লগিন ব্যবহার করুন।
-                        </p>
-                        <input
-                            type="tel"
-                            placeholder="+8801XXXXXXXXX"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className="w-full p-2 border rounded mb-4"
-                            required
-                        />
+                    // <form
+                    //     onSubmit={
+                    //         otpSent
+                    //             ? handleVerifyOtp
+                    //             : (event) => setUpRecaptcha(event)
+                    //     }
+                    //     className="bg-white p-6 rounded shadow-md"
+                    // >
+                    //     <p className="text-xl text-red-500">
+                    //         এখনো কাজ চলমান। দয়া করে ইমেইল লগিন ব্যবহার করুন।
+                    //     </p>
+                    //     <input
+                    //         type="tel"
+                    //         placeholder="+8801XXXXXXXXX"
+                    //         value={phone}
+                    //         onChange={(e) => setPhone(e.target.value)}
+                    //         className="w-full p-2 border rounded mb-4"
+                    //         required
+                    //     />
 
-                        {otpSent && (
-                            <input
-                                type="text"
-                                placeholder="OTP দিন"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-                        )}
+                    //     {otpSent && (
+                    //         <input
+                    //             type="text"
+                    //             placeholder="OTP দিন"
+                    //             value={otp}
+                    //             onChange={(e) => setOtp(e.target.value)}
+                    //             className="w-full p-2 border rounded mb-4"
+                    //         />
+                    //     )}
 
-                        <div id="recaptcha-container"></div>
+                    //     <div id="recaptcha-container"></div>
 
-                        <button
-                            type="submit"
-                            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
-                        >
-                            {otpSent ? "OTP যাচাই করুন" : "OTP পাঠান"}
-                        </button>
-                    </form>
+                    //     <button
+                    //         type="submit"
+                    //         className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
+                    //     >
+                    //         {otpSent ? "OTP যাচাই করুন" : "OTP পাঠান"}
+                    //     </button>
+                    // </form>
+                    <p className="text-xl text-red-500">
+                        এখনো কাজ চলমান। দয়া করে ইমেইল লগিন ব্যবহার করুন।
+                    </p>
                 )}
 
                 <div className="mt-4 text-center block">

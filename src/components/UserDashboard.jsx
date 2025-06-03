@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -39,9 +40,33 @@ const UserDashboard = () => {
 
     if (!userData) {
         return (
-            <p className="text-center mt-10 text-red-600 font-semibold">
-                সদস্য তথ্য পাওয়া যায়নি। পেইজটি রিফ্রেশ করুন অথবা ফর্ম পূরণ করুন।
-            </p>
+            <>
+                <p className="text-center mt-10 text-red-600 font-semibold">
+                    সদস্য তথ্য পাওয়া যায়নি। পেইজটি রিফ্রেশ করুন অথবা ফর্ম পূরণ
+                    করুন। ফর্ম পূরণ করতে{" "}
+                    <button>
+                        <span
+                            className="text-blue-500 hover:underline"
+                            onClick={() => navigate("/sanchayan")}
+                        >
+                            এখানে ক্লিক করুন
+                        </span>
+                    </button>
+                </p>
+                <div className="text-center mt-[calc(50vh-10rem)]">
+                    <p className="mb-2">
+                        লগ আউট করতে{" "}
+                        <button>
+                            <span
+                                className="text-blue-500 hover:underline"
+                                onClick={() => logOut(auth, navigate)}
+                            >
+                                এখানে ক্লিক করুন
+                            </span>
+                        </button>
+                    </p>
+                </div>
+            </>
         );
     }
 

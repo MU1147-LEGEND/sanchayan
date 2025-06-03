@@ -4,6 +4,9 @@ const AnnouncementBar = () => {
     const [crossStyle, setCrossStyle] = useState("");
     const handleClick = () => {
         setCrossStyle("-translate-y-10");
+        setTimeout(() => {
+            setCrossStyle("hidden");
+        }, 500); // Match this duration with the transition duration in the className
     };
     return (
         // <!-- Announcement Bar -->
@@ -14,7 +17,7 @@ const AnnouncementBar = () => {
             }
         >
             <marquee>
-                একাউন্ট খুলতে ও লোন নিতে আপনার নিকটস্থ ব্রাঞ্চে যোগাযোগ করুন। বিস্তারিত জানতে ফোন করুনঃ ০১৭৩৪৯০৬৮৩৮
+                একাউন্ট খুলতে ও লোন নিতে আপনার নিকটস্থ ব্রাঞ্চে যোগাযোগ করুন। বিস্তারিত জানতে ফোন করুনঃ ০১৭৩৪৯০৬৮৩৮ 
             </marquee>
             <button
                 className={

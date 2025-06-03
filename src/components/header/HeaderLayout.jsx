@@ -6,7 +6,7 @@ import { Outlet, useLocation } from "react-router-dom";
 const HeaderLayout = () => {
     const location = useLocation();
 
-    const hideHeaderRoutes = ["/login"];
+    const hideHeaderRoutes = [""];
 
     const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
 

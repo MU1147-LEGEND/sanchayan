@@ -239,6 +239,18 @@ const MemberForm1 = () => {
     };
     // handle uploading image
 
+    // Disable scroll when user is not logged in
+    useEffect(() => {
+        if (!user) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [user]);
+
     return (
         <div className="relative min-h-screen bg-gray-100 mb-10">
             <form
@@ -741,7 +753,7 @@ const MemberForm1 = () => {
             </form>
 
             {!user && (
-                <div className="fixed inset-0 bg-black/5 backdrop-blur-[1.5px] flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen overflow-hidden">
+                <div className="fixed top-35 left-0 right-0 bottom-0 bg-black/5 backdrop-blur-[1.5px] flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen ">
                     <p className="text-xl font-semibold mb-4 text-red-600">
                         You must login to fill the form
                     </p>
