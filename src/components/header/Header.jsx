@@ -4,16 +4,15 @@ import SanchayanLogo from "./SanchayanLogo";
 
 const Header = () => {
     return (
-        <div id="header" className="sticky top-0 left-0 right-0 z-30">
+        <>
             <AnnouncementBar />
-            {/* add bg blur effect */}
-            <header className="bg-white/30 border-b border-gray-200 w-full z-50 shadow-md backdrop-blur-sm">
-                <div className="container mx-auto flex items-center justify-between px-4">
+            <header className="sticky top-0 z-50 bg-white/90 lg:backdrop-blur-lg shadow-sm border-b w-full m-auto border-gray-200 md:px-4">
+                <div className="container mx-auto flex items-center justify-between w-11/12">
                     <SanchayanLogo />
                     <NavBar />
                 </div>
             </header>
-        </div>
+        </>
     );
 };
 export default Header;

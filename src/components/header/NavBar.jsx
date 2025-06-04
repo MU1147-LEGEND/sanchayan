@@ -69,7 +69,7 @@ const NavBar = () => {
             {/* Mobile Drawer & Overlay */}
             {/* Overlay */}
             <div
-                className={`fixed inset-0 z-30 bg-black/50 transition-opacity duration-300 ${
+                className={`md:hidden fixed inset-0 z-50 bg-black/50 transition-opacity duration-300 ${
                     isOpen
                         ? "opacity-100 pointer-events-auto"
                         : "opacity-0 pointer-events-none"
@@ -78,8 +78,8 @@ const NavBar = () => {
             />
             {/* Drawer */}
             <div
-                className={`fixed inset-y-0 right-0 z-50 w-64 bg-white h-full shadow-lg p-6 flex flex-col space-y-4 transition-transform duration-300 transform ${
-                    isOpen ? "translate-x-0" : "translate-x-full"
+                className={`md:hidden fixed inset-y-0 right-0 z-50 w-64 bg-white h-full shadow-lg p-6 flex flex-col space-y-4 transition-transform duration-300 transform ${
+                    isOpen ? "translate-x-0" : "translate-x-100"
                 }`}
             >
                 {" "}
