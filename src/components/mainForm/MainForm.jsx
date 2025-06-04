@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/sanchayan logo.jpg"; // logo path
 import { db } from "../../firebase"; // firebase config path
 import { AuthContext } from "../loginAuthContext";
 
@@ -279,12 +280,51 @@ const MemberForm1 = () => {
             <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="p-6 max-w-3xl mx-auto space-y-4"
+                className="p-6 max-w-3xl mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
             >
-                <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-                    {/* Sanchayan Registration Form */}
-                    সঞ্চয়ন রেজিস্ট্রেশন ফর্ম
-                </h2>
+                <div className="text-center mb-6 flex items-center justify-between">
+                    <div className="w-1/3">
+                        <img
+                            src={logo}
+                            alt="Sanchayan Logo"
+                            className="w-20 h-20 mb-4 mx-auto"
+                        />
+                    </div>
+                    <div className="w-1/3">
+                        <h2
+                            className="text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
+                            style={{
+                                backgroundClip: "text",
+                                WebkitBackgroundClip: "text",
+                                color: "transparent",
+                                WebkitTextFillColor: "transparent",
+                            }}
+                        >
+                            সঞ্চয়ন
+                        </h2>
+                    </div>
+                    <div className="w-1/3">
+                        <p className="text-center text-orange-900 font-semibold">
+                            "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
+                            করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        className="text-xl md:text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-500 via-cyan-600 to-green-600 bg-clip-text text-transparent drop-shadow-lg tracking-wide animate-gradient-x pb-2"
+                        style={{
+                            backgroundClip: "text",
+                            WebkitBackgroundClip: "text",
+                            color: "transparent",
+                            WebkitTextFillColor: "transparent",
+                            letterSpacing: "0.05em",
+                        }}
+                    >
+                        ইসলামী শরীয়াহ্ মোতাবেক পরিচালিত ব্যবসায় প্রতিষ্ঠান।
+                    </h4>
+                </div>
+                <span className="w-full block border-dashed border-b-3 mt-2 border-green-500"></span>
                 {isSubmitted ? (
                     <p className="text-green-600 font-semibold mt-4 ">
                         ✅ ফর্ম সফলভাবে জমা হয়েছে! ভেরিফিকেশনের জন্য দয়া করে
@@ -372,7 +412,7 @@ const MemberForm1 = () => {
                             placeholder="রেফারেন্স নম্বর"
                             className="w-full border p-2"
                         />
-
+                        <span className="w-full block border-dashed border-b-3 mt-2 border-black"></span>
                         <h3 className="text-md font-bold mt-4">
                             সদস্যের ব্যক্তিগত তথ্য
                         </h3>
@@ -564,7 +604,7 @@ const MemberForm1 = () => {
                             placeholder="স্বাক্ষর"
                             className="w-full border p-2"
                         />
-
+                        <span className="w-full block border-dashed border-b-3 mt-2 border-black"></span>
                         <h3 className="text-lg font-bold mt-4">নমিনির তথ্য</h3>
                         <label className="block font-semibold">
                             নমিনির নাম (বাংলায়):
