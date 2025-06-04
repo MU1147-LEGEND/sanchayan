@@ -287,12 +287,12 @@ const MemberForm1 = () => {
                         <img
                             src={logo}
                             alt="Sanchayan Logo"
-                            className="w-20 h-20 mb-4 mx-auto"
+                            className="w-16 h-16 mb-4 mx-auto"
                         />
                     </div>
                     <div className="w-1/3">
                         <h2
-                            className="text-4xl font-extrabold text-center mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
+                            className="text-4xl font-extrabold text-left mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
                             style={{
                                 backgroundClip: "text",
                                 WebkitBackgroundClip: "text",
@@ -304,7 +304,7 @@ const MemberForm1 = () => {
                         </h2>
                     </div>
                     <div className="w-1/3">
-                        <p className="text-center text-orange-900 font-semibold">
+                        <p className="text-center text-orange-900 text-sm font-semibold">
                             "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
                             করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
                         </p>
@@ -312,7 +312,7 @@ const MemberForm1 = () => {
                 </div>
                 <div>
                     <h4
-                        className="text-xl md:text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-500 via-cyan-600 to-green-600 bg-clip-text text-transparent drop-shadow-lg tracking-wide animate-gradient-x pb-2"
+                        className="text-sm md:text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-500 via-cyan-600 to-green-600 bg-clip-text text-transparent drop-shadow-lg tracking-wide animate-gradient-x pb-2"
                         style={{
                             backgroundClip: "text",
                             WebkitBackgroundClip: "text",
@@ -321,7 +321,7 @@ const MemberForm1 = () => {
                             letterSpacing: "0.05em",
                         }}
                     >
-                        ইসলামী শরীয়াহ্ মোতাবেক পরিচালিত ব্যবসায় প্রতিষ্ঠান।
+                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত ব্যবসায় প্রতিষ্ঠান।
                     </h4>
                 </div>
                 <span className="w-full block border-dashed border-b-3 mt-2 border-green-500"></span>

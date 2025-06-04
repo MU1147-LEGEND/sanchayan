@@ -1,4 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
+import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
@@ -8,6 +9,8 @@ const Dashboard = () => {
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedMember, setSelectedMember] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [allMembers, setAllMembers] = useState([]); // To store original list
     const navigate = useNavigate();
 
     // fetch members from Firestore
@@ -19,7 +22,8 @@ const Dashboard = () => {
                     id: doc.id,
                     ...doc.data(),
                 }));
-                setMembers(membersList);
+                setAllMembers(membersList); // Store original list
+                setMembers(membersList); // Initialize with all members
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching members:", error);
@@ -29,31 +33,64 @@ const Dashboard = () => {
 
         fetchMembers();
     }, []);
+
+    // fuse implementation for searching members
+    const preparedMembers = allMembers.map((member) => ({
+        ...member,
+        accountNumber: member.accountNumber?.toString() || "",
+        nid: member.nid?.toString() || "",
+        mobile: member.mobile?.toString() || "",
+    }));
+    useEffect(() => {
+        if (searchTerm.trim() === "") {
+            setMembers(allMembers); // Reset to original list if search term is empty
+        } else {
+            const fuse = new Fuse(preparedMembers, {
+                keys: ["accountNumber", "nameEn", "nid", "mobile"],
+                threshold: 0.3,
+            });
+            const results = fuse.search(searchTerm);
+            console.log("Fuse Results:", results);
+            setMembers(results); // Update members with search results
+        }
+    }, [searchTerm, allMembers]);
+
     // setting up the loading state
     if (loading) return <div className="text-center p-4">Loading...</div>;
-    // loggin out from account
 
-    // const handleLogout = async () => {
-    //     try {
-    //         await signOut(auth);
-    //         // alert("✅ লগ আউট সফল হয়েছে");
-    //         navigate("/login");
-    //     } catch (error) {
-    //         console.error("Logout error:", error);
-    //         alert("❌ লগ আউট ব্যর্থ");
-    //     }
-    // };
+    // loggin out from account
     const logOut = handleLogout;
     return (
         <div className="p-4 mb-10">
-            <h1 className="text-2xl font-bold mb-4">সদস্য তালিকা</h1>
+            {/* search members by id */}
+            <div className="mb-4 w-1/2 m-auto">
+                {/* Search Member label */}
+                <label className="block text-gray-700 mb-2 text-base font-semibold">
+                    সদস্য খুঁজুন:
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="সদস্য আইডি, নাম, বা ফোন নম্বর দিয়ে খুঁজুন..."
+                    className="border-2 border-gray-300 p-2 rounded w-full mx-auto"
+                    value={searchTerm}
+                    onChange={(e) => {
+                        console.log(members);
+                        setSearchTerm(e.target.value);
+                        setSelectedMember(null); // Reset selected member on search
+                    }}
+                />
+            </div>
+            <h1 className="text-2xl font-bold mb-4 text-center">
+                সদস্য তালিকা
+            </h1>
 
             <div className="overflow-x-auto">
                 <table className="min-w-full border border-gray-300 text-sm">
                     <thead className="bg-gray-200 text-left">
                         <tr>
                             <th className="p-2 border">ID</th>
-                            <th className="p-2 border">নাম (বাংলা)</th>
+                            <th className="p-2 border">নাম</th>
                             <th className="p-2 border">মেম্বার টাইপ</th>
                             <th className="p-2 border">ফোন</th>
                             <th className="p-2 border">ভেরিফাইড</th>
@@ -62,35 +99,35 @@ const Dashboard = () => {
                     </thead>
                     <tbody>
                         {members
-                            .sort((a, b) => a.accountNumber - b.accountNumber)
+                            ?.sort((a, b) => a.accountNumber - b.accountNumber)
                             .map((member) => (
                                 <tr
-                                    key={member.id}
+                                    key={member?.id}
                                     className="hover:bg-gray-100 cursor-pointer"
                                     onClick={() => setSelectedMember(member)}
                                 >
                                     <td className="p-2 border">
-                                        {member.accountNumber}
+                                        {member?.accountNumber}
                                     </td>
                                     <td className="p-2 border text-blue-600 hover:underline">
-                                        {member.nameBn}
+                                        {member?.nameEn}
                                     </td>
                                     <td className="p-2 border">
-                                        {member.memberType}
+                                        {member?.memberType}
                                         {" > "}
                                         {member?.subMemberType}
                                     </td>
                                     <td className="p-2 border">
-                                        {member.mobile}
+                                        {member?.mobile}
                                     </td>
                                     <td className="p-2 border">
-                                        {member.verified ? "✅" : "❌"}
+                                        {member?.verified ? "✅" : "❌"}
                                     </td>
                                     <td className="p-2 border">
-                                        {member.photo ? (
+                                        {member?.photo ? (
                                             <img
-                                                src={member.photo}
-                                                alt={member.photo}
+                                                src={member?.photo}
+                                                alt={member?.photo}
                                                 className="h-12 w-12 object-cover rounded"
                                             />
                                         ) : (
