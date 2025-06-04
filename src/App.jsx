@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import SignUp from "./components/SignUp";
 import UserDashboard from "./components/UserDashboard";
 import Gallery from "./components/Gallery";
+import Home from "./components/Home";
 
 const App = () => {
     return (
@@ -19,7 +20,7 @@ const App = () => {
                 <Routes>
                     {/* Routes that show Header */}
                     <Route element={<HeaderLayout />}>
-                        <Route path="/" element={<FullPage />} />
+                        <Route path="/" element={<Home />} />
                         <Route
                             path="/registration-form"
                             element={<FullPage />}
