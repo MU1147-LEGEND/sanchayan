@@ -1,4 +1,4 @@
-name: Deploy Vite App to InfinityFree
+name: Deploy Vite App to mohammadullah.me
 
 on:
   push:
