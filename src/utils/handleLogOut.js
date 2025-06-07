@@ -4,9 +4,9 @@ export const handleLogout = async (auth, navigate) => {
     try {
         await signOut(auth);
         navigate("/login");
-        setTimeout(() => alert("Log out Success"), 100);
+        return true; // ✅ লগ আউট সফল হলে true রিটার্ন করো
     } catch (error) {
         console.error("Logout error:", error);
-        alert("❌ লগ আউট ব্যর্থ");
+        return false; // ❌ লগ আউট ব্যর্থ হলে false রিটার্ন করো
     }
 };

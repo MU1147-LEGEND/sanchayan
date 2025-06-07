@@ -143,7 +143,7 @@ const Dashboard = () => {
                 <div className="mt-4 text-center flex items-center justify-center space-x-4">
                     <p
                         onClick={() => navigate("/")}
-                        className="text-blue-500 hover:underline"
+                        className="text-blue-500 hover:underline cursor-pointer"
                     >
                         হোমে ফিরে যান
                     </p>

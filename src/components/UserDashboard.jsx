@@ -122,6 +122,30 @@ const UserDashboard = () => {
                     {" > "}
                     {subMemberType}
                 </p>
+                <p>
+                    <strong>জন্ম তারিখ:</strong> {dob}
+                </p>
+                <p>
+                    <strong>লিঙ্গ:</strong> {gender}
+                </p>
+                <p>
+                    <strong>পিতার নাম :</strong> {fatherNameEn}
+                </p>
+                <p>
+                    <strong>মাতার নাম:</strong> {motherNameEn}
+                </p>
+                <p>
+                    <strong>জাতীয়তা:</strong> {nationality}
+                </p>
+                <p>
+                    <strong>জাতীয় পরিচয়পত্র নম্বর:</strong> {nid}
+                </p>
+                <p>
+                    <strong>বর্তমান ঠিকানা:</strong> {presentAddress}
+                </p>
+                <p>
+                    <strong>স্থায়ী ঠিকানা:</strong> {permanentAddress}
+                </p>
 
                 <h2 className="text-xl font-semibold mt-6">নমিনির তথ্য</h2>
                 <p>
