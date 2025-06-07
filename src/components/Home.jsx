@@ -21,6 +21,8 @@ const Home = () => {
             title: "Insurance Coverage",
         },
     ];
+    // const user = getAuth()
+    // console.log(user);
     return (
         <div className="min-h-screen flex flex-col pb-8">
             {/* Hero Section */}
@@ -29,10 +31,8 @@ const Home = () => {
                     সঞ্চয়ন
                 </h1>
                 <p className="text-lg md:text-xl text-green-800 max-w-3xl mx-auto">
-                    সঞ্চয়ন একটি সঞ্চয় ও ঋণ-ভিত্তিক সমবায় প্রতিষ্ঠান। এখানে সদস্য
-                    হয়ে আপনি নিয়মিত সঞ্চয়ের পাশাপাশি প্রয়োজন অনুযায়ী ঋণ গ্রহণ
-                    করতে পারবেন। আমরা স্বচ্ছতা ও বিশ্বস্ততার সাথে অর্থনৈতিক
-                    নিরাপত্তা প্রদান করি।
+                    সঞ্চয়ন একটি ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
+                    প্রতিষ্ঠান।
                 </p>
                 <div className="mt-8 flex justify-center gap-4 flex-wrap">
                     <Link
@@ -41,6 +41,7 @@ const Home = () => {
                     >
                         সদস্য হোন
                     </Link>
+
                     <Link
                         to="/login"
                         className="bg-white text-green-700 border border-green-600 px-6 py-3 rounded-lg hover:bg-green-100 transition"
@@ -56,11 +57,8 @@ const Home = () => {
                     আমাদের সম্পর্কে
                 </h2>
                 <p className="text-gray-700 max-w-4xl mx-auto">
-                    সঞ্চয়ন একটি নির্ভরযোগ্য ও কমিউনিটি ভিত্তিক সমবায় সেবা
-                    প্রদানকারী প্রতিষ্ঠান। আমাদের মূল লক্ষ্য হচ্ছে— সদস্যদের
-                    সঞ্চয় অভ্যাস গড়ে তোলা, প্রয়োজনের সময় সহজ শর্তে ঋণ প্রদান এবং
-                    আর্থিক পরিকল্পনায় সহায়তা করা। আমরা বিশ্বাস করি— একটি সংগঠিত
-                    সমাজই অর্থনৈতিকভাবে শক্তিশালী সমাজ গড়ে তুলতে পারে।
+                    সঞ্চয়ন একটি ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
+                    প্রতিষ্ঠান।
                 </p>
                 <div className="text-center mt-8">
                     <Link
