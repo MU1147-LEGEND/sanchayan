@@ -88,10 +88,22 @@ const UserDashboard = () => {
         memberType,
         photo,
         nominee,
+        refarenceNumber,
+        balance,
+        referBalance,
     } = userData;
 
     return (
-        <div className="max-w-3xl mx-auto p-4 mb-10 border rounded-lg shadow">
+        <div className="max-w-3xl mx-auto p-4 mb-10 border rounded-lg shadow relative">
+            {/* balance show on top right corner */}
+            <div className="absolute top-5 right-5 mb-4 flex flex-col items-end">
+                <span className="text-lg font-semibold text-green-700">
+                    আপনার বর্তমান ব্যালেন্স: ৳{balance || "0.00"}
+                </span>
+                <span className="text-lg font-semibold text-green-700">
+                    রেফার করে পেয়েছেন: ৳{referBalance || "0.00"}
+                </span>
+            </div>
             <h1 className="text-2xl font-bold mb-4">🧾 সদস্য তথ্য</h1>
 
             <div className="space-y-2">
@@ -146,7 +158,14 @@ const UserDashboard = () => {
                 <p>
                     <strong>স্থায়ী ঠিকানা:</strong> {permanentAddress}
                 </p>
+                <p>
+                    <strong>রেফারেল কোড:</strong> {refarenceNumber || "N/A"}
+                </p>
+                <p>
+                    <strong>আপনি কতজন রেফার করেছেন:</strong> {"N/A"}
+                </p>
 
+                {/* nominee */}
                 <h2 className="text-xl font-semibold mt-6">নমিনির তথ্য</h2>
                 <p>
                     <strong>নাম (বাংলা):</strong> {nominee.nameBn}

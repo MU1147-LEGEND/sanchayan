@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -21,8 +22,8 @@ const Home = () => {
             title: "Insurance Coverage",
         },
     ];
-    // const user = getAuth()
-    // console.log(user);
+    const auth = getAuth();
+    const user = auth.currentUser;
     return (
         <div className="min-h-screen flex flex-col pb-8">
             {/* Hero Section */}
@@ -31,8 +32,7 @@ const Home = () => {
                     সঞ্চয়ন
                 </h1>
                 <p className="text-lg md:text-xl text-green-800 max-w-3xl mx-auto">
-                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
-                    প্রতিষ্ঠান।
+                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
                 </p>
                 <div className="mt-8 flex justify-center gap-4 flex-wrap">
                     <Link
@@ -46,7 +46,7 @@ const Home = () => {
                         to="/login"
                         className="bg-white text-green-700 border border-green-600 px-6 py-3 rounded-lg hover:bg-green-100 transition"
                     >
-                        লগইন করুন
+                        {user ? "ড্যাশবোর্ডে যান" : "লগইন করুন"}
                     </Link>
                 </div>
             </div>
@@ -57,8 +57,7 @@ const Home = () => {
                     আমাদের সম্পর্কে
                 </h2>
                 <p className="text-gray-700 max-w-4xl mx-auto">
-                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
-                    প্রতিষ্ঠান।
+                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
                 </p>
                 <div className="text-center mt-8">
                     <Link

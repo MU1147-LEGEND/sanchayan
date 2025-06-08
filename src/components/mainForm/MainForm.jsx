@@ -65,8 +65,20 @@ const MemberForm1 = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const subOptions = {
-        "কার্যনির্বাহী পরিষদের সদস্য": ["কার্যনির্বাহী পরিষদের সদস্য"],
-        "সাধারণ সদস্য": ["সাধারণ সদস্য"],
+        "কার্যনির্বাহী পরিষদের সদস্য": [
+            "সাপ্তাহিক সঞ্চয় হিসাব",
+            "মাসিক সঞ্চয় হিসাব (DPS)",
+            "স্থায়ী সঞ্চয় হিসাব (FDR)",
+            "শিক্ষার্থী সঞ্চয় হিসাব",
+            "হজ্জ্ব আমানত হিসাব",
+        ],
+        "সাধারণ সদস্য": [
+            "সাপ্তাহিক সঞ্চয় হিসাব",
+            "মাসিক সঞ্চয় হিসাব (DPS)",
+            "স্থায়ী সঞ্চয় হিসাব (FDR)",
+            "শিক্ষার্থী সঞ্চয় হিসাব",
+            "হজ্জ্ব আমানত হিসাব",
+        ],
         "সঞ্চয়ী সদস্য": [
             "সাপ্তাহিক সঞ্চয় হিসাব",
             "মাসিক সঞ্চয় হিসাব (DPS)",
@@ -264,17 +276,17 @@ const MemberForm1 = () => {
 
     return (
         <div className="relative h-full mb-10">
-            <div className="w-[95%] m-auto text-center mb-6 flex items-center justify-center gap-4">
-                <div className="w-[15%]">
+            <div className="w-[95%] md:w-10/12 m-auto text-center mb-6 flex items-center justify-center gap-4">
+                <div className="w-[15%] md:w-1/3">
                     <img
                         src={logo}
                         alt="Sanchayan Logo"
-                        className="w-16 h-16 mb-4 "
+                        className="w-16 h-16 mb-4 md:m-auto"
                     />
                 </div>
-                <div className="w-[30%]">
+                <div className="w-[30%] md:w-1/3">
                     <h2
-                        className="text-4xl font-extrabold text-left mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
+                        className="text-4xl font-extrabold text-left md:text-center mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
                         style={{
                             backgroundClip: "text",
                             WebkitBackgroundClip: "text",
@@ -285,7 +297,7 @@ const MemberForm1 = () => {
                         সঞ্চয়ন
                     </h2>
                 </div>
-                <div className="w-[45%]">
+                <div className="w-[45%] md:w-1/3">
                     <p className="text-center text-orange-900 text-sm font-semibold">
                         "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
                         করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
@@ -315,8 +327,8 @@ const MemberForm1 = () => {
                 {isSubmitted ? (
                     <p className="text-green-600 font-semibold mt-4 ">
                         ✅ ফর্ম সফলভাবে জমা হয়েছে! ভেরিফিকেশনের জন্য দয়া করে
-                        অপেক্ষা করুন। ১২-২৪ ঘন্টার মধ্যে প্রোফাইল ভেরিফাই করা
-                        হবে।
+                        অপেক্ষা করুন। ১২-২৪ ঘন্টার মধ্যে প্রোফাইল ভেরিফাই করে
+                        আপনার মোবাইল নম্বরে জানিয়ে দেওয়া হবে।
                     </p>
                 ) : (
                     <>
@@ -377,7 +389,7 @@ const MemberForm1 = () => {
                             )}
                         </div>
                         <label className="block font-semibold">
-                            হিসাব নং / একাউন্ট নম্বর:
+                            হিসাব নম্বর:
                         </label>
                         <input
                             type="text"
@@ -385,7 +397,7 @@ const MemberForm1 = () => {
                             onChange={handleChange}
                             value={form.accountNumber}
                             readOnly
-                            placeholder="সদস্য/হিসাব নম্বর"
+                            placeholder="হিসাব নম্বর"
                             className="w-full border p-2"
                         />
                         <label className="block font-semibold">
