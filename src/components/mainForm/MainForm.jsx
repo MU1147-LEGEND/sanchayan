@@ -261,55 +261,42 @@ const MemberForm1 = () => {
             alert("❌ Upload error");
         }
     };
-    // handle uploading image }
-
-    // Disable scroll when submitted
-    // useEffect(() => {
-    //     if (!user) {
-    //         document.body.style.overflow = "hidden";
-    //     } else {
-    //         document.body.style.overflow = "";
-    //     }
-    //     return () => {
-    //         document.body.style.overflow = "";
-    //     };
-    // }, [user]);
 
     return (
         <div className="relative h-full mb-10">
+            <div className="w-[95%] m-auto text-center mb-6 flex items-center justify-center gap-4">
+                <div className="w-[15%]">
+                    <img
+                        src={logo}
+                        alt="Sanchayan Logo"
+                        className="w-16 h-16 mb-4 "
+                    />
+                </div>
+                <div className="w-[30%]">
+                    <h2
+                        className="text-4xl font-extrabold text-left mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
+                        style={{
+                            backgroundClip: "text",
+                            WebkitBackgroundClip: "text",
+                            color: "transparent",
+                            WebkitTextFillColor: "transparent",
+                        }}
+                    >
+                        সঞ্চয়ন
+                    </h2>
+                </div>
+                <div className="w-[45%]">
+                    <p className="text-center text-orange-900 text-sm font-semibold">
+                        "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
+                        করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
+                    </p>
+                </div>
+            </div>
             <form
                 ref={formRef}
                 onSubmit={handleSubmit}
                 className="p-6 max-w-3xl mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
             >
-                <div className="text-center mb-6 flex items-center justify-between">
-                    <div className="w-1/3">
-                        <img
-                            src={logo}
-                            alt="Sanchayan Logo"
-                            className="w-16 h-16 mb-4 mx-auto"
-                        />
-                    </div>
-                    <div className="w-1/3">
-                        <h2
-                            className="text-4xl font-extrabold text-left mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
-                            style={{
-                                backgroundClip: "text",
-                                WebkitBackgroundClip: "text",
-                                color: "transparent",
-                                WebkitTextFillColor: "transparent",
-                            }}
-                        >
-                            সঞ্চয়ন
-                        </h2>
-                    </div>
-                    <div className="w-1/3">
-                        <p className="text-center text-orange-900 text-sm font-semibold">
-                            "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
-                            করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
-                        </p>
-                    </div>
-                </div>
                 <div>
                     <h4
                         className="text-sm md:text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-500 via-cyan-600 to-green-600 bg-clip-text text-transparent drop-shadow-lg tracking-wide animate-gradient-x pb-2"
@@ -819,8 +806,8 @@ const MemberForm1 = () => {
                                 <span className="bg-yellow-400 text-black px-1 py-1">
                                     {form.nameBn || "নাম (বাংলায়)"}
                                 </span>{" "}
-                                সজ্ঞানে ও সেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত ও
-                                নিয়ম-নীতি মেনে সদস্য ফর্ম পূরণ করছি।
+                                সজ্ঞানে ও স্বেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত
+                                ও নিয়ম-নীতি মেনে সদস্য ফর্ম পূরণ করছি।
                             </p>
                             <br />
                         </label>
