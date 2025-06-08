@@ -31,7 +31,7 @@ const Home = () => {
                     সঞ্চয়ন
                 </h1>
                 <p className="text-lg md:text-xl text-green-800 max-w-3xl mx-auto">
-                    সঞ্চয়ন একটি ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
+                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
                     প্রতিষ্ঠান।
                 </p>
                 <div className="mt-8 flex justify-center gap-4 flex-wrap">
