@@ -15,6 +15,7 @@ const NavLink = ({ linkTitle, handleClick }) => {
         Login: "/login",
         Signup: "/signup",
         Dashboard: "/dashboard",
+        Withdraw: "/withdraw",
         "User Dashboard": "/userdashboard",
         "Registration Form": "/registration-form",
     };

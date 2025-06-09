@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SignUp from "./components/SignUp";
 import UserDashboard from "./components/UserDashboard";
+import Withdraw from "./components/Withdraw";
 
 const App = () => {
     return (
@@ -32,6 +33,7 @@ const App = () => {
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/gallery" element={<Gallery />} />
+                        <Route path="/withdraw" element={<Withdraw />} />
 
                         <Route
                             path="/dashboard"

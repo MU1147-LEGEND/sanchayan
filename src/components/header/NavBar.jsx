@@ -12,6 +12,7 @@ const NavBar = () => {
         "Gallery",
         "Registration Form",
         "Dashboard",
+        "Withdraw",
     ];
     const navigate = useNavigate();
     const user = auth.currentUser;

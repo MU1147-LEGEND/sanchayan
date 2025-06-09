@@ -65,7 +65,7 @@ const MemberForm1 = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const subOptions = {
-        "কার্যনির্বাহী পরিষদের সদস্য": [
+        "পরিচালনা পর্ষদের সদস্য": [
             "সাপ্তাহিক সঞ্চয় হিসাব",
             "মাসিক সঞ্চয় হিসাব (DPS)",
             "স্থায়ী সঞ্চয় হিসাব (FDR)",
@@ -276,17 +276,17 @@ const MemberForm1 = () => {
 
     return (
         <div className="relative h-full mb-10">
-            <div className="w-[95%] md:w-10/12 m-auto text-center mb-6 flex items-center justify-center gap-4">
-                <div className="w-[15%] md:w-1/3">
+            <div className="w-[95%] md:w-10/12 m-auto text-center mb-6 flex items-center justify-between gap-4">
+                <div className="w-1/2 md:w-1/3">
                     <img
                         src={logo}
                         alt="Sanchayan Logo"
-                        className="w-16 h-16 mb-4 md:m-auto"
+                        className="w-16 h-16 md:m-auto"
                     />
                 </div>
-                <div className="w-[30%] md:w-1/3">
+                <div className="w-1/2 m-auto text-right">
                     <h2
-                        className="text-4xl font-extrabold text-left md:text-center mb-6 bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
+                        className="text-4xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
                         style={{
                             backgroundClip: "text",
                             WebkitBackgroundClip: "text",
@@ -297,12 +297,12 @@ const MemberForm1 = () => {
                         সঞ্চয়ন
                     </h2>
                 </div>
-                <div className="w-[45%] md:w-1/3">
-                    <p className="text-center text-orange-900 text-sm font-semibold">
-                        "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
-                        করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
-                    </p>
-                </div>
+            </div>
+            <div className="w-11/12 m-auto text-center ">
+                <p className="text-center text-orange-900 text-sm font-semibold">
+                    "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
+                    করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
+                </p>
             </div>
             <form
                 ref={formRef}
@@ -320,7 +320,7 @@ const MemberForm1 = () => {
                             letterSpacing: "0.05em",
                         }}
                     >
-                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত ব্যবসায় প্রতিষ্ঠান।
+                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
                     </h4>
                 </div>
                 <span className="w-full block border-dashed border-b-3 mt-2 border-green-500"></span>
@@ -349,8 +349,8 @@ const MemberForm1 = () => {
                                     <option value="">
                                         -- ধরন নির্বাচন করুন --
                                     </option>
-                                    <option value="কার্যনির্বাহী পরিষদের সদস্য">
-                                        কার্যনির্বাহী পরিষদের সদস্য
+                                    <option value="পরিচালনা পর্ষদের সদস্য">
+                                        পরিচালনা পর্ষদের সদস্য
                                     </option>
                                     <option value="সাধারণ সদস্য">
                                         সাধারণ সদস্য
