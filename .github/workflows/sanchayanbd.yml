@@ -30,8 +30,9 @@ jobs:
           server: ${{ secrets.SANCHAYAN_FTP_SERVER }}
           username: ${{ secrets.SANCHAYAN_FTP_USERNAME }}
           password: ${{ secrets.SANCHAYAN_FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /home/sanchaya/public_html/
           protocol: ftp
           port: 21
-          passive: true
+          local-dir: ./dist/
+          server-dir: /public_html/
+          security: loose
+          log-level: verbose
