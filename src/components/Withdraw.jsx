@@ -1,6 +1,6 @@
 import { getAuth } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,10 @@ const Withdraw = () => {
         accountNumber: "",
     });
     const [balance, setBalance] = useState(0);
+    const [accountNum, setAccountNum] = useState("");
+
     const [verified, setVerified] = useState(false);
+    const [referralCount, setReferralCount] = useState(0);
 
     const auth = getAuth();
     const [user, setUser] = useState(auth.currentUser);
@@ -21,6 +24,27 @@ const Withdraw = () => {
         });
         return () => unsubscribe();
     }, [auth]);
+
+    useEffect(() => {
+        const fetchReferralCount = async () => {
+            const membersCollection = collection(db, "members");
+            const membersSnapshot = await getDocs(membersCollection);
+            let count = 0;
+
+            membersSnapshot.forEach((doc) => {
+                const data = doc.data();
+
+                if (Number(data.refarenceNumber) === accountNum) {
+                    count++;
+                }
+            });
+            setReferralCount(count);
+        };
+
+        if (accountNum) {
+            fetchReferralCount();
+        }
+    }, [accountNum]);
 
     useEffect(() => {
         const checkBalance = async () => {
@@ -36,6 +60,7 @@ const Withdraw = () => {
                     ...prev,
                     accountNumber: existingAccountNumber,
                 }));
+                setAccountNum(existingAccountNumber);
                 setBalance(existingBalance);
                 setVerified(docSnap.data().verified || false);
             } else {
@@ -96,7 +121,10 @@ const Withdraw = () => {
                     >
                         Withdrawal Amount
                         <span className="text-emerald-600 font-semibold">
-                            Current Balance: {balance}
+                            Current Balance:{" "}
+                            {balance
+                                ? `৳${balance + referralCount * 30}`
+                                : "৳0.00"}
                         </span>
                     </label>
                     <input
