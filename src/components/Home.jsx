@@ -35,19 +35,23 @@ const Home = () => {
                     ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
                 </p>
                 <div className="mt-8 flex justify-center gap-4 flex-wrap">
-                    <Link
-                        to="/registration-form"
-                        className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
-                    >
-                        সদস্য হোন
-                    </Link>
+                    <button>
+                        <Link
+                            to="/registration-form"
+                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                        >
+                            সদস্য হোন
+                        </Link>
+                    </button>
 
-                    <Link
-                        to="/login"
-                        className="bg-white text-green-700 border border-green-600 px-6 py-3 rounded-lg hover:bg-green-100 transition"
-                    >
-                        {user ? "ড্যাশবোর্ডে যান" : "লগইন করুন"}
-                    </Link>
+                    <button>
+                        <Link
+                            to="/login"
+                            className="bg-white text-green-700 border border-green-600 px-6 py-3 rounded-lg hover:bg-green-100 transition"
+                        >
+                            {user ? "ড্যাশবোর্ডে যান" : "লগইন করুন"}
+                        </Link>
+                    </button>
                 </div>
             </div>
 
@@ -60,12 +64,14 @@ const Home = () => {
                     ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
                 </p>
                 <div className="text-center mt-8">
-                    <Link
-                        to="/about"
-                        className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
-                    >
-                        বিস্তারিত দেখুন
-                    </Link>
+                    <button>
+                        <Link
+                            to="/about"
+                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                        >
+                            বিস্তারিত দেখুন
+                        </Link>
+                    </button>
                 </div>
             </div>
 
@@ -102,12 +108,14 @@ const Home = () => {
                 </div>
                 {/* filler */}
                 <div className="text-center mt-8">
-                    <Link
-                        to="/gallery"
-                        className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
-                    >
-                        আরও দেখুন
-                    </Link>
+                    <button>
+                        <Link
+                            to="/gallery"
+                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                        >
+                            আরও দেখুন
+                        </Link>
+                    </button>
                 </div>
             </div>
         </div>

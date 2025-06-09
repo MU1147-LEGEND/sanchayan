@@ -2,6 +2,7 @@ import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Withdraw = () => {
     const [form, setForm] = useState({
@@ -13,7 +14,7 @@ const Withdraw = () => {
 
     const auth = getAuth();
     const [user, setUser] = useState(auth.currentUser);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
             setUser(firebaseUser);
@@ -44,6 +45,23 @@ const Withdraw = () => {
 
         checkBalance();
     }, [user]);
+
+    if (!user) {
+        return (
+            <div className="w-4/5 m-auto flex flex-col items-center justify-center h-[50vh] md:h-[70vh]">
+                <h1 className="text-2xl font-bold mb-4">Please Log In</h1>
+                <p className="text-lg text-gray-700 mb-6">
+                    You need to be logged in to make a withdrawal request.
+                </p>
+                <button
+                    onClick={() => navigate("/login")}
+                    className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200 active:translate-y-2 active:shadow-inner"
+                >
+                    Log In
+                </button>
+            </div>
+        );
+    }
 
     if (!verified) {
         return (

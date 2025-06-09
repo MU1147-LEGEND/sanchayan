@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
@@ -9,9 +9,10 @@ const UserDashboard = () => {
     const [user, setUser] = useState(null);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
-
     const logOut = handleLogout;
     const navigate = useNavigate();
+    const [referralCount, setReferralCount] = useState(0);
+    // Check if user is logged in and fetch user data
     useEffect(() => {
         const auth = getAuth();
 
@@ -33,6 +34,28 @@ const UserDashboard = () => {
 
         return () => unsubscribe();
     }, []);
+
+    // calculate the number of referrals from all users, if any user has the current user's account number as refarenceNumber
+    useEffect(() => {
+        const fetchReferralCount = async () => {
+            const membersCollection = collection(db, "members");
+            const membersSnapshot = await getDocs(membersCollection);
+            let count = 0;
+
+            membersSnapshot.forEach((doc) => {
+                const data = doc.data();
+
+                if (Number(data.refarenceNumber) === userData?.accountNumber) {
+                    count++;
+                }
+            });
+            setReferralCount(count);
+        };
+
+        if (userData?.accountNumber) {
+            fetchReferralCount();
+        }
+    }, [userData?.accountNumber]);
 
     if (loading) {
         return <p className="text-center mt-10">লোড হচ্ছে...</p>;
@@ -90,18 +113,17 @@ const UserDashboard = () => {
         nominee,
         refarenceNumber,
         balance,
-        referBalance,
     } = userData;
 
     return (
         <div className="max-w-3xl mx-auto p-4 mb-10 border rounded-lg shadow relative">
             {/* balance show on top right corner */}
-            <div className="absolute top-5 right-5 mb-4 flex flex-col items-end">
+            <div className="md:absolute text-center top-5 right-5 mb-4 flex flex-col md:items-end">
                 <span className="text-lg font-semibold text-green-700">
                     আপনার বর্তমান ব্যালেন্স: ৳{balance || "0.00"}
                 </span>
                 <span className="text-lg font-semibold text-green-700">
-                    রেফার করে পেয়েছেন: ৳{referBalance || "0.00"}
+                    রেফার করে পেয়েছেন: ৳{referralCount * 30 || "0.00"}
                 </span>
             </div>
             <h1 className="text-2xl font-bold mb-4">🧾 সদস্য তথ্য</h1>
@@ -162,11 +184,12 @@ const UserDashboard = () => {
                     <strong>রেফারেল কোড:</strong> {refarenceNumber || "N/A"}
                 </p>
                 <p>
-                    <strong>আপনি কতজন রেফার করেছেন:</strong> {"N/A"}
+                    <strong>আপনি কতজন রেফার করেছেন:</strong>{" "}
+                    {referralCount || "N/A"}
                 </p>
 
                 {/* nominee */}
-                <h2 className="text-xl font-semibold mt-6">নমিনির তথ্য</h2>
+                <h2 className="text-xl font-semibold mt-6">👩‍👦 নমিনির তথ্য</h2>
                 <p>
                     <strong>নাম (বাংলা):</strong> {nominee.nameBn}
                 </p>
@@ -188,12 +211,19 @@ const UserDashboard = () => {
                 )}
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex justify-center items-center space-x-4">
                 <button
                     onClick={() => logOut(auth, navigate)}
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                 >
                     লগ আউট
+                </button>
+                <button
+                    onClick={() => navigate("/withdraw")}
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-emerald-500"
+                >
+                    {/* টাকা উত্তোলন */}
+                    <span className="text-white">টাকা উত্তোলন</span>
                 </button>
             </div>
         </div>
