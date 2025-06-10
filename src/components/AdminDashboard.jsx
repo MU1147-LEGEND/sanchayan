@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -50,16 +50,34 @@ const Dashboard = () => {
                 threshold: 0.3,
             });
             const results = fuse.search(searchTerm);
-            console.log("Fuse Results:", results);
+
             setMembers(results); // Update members with search results
         }
     }, [searchTerm, allMembers]);
 
+    // handle user verification
+    const handleVerifyUser = async () => {
+        try {
+            const memberRef = doc(db, "members", selectedMember.id);
+            await updateDoc(memberRef, {
+                verified: true,
+            });
+            setSelectedMember((prev) => ({
+                ...prev,
+                verified: true,
+            }));
+            alert("User verified successfully!");
+        } catch (error) {
+            console.error("Error verifying user:", error);
+            alert("Failed to verify user.");
+        }
+    };
     // setting up the loading state
     if (loading) return <div className="text-center p-4">Loading...</div>;
 
     // loggin out from account
     const logOut = handleLogout;
+    
     return (
         <div className="p-4 mb-10">
             {/* search members by id */}
@@ -75,7 +93,7 @@ const Dashboard = () => {
                     className="border-2 border-gray-300 p-2 rounded w-full mx-auto"
                     value={searchTerm}
                     onChange={(e) => {
-                        console.log(members);
+                       
                         setSearchTerm(e.target.value);
                         setSelectedMember(null); // Reset selected member on search
                     }}
@@ -167,15 +185,17 @@ const Dashboard = () => {
                             ✕
                         </button>
 
-                        <h2 className="text-xl font-bold mb-2">
-                            {selectedMember.nameBn} ({selectedMember.nameEn})
-                        </h2>
-
                         <img
                             src={selectedMember.photo}
                             alt={selectedMember.photo}
                             className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
                         />
+                        <h2 className="text-xl font-bold mb-2">
+                            {selectedMember.nameBn} ({selectedMember.nameEn})
+                        </h2>
+                        <h2 className="text-xl font-bold mb-2">
+                            Balance: ৳{selectedMember.balance || "0.00"}
+                        </h2>
 
                         <div className="text-sm space-y-1">
                             <p>
@@ -218,6 +238,35 @@ const Dashboard = () => {
                                 <strong>ঠিকানা:</strong>{" "}
                                 {selectedMember.presentAddress}
                             </p>
+                            <p>
+                                <strong>রেজিস্ট্রেশন তারিখ:</strong>{" "}
+                                {new Date(
+                                    selectedMember.createdAt
+                                ).toLocaleDateString("bn-BD", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                })}
+                            </p>
+                            {selectedMember.verified ? (
+                                <p className="text-green-500">
+                                    ✅ সদস্যটি ভেরিফাইড
+                                </p>
+                            ) : (
+                                <p className="text-red-500">
+                                    ❌ সদস্যটি ভেরিফাইড নয়
+                                </p>
+                            )}
+                            {/* confirm user verify */}
+                            {!selectedMember.verified ? (
+                                <button
+                                    onClick={handleVerifyUser}
+                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    style={{ marginTop: "10px" }}
+                                >
+                                    Verify The user
+                                </button>
+                            ) : null}
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,19 @@
 import { getAuth } from "firebase/auth";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
-import { db } from "../firebase";
+import {
+    addDoc,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    updateDoc,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase";
 
 const Withdraw = () => {
     const [form, setForm] = useState({
-        amount: 0,
+        amount: "",
         accountNumber: "",
     });
     const [balance, setBalance] = useState(0);
@@ -18,6 +25,8 @@ const Withdraw = () => {
     const auth = getAuth();
     const [user, setUser] = useState(auth.currentUser);
     const navigate = useNavigate();
+    const totalBalance = Number(balance); // + referralCount * 30;
+    console.log(totalBalance);
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
             setUser(firebaseUser);
@@ -25,6 +34,7 @@ const Withdraw = () => {
         return () => unsubscribe();
     }, [auth]);
 
+    // Fetch referral count
     useEffect(() => {
         const fetchReferralCount = async () => {
             const membersCollection = collection(db, "members");
@@ -71,6 +81,70 @@ const Withdraw = () => {
         checkBalance();
     }, [user]);
 
+    // handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const amount = Number(form.amount); // Always convert early and use this
+        if (isNaN(amount) || amount < 100) {
+            alert("Amount must be greater than 99TK");
+            return;
+        }
+
+        if (amount > totalBalance) {
+            alert(
+                `Insufficient balance. Your current balance is ৳${totalBalance}`
+            );
+            return;
+        }
+
+        const docRef = doc(db, "members", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const existingAccountNumber = docSnap.data().accountNumber;
+            const enteredAccountNumber = Number(form.accountNumber);
+
+            if (existingAccountNumber !== enteredAccountNumber) {
+                alert(
+                    "The account number you entered is not your account number."
+                );
+                return;
+            }
+
+            const withdrawalData = {
+                amount, // already a number
+                accountNumber: enteredAccountNumber,
+                userId: user.uid,
+                timestamp: new Date(),
+            };
+
+            const withdrawalRef = collection(db, "withdrawals");
+            await addDoc(withdrawalRef, withdrawalData);
+
+            const newBalance = totalBalance - amount;
+
+            console.log("Total:", totalBalance);
+            console.log("Withdraw:", amount);
+            console.log("New balance:", newBalance);
+
+            await updateDoc(docRef, { balance: newBalance });
+            setBalance(newBalance);
+
+            setForm({
+                amount: "",
+                accountNumber: existingAccountNumber,
+            });
+
+            alert(
+                `Withdrawal request of ৳${amount} has been submitted successfully!`
+            );
+        } else {
+            console.log("❌ কোনো ডেটা পাওয়া যায়নি");
+        }
+    };
+
+    // handle not logged in or not verified
     if (!user) {
         return (
             <div className="w-4/5 m-auto flex flex-col items-center justify-center h-[50vh] md:h-[70vh]">
@@ -110,7 +184,7 @@ const Withdraw = () => {
             </p>
             <form
                 onSubmit={(e) => {
-                    e.preventDefault();
+                    handleSubmit(e);
                 }}
                 className="bg-white p-6 rounded shadow-md w-full max-w-md"
             >
@@ -122,9 +196,7 @@ const Withdraw = () => {
                         Withdrawal Amount
                         <span className="text-emerald-600 font-semibold">
                             Current Balance:{" "}
-                            {balance
-                                ? `৳${balance + referralCount * 30}`
-                                : "৳0.00"}
+                            {totalBalance ? `৳${totalBalance}` : "৳0.00"}
                         </span>
                     </label>
                     <input

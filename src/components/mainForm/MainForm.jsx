@@ -276,53 +276,69 @@ const MemberForm1 = () => {
 
     return (
         <div className="relative h-full mb-10">
-            <div className="w-[95%] md:w-10/12 m-auto text-center mb-6 flex items-center justify-between gap-4">
-                <div className="w-1/2 md:w-1/3">
+            {/* form header for desktop */}
+            <div className="hidden w-[80%] md:w-[80%] m-auto text-center mb-6 lg:flex items-center justify-between gap-4">
+                <div className=" lg:w-1/4 flex items-center justify-end">
                     <img
                         src={logo}
                         alt="Sanchayan Logo"
-                        className="w-16 h-16 md:m-auto"
+                        className="w-16 h-16 "
                     />
                 </div>
-                <div className="w-1/2 m-auto text-right">
-                    <h2
-                        className="text-4xl font-extrabold bg-gradient-to-r from-fuchsia-500 via-blue-500 to-orange-300 bg-clip-text text-transparent drop-shadow-lg animate-gradient-x"
-                        style={{
-                            backgroundClip: "text",
-                            WebkitBackgroundClip: "text",
-                            color: "transparent",
-                            WebkitTextFillColor: "transparent",
-                        }}
-                    >
+                <div>
+                    <h4 className="text-sm md:text-2xl font-bold text-center drop-shadow-lg tracking-wide">
+                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
+                    </h4>
+                </div>
+                <div className="w-1/4 m-auto text-left">
+                    <h2 className="text-4xl font-extrabold text-emerald-700 drop-shadow-lg ">
                         সঞ্চয়ন
                     </h2>
                 </div>
             </div>
-            <div className="w-11/12 m-auto text-center ">
+            <div className="hidden lg:block w-11/12 m-auto text-center ">
                 <p className="text-center text-orange-900 text-sm font-semibold">
                     "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
                     করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
                 </p>
             </div>
+            {/* form header for mobile */}
+            <div className="lg:hidden">
+                <div className="w-[95%] md:w-10/12 m-auto text-center mb-4 flex items-center justify-center gap-4">
+                    <div className="w-1/2 md:w-1/3 flex items-center md:justify-between justify-end">
+                        <img
+                            src={logo}
+                            alt="Sanchayan Logo"
+                            className="w-24 md:w-20 h-28 md:h-20"
+                        />
+                    </div>
+                    <div>
+                        <div className="m-auto text-center">
+                            <h1 className="text-6xl md:text-5xl font-bold text-green-900 mb-4">
+                                সঞ্চয়ন
+                            </h1>
+                        </div>
+                        <div>
+                            <h4 className="text-sm md:text-2xl font-bold text-center mb-6 drop-shadow-sm tracking-wide animate-gradient-x pb-2">
+                                ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
+                                প্রতিষ্ঠান।
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="w-11/12 m-auto text-center ">
+                    <p className="text-center text-orange-900 text-sm font-semibold">
+                        "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
+                        করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
+                    </p>
+                </div>
+            </div>
+            {/* form header for mobile */}
             <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="p-6 max-w-3xl mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
+                className="p-6 max-w-3xl lg:w-[80%] mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
             >
-                <div>
-                    <h4
-                        className="text-sm md:text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-500 via-cyan-600 to-green-600 bg-clip-text text-transparent drop-shadow-lg tracking-wide animate-gradient-x pb-2"
-                        style={{
-                            backgroundClip: "text",
-                            WebkitBackgroundClip: "text",
-                            color: "transparent",
-                            WebkitTextFillColor: "transparent",
-                            letterSpacing: "0.05em",
-                        }}
-                    >
-                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
-                    </h4>
-                </div>
                 <span className="w-full block border-dashed border-b-3 mt-2 border-green-500"></span>
                 {isSubmitted ? (
                     <p className="text-green-600 font-semibold mt-4 ">
@@ -813,13 +829,14 @@ const MemberForm1 = () => {
                                 </svg>
                             </div>
                             <p className="text-lg font-semibold">
-                                এই মর্মে প্রত্যয়ন করছি যে, আমি নিম্ন
-                                স্বাক্ষরকারী
+                                এই মর্মে প্রত্যয়ন করছি যে, আমি উপর্যুক্ত
+                                স্বাক্ষরকারী{" "}
                                 <span className="bg-yellow-400 text-black px-1 py-1">
-                                    {form.nameBn || "নাম (বাংলায়)"}
+                                    {form.nameBn || "____________"}
                                 </span>{" "}
-                                সজ্ঞানে ও স্বেচ্ছায় অত্র প্রতিষ্ঠানের সকল শর্ত
-                                ও নিয়ম-নীতি মেনে সদস্য ফর্ম পূরণ করছি।
+                                স্বেচ্ছায়, স্বজ্ঞানে ও সুস্থ মস্তিষ্কে অত্র
+                                প্রতিষ্ঠানের সকল শর্ত ও নিয়ম-নীতি মেনে সদস্য
+                                ফর্ম পূরণ করেছি।
                             </p>
                             <br />
                         </label>

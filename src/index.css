@@ -6,3 +6,7 @@ button:active {
 button:hover {
     cursor: pointer;
 }
+
+.primary-color {
+    color: #68934b;
+}

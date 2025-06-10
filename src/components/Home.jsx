@@ -46,7 +46,7 @@ const Home = () => {
 
                     <button>
                         <Link
-                            to="/login"
+                            to="/userdashboard"
                             className="bg-white text-green-700 border border-green-600 px-6 py-3 rounded-lg hover:bg-green-100 transition"
                         >
                             {user ? "ড্যাশবোর্ডে যান" : "লগইন করুন"}
