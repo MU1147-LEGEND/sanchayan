@@ -1,4 +1,3 @@
-import AnnouncementBar from "../announcement-bar/AnnouncementBar";
 import NavBar from "./NavBar";
 import SanchayanLogo from "./SanchayanLogo";
 
