@@ -54,7 +54,7 @@ const Dashboard = () => {
 
             setMembers(results); // Update members with search results
         }
-    }, [searchTerm, allMembers, preparedMembers]);
+    }, [searchTerm, allMembers]);
 
     // handle user verification
     const handleVerifyUser = async () => {
@@ -271,11 +271,22 @@ const Dashboard = () => {
                         🔓 Logout
                     </button>
                 </div>
+                {/* withdraw history */}
+                <div className="mt-4 text-center">
+                    <button
+                        onClick={() => navigate("/withdraw-history")}
+                        className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+                    >
+                        Withdraw History
+                    </button>
+                </div>
             </div>
 
             {/* Modal */}
             {selectedMember && (
-                <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50`}>
+                <div
+                    className={`fixed inset-0 bg-black/80 flex items-center justify-center z-50`}
+                >
                     <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
                         <button
                             className="absolute top-2 right-2 text-gray-600 hover:text-red-500"

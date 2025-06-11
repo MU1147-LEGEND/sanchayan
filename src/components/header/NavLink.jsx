@@ -18,6 +18,7 @@ const NavLink = ({ linkTitle, handleClick }) => {
         Withdraw: "/withdraw",
         "User Dashboard": "/userdashboard",
         "Registration Form": "/registration-form",
+        "Withdraw History": "/withdraw-history",
     };
 
     const currentPath = pathMap[linkTitle] || "/";

@@ -32,7 +32,7 @@ const UserDashboard = () => {
             setLoading(false); // ✅ যেকোনো অবস্থায় loading বন্ধ করো
         });
 
-        return () => unsubscribe();
+        return () => unsubscribe(); // Clean up the subscription on unmount
     }, []);
 
     // calculate the number of referrals from all users, if any user has the current user's account number as refarenceNumber
@@ -60,7 +60,7 @@ const UserDashboard = () => {
     if (loading) {
         return <p className="text-center mt-10">লোড হচ্ছে...</p>;
     }
-
+    
     if (!userData) {
         return (
             <>

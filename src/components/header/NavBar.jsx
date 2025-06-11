@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import MyAccount from "./MyAccount";
@@ -14,8 +14,26 @@ const NavBar = () => {
         "Dashboard",
         "Withdraw",
     ];
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
     const user = auth.currentUser;
+    // check if user is admin (firebse key: isAdmin)
+    // if adminlist contains user's email then set isAdmin to true
+    useEffect(() => {
+        const adminList = [
+            "ullahmohammad314@gmail.com",
+            "mynuddina2@gmail.com",
+        ];
+        if (user) {
+            if (adminList.includes(user.email)) {
+                setIsAdmin(true);
+            } else {
+                setIsAdmin(false);
+            }
+        }
+    }, [user, isAdmin]);
+    // handle click on nav link
+
     const handleClick = (linkTitle) => {
         if (linkTitle === "Home") {
             navigate("/");
@@ -23,6 +41,10 @@ const NavBar = () => {
         }
         if (linkTitle === "Registration Form") {
             navigate("/registration-form");
+            return;
+        }
+        if (linkTitle === "Withdraw History") {
+            navigate("/withdraw-history");
             return;
         }
         navigate(`/${linkTitle.toLowerCase()}`);
@@ -116,6 +138,18 @@ const NavBar = () => {
                     />
                 ))}
                 <MyAccount />
+                {/* withdraw history */}
+                {/* {!isAdmin && (
+                    <button
+                        onClick={() => {
+                            navigate("/withdraw-history");
+                            setIsOpen(false);
+                        }}
+                        className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 w-full"
+                    >
+                        Withdraw History
+                    </button>
+                )} */}
                 {/* if not logged in then show login and register button */}
                 {!user && (
                     <>

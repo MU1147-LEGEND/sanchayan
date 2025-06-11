@@ -7,7 +7,10 @@ const ProtectedRoute = ({ children }) => {
 
     if (loading) return <p>লোড হচ্ছে...</p>;
     if (!user) return <Navigate to="/login" />;
-    const isAdmin = user.email === "ullahmohammad314@gmail.com";
+    const isAdmin =
+        user.email === "ullahmohammad314@gmail.com" ||
+        user.email === "mynuddina2@gmail.com";
+
     if (!isAdmin) {
         return <Navigate to="/userdashboard" />;
     }
