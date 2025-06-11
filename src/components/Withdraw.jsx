@@ -26,7 +26,8 @@ const Withdraw = () => {
     const [user, setUser] = useState(auth.currentUser);
     const navigate = useNavigate();
     const totalBalance = Number(balance); // + referralCount * 30;
-    console.log(totalBalance);
+    
+    // log out user 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
             setUser(firebaseUser);

@@ -54,7 +54,7 @@ const Dashboard = () => {
 
             setMembers(results); // Update members with search results
         }
-    }, [searchTerm, allMembers]);
+    }, [searchTerm, allMembers, preparedMembers]);
 
     // handle user verification
     const handleVerifyUser = async () => {
@@ -77,6 +77,12 @@ const Dashboard = () => {
             };
 
             // send a message to user's email or phone
+            // check the phone number is valid or not
+            if (!/^\d{11}$/.test(data.number)) {
+                alert("Invalid phone number format. Please check the number.");
+                return;
+            }
+            // send a message to user's phone
             const url = `https://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
             const response = await fetch(url, {
                 method: "GET",
@@ -141,6 +147,12 @@ const Dashboard = () => {
                 message: `আপনার অ্যাকাউন্টে ৳${addBalance} যোগ করা হয়েছে। নতুন ব্যালেন্স: ৳${newBalance}. ধন্যবাদ! Visit: https://sanchayanbd.com`,
             };
             // send a message to user's email or phone
+            // check the phone number is valid or not
+            if (!/^\d{11}$/.test(data.number)) {
+                alert("Invalid phone number format. Please check the number.");
+                return;
+            }
+            // send a message to user's phone
             const url = `https://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
             const response = await fetch(url, {
                 method: "GET",
@@ -263,7 +275,7 @@ const Dashboard = () => {
 
             {/* Modal */}
             {selectedMember && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50`}>
                     <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
                         <button
                             className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
