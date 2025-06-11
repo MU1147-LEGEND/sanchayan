@@ -77,7 +77,7 @@ const Dashboard = () => {
             };
 
             // send a message to user's email or phone
-            const url = `http://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
+            const url = `https://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -141,7 +141,7 @@ const Dashboard = () => {
                 message: `আপনার অ্যাকাউন্টে ৳${addBalance} যোগ করা হয়েছে। নতুন ব্যালেন্স: ৳${newBalance}. ধন্যবাদ! Visit: https://sanchayanbd.com`,
             };
             // send a message to user's email or phone
-            const url = `http://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
+            const url = `https://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
