@@ -11,6 +11,7 @@ const Dashboard = () => {
     const [selectedMember, setSelectedMember] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [allMembers, setAllMembers] = useState([]); // To store original list
+    const [addBalance, setAddBalance] = useState("");
     const navigate = useNavigate();
 
     // fetch members from Firestore
@@ -66,18 +67,105 @@ const Dashboard = () => {
                 ...prev,
                 verified: true,
             }));
+            // data
+            const data = {
+                api_key: "vDeqZenizd792e6VYGAh",
+                senderid: "8809617611022",
+                number: selectedMember.mobile,
+                message:
+                    "আপনার সদস্যতা সফলভাবে ভেরিফাইড হয়েছে। ধন্যবাদ! Visit: https://sanchayanbd.com",
+            };
+
+            // send a message to user's email or phone
+            const url = `http://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to send verification message");
+            } else {
+                console.log("Verification message sent successfully");
+            }
+
+            // update the members state to reflect the change
+            setMembers((prevMembers) =>
+                prevMembers.map((member) =>
+                    member.id === selectedMember.id
+                        ? { ...member, verified: true }
+                        : member
+                )
+            );
+
             alert("User verified successfully!");
         } catch (error) {
             console.error("Error verifying user:", error);
             alert("Failed to verify user.");
         }
     };
+
+    // handle adding balance to user's account
+    const handleAddBalance = (e) => {
+        const value = e.target.value;
+        if (value === "" || !isNaN(value)) {
+            setAddBalance(value);
+        } else {
+            alert("Please enter a valid number for balance.");
+        }
+    };
+    // handle adding balance to user's account
+    const handleAddBalanceToUser = async () => {
+        if (addBalance === "" || isNaN(addBalance)) {
+            alert("Please enter a valid number for balance.");
+            return;
+        }
+        try {
+            const memberRef = doc(db, "members", selectedMember.id);
+            const newBalance =
+                parseFloat(selectedMember.balance || 0) +
+                parseFloat(addBalance);
+            await updateDoc(memberRef, {
+                balance: newBalance,
+            });
+            setSelectedMember((prev) => ({
+                ...prev,
+                balance: newBalance,
+            }));
+            // data
+            const data = {
+                api_key: "vDeqZenizd792e6VYGAh",
+                senderid: "8809617611022",
+                number: selectedMember.mobile,
+                message: `আপনার অ্যাকাউন্টে ৳${addBalance} যোগ করা হয়েছে। নতুন ব্যালেন্স: ৳${newBalance}. ধন্যবাদ! Visit: https://sanchayanbd.com`,
+            };
+            // send a message to user's email or phone
+            const url = `http://bulksmsbd.net/api/smsapi?api_key=${data.api_key}&type=text&number=${data.number}&senderid=${data.senderid}&message=${data.message}`;
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to send balance update message");
+            } else {
+                console.log("Balance update message sent successfully");
+            }
+            alert("Balance added successfully!");
+        } catch (error) {
+            console.error("Error adding balance:", error);
+            alert("Failed to add balance.");
+        }
+    };
+
     // setting up the loading state
     if (loading) return <div className="text-center p-4">Loading...</div>;
 
     // loggin out from account
     const logOut = handleLogout;
-    
+
     return (
         <div className="p-4 mb-10">
             {/* search members by id */}
@@ -93,7 +181,6 @@ const Dashboard = () => {
                     className="border-2 border-gray-300 p-2 rounded w-full mx-auto"
                     value={searchTerm}
                     onChange={(e) => {
-                       
                         setSearchTerm(e.target.value);
                         setSelectedMember(null); // Reset selected member on search
                     }}
@@ -121,7 +208,7 @@ const Dashboard = () => {
                             .map((member) => (
                                 <tr
                                     key={member?.id}
-                                    className="hover:bg-gray-100 cursor-pointer"
+                                    className="hover:bg-gray-200 cursor-pointer"
                                     onClick={() => setSelectedMember(member)}
                                 >
                                     <td className="p-2 border">
@@ -266,7 +353,29 @@ const Dashboard = () => {
                                 >
                                     Verify The user
                                 </button>
-                            ) : null}
+                            ) : (
+                                <>
+                                    {/* add balance to user's account */}
+                                    <input
+                                        type="number"
+                                        value={addBalance}
+                                        onChange={handleAddBalance}
+                                        placeholder="টাকার পরিমাণ"
+                                        className="border-2 border-gray-300 p-2 rounded w-full"
+                                        style={{ marginTop: "10px" }}
+                                    />
+                                    <button
+                                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                                        style={{ marginTop: "10px" }}
+                                        onClick={() => {
+                                            handleAddBalanceToUser();
+                                            setAddBalance(""); // Reset input after adding balance
+                                        }}
+                                    >
+                                        Add Balance
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

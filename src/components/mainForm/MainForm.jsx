@@ -542,7 +542,7 @@ const MemberForm1 = () => {
                             মোবাইল নম্বর:
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             name="mobile"
                             value={form.mobile}
                             onChange={handleChange}
