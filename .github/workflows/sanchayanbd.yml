@@ -1,4 +1,4 @@
-name: Deploy sanchayanbd.com via SFTP
+name: Deploy sanchayanbd.com via FTP
 
 on:
   push:
@@ -24,12 +24,15 @@ jobs:
       - name: Build project (Vite)
         run: npm run build
 
-      - name: SFTP Deploy using SCP
-        uses: appleboy/scp-action@v0.1.7
+      - name: FTP Deploy Vite build
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.SANCHAYAN_SFTP_HOST }}
-          username: ${{ secrets.SANCHAYAN_SFTP_USERNAME }}
-          password: ${{ secrets.SANCHAYAN_SFTP_PASSWORD }}
-          port: 22
-          source: "dist/*"
-          target: "/home/sanchaya/public_html"
+          server: ${{ secrets.SANCHAYAN_FTP_SERVER }}
+          username: ${{ secrets.SANCHAYAN_FTP_USERNAME }}
+          password: ${{ secrets.SANCHAYAN_FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./dist/
+          server-dir: /public_html/
+          security: loose
+          log-level: verbose
