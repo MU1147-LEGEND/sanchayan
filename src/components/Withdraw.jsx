@@ -26,8 +26,8 @@ const Withdraw = () => {
     const [user, setUser] = useState(auth.currentUser);
     const navigate = useNavigate();
     const totalBalance = Number(balance); // + referralCount * 30;
-    
-    // log out user 
+
+    // log out user
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
             setUser(firebaseUser);
@@ -87,12 +87,18 @@ const Withdraw = () => {
         e.preventDefault();
 
         const amount = Number(form.amount); // Always convert early and use this
-        if (isNaN(amount) || amount < 100) {
-            alert("Amount must be greater than 99TK");
+        if (isNaN(amount) || amount < 500) {
+            alert("Amount must be greater than 500");
+            return;
+        }
+        if (amount === totalBalance) {
+            alert(
+                `আপনার একাউন্টটি সচল রাখতে সর্বনিম্ন ১০০ টাকা ব্যালেন্স রাখতে হবে।`
+            );
             return;
         }
 
-        if (amount > totalBalance) {
+        if (amount > totalBalance - 100) {
             alert(
                 `Insufficient balance. Your current balance is ৳${totalBalance}`
             );

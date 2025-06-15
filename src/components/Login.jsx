@@ -6,7 +6,7 @@ import {
     signInWithPhoneNumber,
 } from "firebase/auth";
 import { useContext, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { AuthContext } from "./loginAuthContext";
 
@@ -147,12 +147,13 @@ export default function Login() {
                             <span className="w-1/3 text-center">অথবা</span>
                             <hr className="w-1/3" />
                         </span>
-                        <button
-                            onClick={() => navigate("/signup")}
-                            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-2"
+                        <Link to='/signup'
+                            // onClick={() => navigate("/signup")}
+                            
+                            className="block text-center w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-2"
                         >
                             সাইন আপ করুন
-                        </button>
+                        </Link>
                     </form>
                 ) : (
                     // <form

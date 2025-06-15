@@ -244,7 +244,7 @@ const Dashboard = () => {
                                         {member?.photo ? (
                                             <img
                                                 src={member?.photo}
-                                                alt={member?.photo}
+                                                alt="profile photo"
                                                 className="h-12 w-12 object-cover rounded"
                                             />
                                         ) : (
@@ -297,8 +297,8 @@ const Dashboard = () => {
 
                         <img
                             src={selectedMember.photo}
-                            alt={selectedMember.photo}
-                            className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
+                            alt="profile photo"
+                            className="w-32 h-32 rounded-full object-cover mx-auto mb-4 text-center"
                         />
                         <h2 className="text-xl font-bold mb-2">
                             {selectedMember.nameBn} ({selectedMember.nameEn})
