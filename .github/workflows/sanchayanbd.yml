@@ -1,4 +1,4 @@
-name: Deploy sanchayanbd.com via FTP
+name: Deploy React App via SSH
 
 on:
   push:
@@ -6,33 +6,30 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js (v20+)
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build project (Vite)
+      - name: Build Project
         run: npm run build
 
-      - name: FTP Deploy Vite build
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy via SSH
+        uses: appleboy/scp-action@v0.1.4
         with:
-          server: ${{ secrets.SANCHAYAN_FTP_SERVER }}
-          username: ${{ secrets.SANCHAYAN_FTP_USERNAME }}
-          password: ${{ secrets.SANCHAYAN_FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
-          local-dir: ./dist/
-          server-dir: /public_html/
-          security: loose
-          log-level: verbose
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          key: ${{ secrets.CPANEL_KEY }}
+          port: 22
+          source: "dist/*"
+          target: "/public_html/"
