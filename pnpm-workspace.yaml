@@ -1,0 +1,10 @@
+onlyBuiltDependencies:
+  - '@firebase/util'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - '@tailwindcss/oxide'
+  - aws-sdk
+  - core-js
+  - esbuild
+  - protobufjs
+  - sharp
