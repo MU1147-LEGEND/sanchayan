@@ -24,12 +24,12 @@ jobs:
       - name: Build project (Vite)
         run: npm run build
 
-      - name: SFTP Deploy Vite build
-        uses: presslabs/sftp-action@v1.2.0
+      - name: SFTP Deploy using SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SANCHAYAN_SFTP_HOST }}
           username: ${{ secrets.SANCHAYAN_SFTP_USERNAME }}
           password: ${{ secrets.SANCHAYAN_SFTP_PASSWORD }}
           port: 22
-          localPath: './dist'
-          remotePath: '/home/sanchaya/public_html'
+          source: "dist/*"
+          target: "/home/sanchaya/public_html"
