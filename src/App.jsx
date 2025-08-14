@@ -14,6 +14,7 @@ import SignUp from "./components/SignUp";
 import UserDashboard from "./components/UserDashboard";
 import Withdraw from "./components/Withdraw";
 import WithdrawHistory from "./components/WithdrawHistory";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 
 const App = () => {
     return (
@@ -32,6 +33,7 @@ const App = () => {
                             element={<UserDashboard />}
                         />
                         <Route path="/about" element={<About />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/gallery" element={<Gallery />} />
                         <Route path="/withdraw" element={<Withdraw />} />

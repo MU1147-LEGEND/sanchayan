@@ -78,11 +78,11 @@ const Footer = () => {
                             About Us
                         </Link>
                         <Link
-                            to={"/withdraw"}
+                            to={"/privacy-policy"}
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:text-blue-800 transition"
                         >
-                            Withdraw
+                            Privacy Policy
                         </Link>
                     </div>
                 </div>
