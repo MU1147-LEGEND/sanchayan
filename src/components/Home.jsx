@@ -1,6 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 import H1 from "./custom-tags/H1";
+import AboutSanchayanbd from "./AboutSanchayanbd";
 
 const Home = () => {
     const images = [
@@ -29,9 +30,7 @@ const Home = () => {
         <div className="min-h-screen flex flex-col pb-8">
             {/* Hero Section */}
             <div className="bg-gradient-to-br from-green-100 to-green-300 py-20 px-6 text-center">
-                <H1>
-                    সঞ্চয়ন
-                </H1>
+                <H1>সঞ্চয়ন</H1>
                 <p className="text-lg md:text-xl text-green-800 max-w-3xl mx-auto">
                     ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
                 </p>
@@ -59,9 +58,7 @@ const Home = () => {
             {/* About Section */}
             <div className="py-16 px-6 bg-white text-center">
                 <H1>আমাদের সম্পর্কে</H1>
-                <p className="text-gray-700 max-w-4xl mx-auto">
-                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
-                </p>
+                <AboutSanchayanbd />
                 <div className="text-center mt-8">
                     <button>
                         <Link
@@ -76,7 +73,7 @@ const Home = () => {
 
             {/* Gallery Section */}
             <div className="bg-gray-100 py-12 px-6">
-                        <H1>আমাদের কিছু মুহূর্ত</H1>
+                <H1>আমাদের কিছু মুহূর্ত</H1>
                 <div>
                     <p className="text-center text-gray-600 mb-6">
                         আমাদের সদস্যদের সঞ্চয় ও ঋণ কার্যক্রমের কিছু ছবি। সঞ্চয় ও
