@@ -60,7 +60,11 @@ const UserDashboard = () => {
     if (loading) {
         return <p className="text-center mt-10">লোড হচ্ছে...</p>;
     }
-    
+
+    if (!user) {
+        return navigate("/login");
+    }
+
     if (!userData) {
         return (
             <>

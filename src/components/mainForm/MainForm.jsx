@@ -19,6 +19,7 @@ const MemberForm1 = () => {
     const initialForm = {
         memberType: "",
         subMemberType: "",
+        monthlySavings: "",
         accountNumber: "",
         refarenceNumber: "",
         nameBn: "",
@@ -35,7 +36,7 @@ const MemberForm1 = () => {
         permanentAddress: "",
         nationality: "বাংলাদেশী",
         photo: null,
-        signature: "",
+        signature: null,
         verified: false,
         nominee: {
             nameBn: "",
@@ -79,7 +80,7 @@ const MemberForm1 = () => {
             "শিক্ষার্থী সঞ্চয় হিসাব",
             "হজ্জ্ব আমানত হিসাব",
         ],
-        "সঞ্চয়ী সদস্য": [
+        "সঞ্চয়ী হিসাব": [
             "সাপ্তাহিক সঞ্চয় হিসাব",
             "মাসিক সঞ্চয় হিসাব (DPS)",
             "স্থায়ী সঞ্চয় হিসাব (FDR)",
@@ -287,11 +288,11 @@ const MemberForm1 = () => {
                 </div>
                 <div>
                     <h4 className="text-sm md:text-2xl font-bold text-center drop-shadow-lg tracking-wide">
-                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
+                        ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি সমাজ উন্নয়ন সংস্থা।
                     </h4>
                 </div>
                 <div className="w-1/4 m-auto text-left">
-                    <h2 className="text-4xl font-extrabold text-emerald-700 drop-shadow-lg ">
+                    <h2 className="text-4xl font-extrabold text-emerald-600 drop-shadow-lg ">
                         সঞ্চয়ন
                     </h2>
                 </div>
@@ -366,41 +367,62 @@ const MemberForm1 = () => {
                                         -- ধরন নির্বাচন করুন --
                                     </option>
                                     <option value="পরিচালনা পর্ষদের সদস্য">
-                                        পরিচালনা পর্ষদের সদস্য
+                                        পরিচালনা পর্ষদের সদস্য (শেয়ারের মূল্য -
+                                        ১,০০,০০০ টাকা)
                                     </option>
                                     <option value="সাধারণ সদস্য">
-                                        সাধারণ সদস্য
+                                        সাধারণ সদস্য (শেয়ারের মূল্য - ১০,০০০
+                                        টাকা)
                                     </option>
-                                    <option value="সঞ্চয়ী সদস্য">
-                                        সঞ্চয়ী সদস্য
+                                    <option value="সঞ্চয়ী হিসাব">
+                                        সঞ্চয়ী হিসাব
                                     </option>
                                 </select>
                             </div>
 
                             {/* সাব-মেম্বার ধরন, যদি প্রযোজ্য হয় */}
                             {form.memberType && (
-                                <div>
-                                    <label className="block font-semibold">
-                                        সদস্যের উপ-ধরন:
-                                    </label>
-                                    <select
-                                        name="subMemberType"
-                                        value={form.subMemberType}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full border p-2"
-                                    >
-                                        <option value="">
-                                            -- উপ-ধরন নির্বাচন করুন --
-                                        </option>
-                                        {subOptions[form.memberType].map(
-                                            (sub, index) => (
-                                                <option key={index} value={sub}>
-                                                    {sub}
-                                                </option>
-                                            )
-                                        )}
-                                    </select>
+                                <div className="flex gap-4">
+                                    <div className="w-full">
+                                        <label className="block font-semibold">
+                                            সদস্যের উপ-ধরন:
+                                        </label>
+                                        <select
+                                            name="subMemberType"
+                                            value={form.subMemberType}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full border p-2"
+                                        >
+                                            <option value="">
+                                                -- উপ-ধরন নির্বাচন করুন --
+                                            </option>
+                                            {subOptions[form.memberType].map(
+                                                (sub, index) => (
+                                                    <option
+                                                        key={index}
+                                                        value={sub}
+                                                    >
+                                                        {sub}
+                                                    </option>
+                                                )
+                                            )}
+                                        </select>
+                                    </div>
+                                    <div className="w-full">
+                                        <label className="block font-semibold">
+                                            মাসিক সঞ্চয় (টাকা):
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="monthlySavings"
+                                            onChange={handleChange}
+                                            value={form.monthlySavings}
+                                            placeholder="মাসিক সঞ্চয় (টাকা)"
+                                            className="w-full border p-2"
+                                            required
+                                        />
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -502,6 +524,7 @@ const MemberForm1 = () => {
                                     value="পুরুষ"
                                     onChange={handleChange}
                                     checked={form.gender === "পুরুষ"}
+                                    required
                                 />{" "}
                                 পুরুষ
                             </label>
@@ -512,6 +535,7 @@ const MemberForm1 = () => {
                                     value="মহিলা"
                                     onChange={handleChange}
                                     checked={form.gender === "মহিলা"}
+                                    required
                                 />{" "}
                                 মহিলা
                             </label>
@@ -524,7 +548,6 @@ const MemberForm1 = () => {
                             onChange={handleChange}
                             placeholder="ধর্ম"
                             className="w-full border p-2"
-                            required
                         />
                         <label className="block font-semibold">
                             এনআইডি/জন্মনিবন্ধন নম্বর:
@@ -601,7 +624,7 @@ const MemberForm1 = () => {
                                 handleUpload(e, "photo");
                             }}
                             className="w-full border p-2"
-                            // required
+                            required
                         />
                         {form.photo && (
                             <img
@@ -610,15 +633,44 @@ const MemberForm1 = () => {
                                 className="w-24 h-24 object-cover mt-2"
                             />
                         )}
-                        <label className="block font-semibold">স্বাক্ষর:</label>
+
+                        <label className="block font-semibold">
+                            স্বাক্ষর (ছবি) - Width:300px, Height:200px:
+                        </label>
                         <input
-                            type="text"
+                            type="file"
                             name="signature"
-                            value={form.signature || form.nameEn}
-                            onChange={handleChange}
-                            placeholder="স্বাক্ষর"
+                            onChange={(e) => {
+                                // validate image size, required size 300x200
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const img = new Image();
+                                    img.src = URL.createObjectURL(file);
+                                    img.onload = () => {
+                                        if (
+                                            img.width !== 300 ||
+                                            img.height !== 200
+                                        ) {
+                                            alert(
+                                                "Invalid image size. Please upload an image of size 300x200."
+                                            );
+                                            e.target.value = null;
+                                            return;
+                                        }
+                                        handleUpload(e, "signature");
+                                    };
+                                }
+                            }}
                             className="w-full border p-2"
+                            required
                         />
+                        {form.signature && (
+                            <img
+                                src={form.signature}
+                                alt="স্বাক্ষর"
+                                className="w-[100px] h-[50px] object-cover mt-2"
+                            />
+                        )}
                         <span className="w-full block border-dashed border-b-3 mt-2 border-black"></span>
                         <h3 className="text-lg font-bold mt-4">নমিনির তথ্য</h3>
                         <label className="block font-semibold">
@@ -834,9 +886,8 @@ const MemberForm1 = () => {
                                 <span className="bg-yellow-400 text-black px-1 py-1">
                                     {form.nameBn || "____________"}
                                 </span>{" "}
-                                স্বেচ্ছায়, স্বজ্ঞানে ও সুস্থ মস্তিষ্কে অত্র
-                                প্রতিষ্ঠানের সকল শর্ত ও নিয়ম-নীতি মেনে সদস্য
-                                ফর্ম পূরণ করেছি।
+                                সঞ্চয়নের সকল নিয়মনীতি ও আইনের প্রতি অনুগত ও
+                                শ্রদ্ধাশীল।
                             </p>
                             <br />
                         </label>
@@ -883,15 +934,18 @@ const MemberForm1 = () => {
             {alreadySubmitted && (
                 <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen">
                     <p className="text-xl font-semibold mb-4 text-red-600">
-                        আপনি একটি ফর্ম জমা দিয়েছেন।
+                        আপনি একটি ফর্ম জমা দিয়েছেন। আপনার তথ্য পরিবর্তন করতে
+                        সাপোর্ট টিমের সাথে যোগাযোগ করুন। ধন্যবাদ!
                     </p>
+                    <p className="my-4"> সাপোর্টঃ +8801747337534</p>
                     <button
                         onClick={() => navigate("/login")}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"
                     >
                         ড্যাশবোর্ডে যান।
                     </button>
-                    <br />
+                    {/* form edit feature (currrenly disabled this feature.) */}
+                    {/* <br />
                     {" অথবা "} <br /> <br />
                     <button
                         onClick={() => setAlreadySubmitted(false)}
@@ -899,7 +953,7 @@ const MemberForm1 = () => {
                     >
                         ফর্ম এডিট করুন (সতর্কবার্তাঃ ফর্মের কোনো বক্স খালি রাখলে
                         সেটি ফাকা থাকবে। )
-                    </button>
+                    </button> */}
                 </div>
             )}
         </div>

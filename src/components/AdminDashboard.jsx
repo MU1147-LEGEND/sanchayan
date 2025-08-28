@@ -1,7 +1,7 @@
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { handleLogout } from "../utils/handleLogOut";
 
@@ -347,6 +347,16 @@ const Dashboard = () => {
                             <p>
                                 <strong>ঠিকানা:</strong>{" "}
                                 {selectedMember.presentAddress}
+                            </p>
+                            <p className="my-2">
+                                <strong>স্বাক্ষর:</strong>{" "}
+                                <Link
+                                    to={selectedMember.signature}
+                                    target="_blank"
+                                    className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+                                >
+                                    View
+                                </Link>
                             </p>
                             <p>
                                 <strong>রেজিস্ট্রেশন তারিখ:</strong>{" "}

@@ -32,7 +32,7 @@ const Home = () => {
             <div className="bg-gradient-to-br from-green-100 to-green-300 py-20 px-6 text-center">
                 <H1>সঞ্চয়ন</H1>
                 <p className="text-lg md:text-xl text-green-800 max-w-3xl mx-auto">
-                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায় প্রতিষ্ঠান।
+                    ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি সমাজ উন্নয়ন সংস্থা।
                 </p>
                 <div className="mt-8 flex justify-center gap-4 flex-wrap">
                     <button>
@@ -55,31 +55,15 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* About Section */}
-            <div className="py-16 px-6 bg-white text-center">
-                <H1>আমাদের সম্পর্কে</H1>
-                <AboutSanchayanbd />
-                <div className="text-center mt-8">
-                    <button>
-                        <Link
-                            to="/about"
-                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
-                        >
-                            বিস্তারিত দেখুন
-                        </Link>
-                    </button>
-                </div>
-            </div>
-
             {/* Gallery Section */}
             <div className="bg-gray-100 py-12 px-6">
-                <H1>আমাদের কিছু মুহূর্ত</H1>
+                {/* <H1>আমাদের কিছু মুহূর্ত</H1> */}
                 <div>
-                    <p className="text-center text-gray-600 mb-6">
+                    {/* <p className="text-center text-gray-600 mb-6">
                         আমাদের সদস্যদের সঞ্চয় ও ঋণ কার্যক্রমের কিছু ছবি। সঞ্চয় ও
                         ঋণের মাধ্যমে আমরা একসাথে একটি শক্তিশালী আর্থিক ভিত্তি
                         গড়ে তুলতে কাজ করছি।
-                    </p>
+                    </p> */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {images.map((image) => (
                             <div
@@ -108,6 +92,22 @@ const Home = () => {
                             className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
                         >
                             আরও দেখুন
+                        </Link>
+                    </button>
+                </div>
+            </div>
+
+            {/* About Section */}
+            <div className="py-16 px-6 bg-white text-center">
+                <H1>আমাদের সম্পর্কে</H1>
+                <AboutSanchayanbd />
+                <div className="text-center mt-8">
+                    <button>
+                        <Link
+                            to="/about"
+                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                        >
+                            বিস্তারিত দেখুন
                         </Link>
                     </button>
                 </div>
