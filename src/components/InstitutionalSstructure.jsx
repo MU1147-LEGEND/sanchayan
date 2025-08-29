@@ -41,14 +41,15 @@ export default function InstitutionalStructure() {
                     <span>↓</span>
                     <div className="flex items-start gap-12">
                         <div className="flex flex-col items-center gap-2">
-                            <span className="text-nowrap">অতিরিক্ত জেনারেল ম্যানেজার (AGM) - ২জন</span>
+                            <span className="text-nowrap">
+                                অতিরিক্ত জেনারেল ম্যানেজার (AGM) - ২জন
+                            </span>
                             <span>↓</span>
                             <span>ব্রাঞ্চ ম্যানেজার (BM)</span>
                             <span>↓</span>
                             <div className="flex gap-12">
-                                <span>হিসাবরক্ষক</span>
-                                <span>বিক্রয়কর্মী</span>
-                                <span>মার্কেটিং</span>
+                                <span>এ্যাকাউন্টস অফিসার</span>
+                                <span>ফিল্ড অফিসার</span>
                             </div>
                         </div>
                     </div>
