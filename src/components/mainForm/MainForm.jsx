@@ -295,6 +295,9 @@ const MemberForm1 = () => {
                     <h2 className="text-4xl font-extrabold text-emerald-600 drop-shadow-lg ">
                         সঞ্চয়ন
                     </h2>
+                    <p className="text-[0.5rem] font-bold text-left text-wrap">
+                        মাল্টিপারপাস <br /> কো-অপারেটিভ সোসাইটি।
+                    </p>
                 </div>
             </div>
             <div className="hidden lg:block w-11/12 m-auto text-center ">
