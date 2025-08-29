@@ -44,11 +44,11 @@ const PrivacyPolicy = () => {
                         <ul className="ml-10 space-y-1 my-2">
                             <li>
                                 ক. পরিচালনা পর্ষদের সদস্যদের জন্য প্রতিটি
-                                শেয়ারের মূল্য এক লক্ষ (১০০০০০/—) টাকা।
+                                শেয়ারের মূল্য এক লক্ষ (১,০০,০০০/—) টাকা।
                             </li>
                             <li>
                                 খ. সঞ্চয়নের প্রতিটি সাধারণ শেয়ারের মূল্য দশ
-                                হাজার (১০০০০/—) টাকা।
+                                হাজার (১০,০০০/—) টাকা।
                             </li>
                         </ul>
                     </li>
@@ -71,12 +71,6 @@ const PrivacyPolicy = () => {
                                     <th className="border border-gray-300 p-2">
                                         স্কীমের নাম
                                     </th>
-                                    <th className="border border-gray-300 p-2">
-                                        বিবরণ
-                                    </th>
-                                    <th className="border border-gray-300 p-2">
-                                        সুবিধা
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,12 +81,6 @@ const PrivacyPolicy = () => {
                                     <td className="border border-gray-300 p-2">
                                         সাপ্তাহিক সঞ্চয় হিসাব
                                     </td>
-                                    <td className="border border-gray-300 p-2">
-                                        বিবরণ ১
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        সুবিধা ১
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td className="border border-gray-300 p-2">
@@ -100,12 +88,6 @@ const PrivacyPolicy = () => {
                                     </td>
                                     <td className="border border-gray-300 p-2">
                                         মাসিক সঞ্চয় হিসাব (DPS)
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        বিবরণ ২
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        সুবিধা ২
                                     </td>
                                 </tr>
                                 <tr>
@@ -115,12 +97,6 @@ const PrivacyPolicy = () => {
                                     <td className="border border-gray-300 p-2">
                                         নির্দিষ্ট মেয়াদী সঞ্চয় হিসাব (FDR)
                                     </td>
-                                    <td className="border border-gray-300 p-2">
-                                        বিবরণ ৩
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        সুবিধা ৩
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td className="border border-gray-300 p-2">
@@ -129,12 +105,6 @@ const PrivacyPolicy = () => {
                                     <td className="border border-gray-300 p-2">
                                         শিক্ষার্থী সঞ্চয় হিসাব (DPS এর মতো)
                                     </td>
-                                    <td className="border border-gray-300 p-2">
-                                        বিবরণ ৪
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        সুবিধা ৪
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td className="border border-gray-300 p-2">
@@ -142,12 +112,6 @@ const PrivacyPolicy = () => {
                                     </td>
                                     <td className="border border-gray-300 p-2">
                                         হজ্জ আমানত হিসাব (DPS)
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        বিবরণ ৫
-                                    </td>
-                                    <td className="border border-gray-300 p-2">
-                                        সুবিধা ৫
                                     </td>
                                 </tr>
                             </tbody>

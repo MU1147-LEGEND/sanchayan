@@ -15,6 +15,7 @@ import UserDashboard from "./components/UserDashboard";
 import Withdraw from "./components/Withdraw";
 import WithdrawHistory from "./components/WithdrawHistory";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import InstitutionalStructure from "./components/InstitutionalSstructure";
 
 const App = () => {
     return (
@@ -34,6 +35,7 @@ const App = () => {
                         />
                         <Route path="/about" element={<About />} />
                         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route path="/structure" element={<InstitutionalStructure />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/gallery" element={<Gallery />} />
                         <Route path="/withdraw" element={<Withdraw />} />
