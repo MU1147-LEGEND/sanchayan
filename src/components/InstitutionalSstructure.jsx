@@ -53,9 +53,6 @@ export default function InstitutionalStructure() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="flex flex-col items-center gap-2">
-                        <span>অতিরিক্ত জেনারেল ম্যানেজার (AGM) - ২জন</span>
-                    </div> */}
                 </div>
             </div>
         </div>

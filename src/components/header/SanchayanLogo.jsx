@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import siteLogo from "../../assets/sanchayan transparent.png";
+import siteLogo from "../../assets/sanchayan-29-aug.png";
 const SanchayanLogo = ({ place = "header" }) => {
     const navigate = useNavigate();
     let style =
@@ -19,7 +19,7 @@ const SanchayanLogo = ({ place = "header" }) => {
                 navigate("/");
             }}
         >
-            <img className="w-24 h-20 inline" src={siteLogo} alt="site logo" />
+            <img className="w-24 inline" src={siteLogo} alt="site logo" />
         </p>
     );
 };

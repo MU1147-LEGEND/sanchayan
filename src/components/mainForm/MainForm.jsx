@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/sanchayan logo.jpg"; // logo path
+import logo from "../../assets/sanchayan-29-aug.png"; // logo path
 import { db } from "../../firebase"; // firebase config path
 import { AuthContext } from "../loginAuthContext";
 
@@ -278,12 +278,12 @@ const MemberForm1 = () => {
     return (
         <div className="relative h-full mb-10">
             {/* form header for desktop */}
-            <div className="hidden w-[80%] md:w-[80%] m-auto text-center mb-6 lg:flex items-center justify-between gap-4">
+            <div className="hidden max-w-5xl m-auto text-center mb-6 lg:flex items-center justify-between gap-4">
                 <div className=" lg:w-1/4 flex items-center justify-end">
                     <img
                         src={logo}
                         alt="Sanchayan Logo"
-                        className="w-16 h-16 "
+                        className="w-16 lg:w-20 "
                     />
                 </div>
                 <div>
@@ -309,24 +309,23 @@ const MemberForm1 = () => {
             {/* form header for mobile */}
             <div className="lg:hidden">
                 <div className="w-[95%] md:w-10/12 m-auto text-center mb-4 flex items-center justify-center gap-4">
-                    <div className="w-1/2 md:w-1/3 flex items-center md:justify-between justify-end">
+                    <div className="w-1/2 md:w-1/3 flex items-center md:justify-between ">
                         <img
                             src={logo}
                             alt="Sanchayan Logo"
-                            className="w-24 md:w-20 h-28 md:h-20"
+                            className="w-24 md:w-20 md:h-20"
                         />
                     </div>
                     <div>
                         <div className="m-auto text-center">
-                            <h1 className="text-6xl md:text-5xl font-bold text-green-900 mb-4">
+                            <h1 className="text-6xl md:text-5xl font-bold text-green-600 mb-4">
                                 সঞ্চয়ন
                             </h1>
                         </div>
                         <div>
-                            <h4 className="text-sm md:text-2xl font-bold text-center mb-6 drop-shadow-sm tracking-wide animate-gradient-x pb-2">
-                                ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি ব্যবসায়
-                                প্রতিষ্ঠান।
-                            </h4>
+                            <p className="text-[0.5rem] font-bold text-center text-wrap">
+                                মাল্টিপারপাস <br /> কো-অপারেটিভ সোসাইটি।
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -337,11 +336,11 @@ const MemberForm1 = () => {
                     </p>
                 </div>
             </div>
-            {/* form header for mobile */}
+            {/* form header for mobile end */}
             <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="p-6 max-w-3xl lg:w-[80%] mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
+                className="p-6 max-w-4xl lg:w-[80%] mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
             >
                 <span className="w-full block border-dashed border-b-3 mt-2 border-green-500"></span>
                 {isSubmitted ? (
