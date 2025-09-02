@@ -84,6 +84,13 @@ const Footer = () => {
                         >
                             Privacy Policy
                         </Link>
+                        <Link
+                            to={"/structure"}
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 transition"
+                        >
+                            Institutional Structure
+                        </Link>
                     </div>
                 </div>
             </div>
