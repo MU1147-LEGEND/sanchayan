@@ -48,8 +48,8 @@ export default function InstitutionalStructure() {
                             <span>ব্রাঞ্চ ম্যানেজার (BM)</span>
                             <span>↓</span>
                             <div className="flex gap-12">
-                                <span>এ্যাকাউন্টস অফিসার</span>
-                                <span>ফিল্ড অফিসার</span>
+                                <span>অ্যাকাউন্টস অফিসার (AO)</span>
+                                <span>ফিল্ড অফিসার (FO)</span>
                             </div>
                         </div>
                     </div>
