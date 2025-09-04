@@ -1,7 +1,7 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { useRef } from "react";
-import { useAutoplayProgress } from "./EmblaCarouselAutoPlayProgress";
+import { useAutoplayProgress } from "./emblaCarouselAutoplayProgress";
 
 const EmblaCarousel = (props) => {
     const { slides, options, images } = props;
