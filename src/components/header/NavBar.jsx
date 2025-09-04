@@ -37,17 +37,21 @@ const NavBar = () => {
     const handleClick = (linkTitle) => {
         if (linkTitle === "Home") {
             navigate("/");
+            window.scrollTo({ top: 0, behavior: "smooth" });
             return;
         }
         if (linkTitle === "Registration Form") {
             navigate("/registration-form");
+            window.scrollTo({ top: 0, behavior: "smooth" });
             return;
         }
         if (linkTitle === "Withdraw History") {
             navigate("/withdraw-history");
+            window.scrollTo({ top: 0, behavior: "smooth" });
             return;
         }
         navigate(`/${linkTitle.toLowerCase()}`);
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
     const [isOpen, setIsOpen] = useState(false);
 
@@ -69,7 +73,7 @@ const NavBar = () => {
             <div className="md:hidden flex items-center">
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="p-2 focus:outline-none"
+                    className="p-2 focus:outline-none text-gray-700 dark:text-gray-300"
                     aria-label="Open menu"
                 >
                     {/* Hamburger icon */}
@@ -101,7 +105,7 @@ const NavBar = () => {
             />
             {/* Drawer */}
             <div
-                className={`md:hidden fixed inset-y-0 right-0 z-50 w-64 bg-white h-full shadow-lg p-6 flex flex-col space-y-4 transition-transform duration-300 transform ${
+                className={`md:hidden fixed inset-y-0 right-0 z-50 w-64 bg-white dark:bg-gray-800 h-full shadow-lg p-6 flex flex-col space-y-4 transition-transform duration-300 transform ${
                     isOpen ? "translate-x-0" : "translate-x-100"
                 }`}
             >
@@ -109,7 +113,7 @@ const NavBar = () => {
                 <br /> <br />
                 <button
                     onClick={() => setIsOpen(false)}
-                    className="absolute top-4 right-4 p-2 focus:outline-none"
+                    className="absolute top-4 right-4 p-2 focus:outline-none text-gray-700 dark:text-gray-300"
                     aria-label="Close menu"
                 >
                     {/* Close icon */}
@@ -144,6 +148,7 @@ const NavBar = () => {
                         onClick={() => {
                             navigate("/withdraw-history");
                             setIsOpen(false);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
                         className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 w-full"
                     >
@@ -157,6 +162,7 @@ const NavBar = () => {
                             onClick={() => {
                                 navigate("/login");
                                 setIsOpen(false);
+                                window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full"
                         >
@@ -166,6 +172,7 @@ const NavBar = () => {
                             onClick={() => {
                                 navigate("/signup");
                                 setIsOpen(false);
+                                window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
                             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 w-full"
                         >
@@ -180,6 +187,7 @@ const NavBar = () => {
                             auth.signOut();
                             navigate("/");
                             setIsOpen(false);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
                         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 w-full"
                     >

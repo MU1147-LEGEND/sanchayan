@@ -183,14 +183,14 @@ const Dashboard = () => {
             {/* search members by id */}
             <div className="mb-4 w-1/2 m-auto">
                 {/* Search Member label */}
-                <label className="block text-gray-700 mb-2 text-base font-semibold">
+                <label className="block text-gray-700 dark:text-gray-400 mb-2 text-base font-semibold">
                     সদস্য খুঁজুন:
                 </label>
 
                 <input
                     type="text"
                     placeholder="সদস্য আইডি, নাম, বা ফোন নম্বর দিয়ে খুঁজুন..."
-                    className="border-2 border-gray-300 p-2 rounded w-full mx-auto"
+                    className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full mx-auto dark:text-gray-300 dark-placeholder"
                     value={searchTerm}
                     onChange={(e) => {
                         setSearchTerm(e.target.value);
@@ -198,13 +198,13 @@ const Dashboard = () => {
                     }}
                 />
             </div>
-            <h1 className="text-2xl font-bold mb-4 text-center">
+            <h1 className="text-2xl font-bold mb-4 text-center text-black dark:text-white">
                 সদস্য তালিকা
             </h1>
 
             <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300 text-sm">
-                    <thead className="bg-gray-200 text-left">
+                <table className="min-w-full border border-gray-300 dark:border-gray-600 text-sm">
+                    <thead className="bg-gray-200 dark:bg-gray-700 dark:text-gray-300 text-left">
                         <tr>
                             <th className="p-2 border">ID</th>
                             <th className="p-2 border">নাম</th>
@@ -220,13 +220,13 @@ const Dashboard = () => {
                             .map((member) => (
                                 <tr
                                     key={member?.id}
-                                    className="hover:bg-gray-200 cursor-pointer"
+                                    className="hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-300 cursor-pointer"
                                     onClick={() => setSelectedMember(member)}
                                 >
                                     <td className="p-2 border">
                                         {member?.accountNumber}
                                     </td>
-                                    <td className="p-2 border text-blue-600 hover:underline">
+                                    <td className="p-2 border text-blue-600 dark:text-blue-400 hover:underline">
                                         {member?.nameEn}
                                     </td>
                                     <td className="p-2 border">
@@ -260,7 +260,7 @@ const Dashboard = () => {
                 <div className="mt-4 text-center flex items-center justify-center space-x-4">
                     <p
                         onClick={() => navigate("/")}
-                        className="text-blue-500 hover:underline cursor-pointer"
+                        className="text-blue-500 dark:text-blue-400 hover:underline cursor-pointer"
                     >
                         হোমে ফিরে যান
                     </p>
@@ -287,9 +287,9 @@ const Dashboard = () => {
                 <div
                     className={`fixed inset-0 bg-black/80 flex items-center justify-center z-50`}
                 >
-                    <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+                    <div className="bg-white dark:bg-gray-800 dark:text-gray-300 rounded-lg shadow-xl max-w-md w-full p-6 relative">
                         <button
-                            className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
+                            className="absolute top-2 right-2 text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 text-2xl font-bold"
                             onClick={() => setSelectedMember(null)}
                         >
                             ✕
@@ -353,7 +353,7 @@ const Dashboard = () => {
                                 <Link
                                     to={selectedMember.signature}
                                     target="_blank"
-                                    className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+                                    className="bg-blue-500 dark:bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-600"
                                 >
                                     View
                                 </Link>
@@ -394,11 +394,11 @@ const Dashboard = () => {
                                         value={addBalance}
                                         onChange={handleAddBalance}
                                         placeholder="টাকার পরিমাণ"
-                                        className="border-2 border-gray-300 p-2 rounded w-full"
+                                        className="border-2 border-gray-300 p-2 rounded w-full .dark-placeholder"
                                         style={{ marginTop: "10px" }}
                                     />
                                     <button
-                                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 dark:hover:bg-green-700 dark:text-gray-300"
                                         style={{ marginTop: "10px" }}
                                         onClick={() => {
                                             handleAddBalanceToUser();

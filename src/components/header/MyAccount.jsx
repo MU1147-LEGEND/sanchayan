@@ -17,7 +17,9 @@ const MyAccount = () => {
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                setDisplayName(docSnap?.data()?.nameBn?.split(" ")[0] || "User");
+                setDisplayName(
+                    docSnap?.data()?.nameBn?.split(" ")[0] || "User"
+                );
             }
         };
 
@@ -26,13 +28,14 @@ const MyAccount = () => {
 
     const handleClick = () => {
         navigate("/login");
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     return (
         <button
             onClick={handleClick}
-            className={`cursor-pointer hover:opacity-70 ${
-                user ? "text-green-600 font-semibold" : ""
+            className={`cursor-pointer hover:opacity-70 text-gray-700 dark:text-gray-300 ${
+                user ? "text-green-600 dark:text-green-400 font-semibold" : ""
             }`}
             // disabled={user}
         >

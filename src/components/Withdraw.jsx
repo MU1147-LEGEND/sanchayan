@@ -155,8 +155,10 @@ const Withdraw = () => {
     if (!user) {
         return (
             <div className="w-4/5 m-auto flex flex-col items-center justify-center h-[50vh] md:h-[70vh]">
-                <h1 className="text-2xl font-bold mb-4">Please Log In</h1>
-                <p className="text-lg text-gray-700 mb-6">
+                <h1 className="text-2xl font-bold mb-4 dark:text-gray-300">
+                    Please Log In
+                </h1>
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
                     You need to be logged in to make a withdrawal request.
                 </p>
                 <button
@@ -172,10 +174,10 @@ const Withdraw = () => {
     if (!verified) {
         return (
             <div className="w-4/5 m-auto flex flex-col items-center justify-center h-[50vh] md:h-[70vh]">
-                <h1 className="text-2xl font-bold mb-4">
+                <h1 className="text-2xl font-bold mb-4 dark:text-gray-300">
                     Account Not Verified
                 </h1>
-                <p className="text-lg text-gray-700 mb-6">
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
                     Your account is not verified. Please contact support to
                     verify your account.
                 </p>
@@ -184,24 +186,26 @@ const Withdraw = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold mb-4">Make a Withdraw Request</h1>
-            <p className="text-lg text-gray-700 mb-6">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+            <h1 className="text-3xl font-bold mb-4 dark:text-gray-300">
+                Make a Withdraw Request
+            </h1>
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
                 Please fill out the form below to request a withdrawal.
             </p>
             <form
                 onSubmit={(e) => {
                     handleSubmit(e);
                 }}
-                className="bg-white p-6 rounded shadow-md w-full max-w-md"
+                className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-md"
             >
                 <div className="mb-4">
                     <label
                         htmlFor="amount"
-                        className="text-sm font-medium text-gray-700 mb-2 flex justify-between"
+                        className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex justify-between"
                     >
                         Withdrawal Amount
-                        <span className="text-emerald-600 font-semibold">
+                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
                             Current Balance:{" "}
                             {totalBalance ? `৳${totalBalance}` : "৳0.00"}
                         </span>
@@ -218,13 +222,13 @@ const Withdraw = () => {
                             })
                         }
                         required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark-placeholder dark:text-gray-300 dark:border-gray-600"
                     />
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="accountNumber"
-                        className="block text-sm font-medium text-gray-700 mb-2"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                     >
                         Account Number
                     </label>
@@ -240,7 +244,7 @@ const Withdraw = () => {
                             })
                         }
                         required
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark-placeholder dark:text-gray-300 dark:border-gray-600"
                     />
                 </div>
                 <button
@@ -250,10 +254,10 @@ const Withdraw = () => {
                     Submit Request
                 </button>
             </form>
-            <p className="mt-4 text-sm text-gray-600">
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
                 Please allow 2-3 business days for processing.
             </p>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 If you have any questions, please contact our support team.
             </p>
         </div>

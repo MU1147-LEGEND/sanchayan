@@ -2,8 +2,8 @@ import React from "react";
 
 export default function InstitutionalStructure() {
     return (
-        <div className="w-full min-h-screen bg-neutral-50 flex justify-center p-6">
-            <div className="bg-white shadow-xl rounded-2xl max-w-3xl w-full p-8 leading-8 font-[Noto Sans Bengali]">
+        <div className="w-full min-h-screen bg-neutral-50 dark:bg-gray-800 dark:text-gray-200 flex justify-center p-6">
+            <div className="bg-white dark:bg-gray-700 shadow-xl rounded-2xl max-w-3xl w-full p-8 leading-8">
                 <h2 className="text-xl font-bold mb-4">প্রতিষ্ঠানিক কাঠামোঃ</h2>
                 <p className="mb-4">
                     সংস্থার দুটি স্তর বা কমিটিতে সমন্বয়ে পরিচালিত হবে। <br />
@@ -11,7 +11,7 @@ export default function InstitutionalStructure() {
                     ২. কার্যনির্বাহী পরিষদ (Exicative Committee)
                 </p>
 
-                <p className="mb-6 text-sm text-gray-700">
+                <p className="mb-6 text-sm text-gray-700 dark:text-gray-300">
                     * পরিচালনা পর্ষদের সদস্য সর্বোচ্চ বিশ (২০) জন Board of
                     Directors প্রতিষ্ঠানের সর্বোচ্চ নীতি নির্ধারনী বোর্ড বা
                     সংসদ। এই বোর্ডে প্রধানতঃ চেয়ারম্যান হিসেবে গঠন করা হয়। এর
@@ -28,7 +28,7 @@ export default function InstitutionalStructure() {
                     <span>সদস্য - ১৭ জন।</span>
                 </div>
 
-                <p className="mb-6 text-sm text-gray-700">
+                <p className="mb-6 text-sm text-gray-700 dark:text-gray-300">
                     কার্যনির্বাহী পরিষদঃ এটি প্রতিষ্ঠানের পরিচালনা পর্ষদের
                     অধীনস্থ একটি সংস্থা বা কমিটি যারা প্রতিষ্ঠানের দৈনন্দিন
                     কার্যক্রম পরিচালনা করেন। এর গঠন নিম্নরূপঃ

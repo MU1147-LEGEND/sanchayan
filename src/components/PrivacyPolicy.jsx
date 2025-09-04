@@ -5,7 +5,7 @@ import FDR_Scheme from "./FDR_Scheme";
 
 const PrivacyPolicy = () => {
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+        <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 dark:text-gray-300 shadow-md rounded-lg">
             <div className="privacy-policy mb-20 mt-10">
                 <H1>সঞ্চয়নের নীতিমালাঃ</H1>
                 <ul className="ml-4 space-y-5">

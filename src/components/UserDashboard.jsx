@@ -68,12 +68,12 @@ const UserDashboard = () => {
     if (!userData) {
         return (
             <>
-                <p className="text-center mt-10 text-red-600 font-semibold">
+                <p className="text-center mt-10 text-red-600 dark:text-red-400 font-semibold">
                     সদস্য তথ্য পাওয়া যায়নি। পেইজটি রিফ্রেশ করুন অথবা ফর্ম পূরণ
                     করুন। ফর্ম পূরণ করতে{" "}
                     <button>
                         <span
-                            className="text-blue-500 hover:underline"
+                            className="text-blue-500 dark:text-blue-400 hover:underline"
                             onClick={() => navigate("/registration-form")}
                         >
                             এখানে ক্লিক করুন
@@ -85,7 +85,7 @@ const UserDashboard = () => {
                         লগ আউট করতে{" "}
                         <button>
                             <span
-                                className="text-blue-500 hover:underline"
+                                className="text-blue-500 dark:text-blue-400 hover:underline"
                                 onClick={() => logOut(auth, navigate)}
                             >
                                 এখানে ক্লিক করুন
@@ -120,13 +120,13 @@ const UserDashboard = () => {
     } = userData;
 
     return (
-        <div className="max-w-3xl mx-auto p-4 mb-10 border rounded-lg shadow relative">
+        <div className="max-w-3xl dark:text-gray-300 mx-auto p-4 mb-10 border rounded-lg shadow relative">
             {/* balance show on top right corner */}
             <div className="md:absolute text-center top-5 right-5 mb-4 flex flex-col md:items-end">
-                <span className="text-lg font-semibold text-green-700">
+                <span className="text-lg font-semibold text-green-700 dark:text-green-300">
                     আপনার বর্তমান ব্যালেন্স: ৳{balance || "0.00"}
                 </span>
-                <span className="text-lg font-semibold text-green-700">
+                <span className="text-lg font-semibold text-green-700 dark:text-green-300">
                     রেফার করে পেয়েছেন: ৳{referralCount * 30 || "0.00"}
                 </span>
             </div>

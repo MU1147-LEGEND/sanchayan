@@ -1,10 +1,10 @@
 export default function DPS_Scheme() {
     return (
-        <div className=" w-full bg-white ">
+        <div className=" w-full bg-white dark:bg-gray-800 dark:text-gray-300">
             <div className=" mx-auto">
                 <div className="overflow-x-auto rounded-2xl border">
                     <table className="min-w-full text-center border-collapse">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th className="px-4 py-3 border">মাসিক জমা</th>
                                 <th className="px-4 py-3 border">
@@ -35,7 +35,7 @@ export default function DPS_Scheme() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="hover:bg-gray-100">
+                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">৫০০</td>
                                 <td className="border px-4 py-2">৬,০০০</td>
                                 <td className="border px-4 py-2">১২,০০০</td>
@@ -43,7 +43,7 @@ export default function DPS_Scheme() {
                                 <td className="border px-4 py-2">২৪,০০০</td>
                                 <td className="border px-4 py-2">৩০,০০০</td>
                             </tr>
-                            <tr className="hover:bg-gray-100">
+                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">১,০০০</td>
                                 <td className="border px-4 py-2">১২,০০০</td>
                                 <td className="border px-4 py-2">২৪,০০০</td>
@@ -51,7 +51,7 @@ export default function DPS_Scheme() {
                                 <td className="border px-4 py-2">৪৮,০০০</td>
                                 <td className="border px-4 py-2">৬০,০০০</td>
                             </tr>
-                            <tr className="hover:bg-gray-100">
+                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">২,০০০</td>
                                 <td className="border px-4 py-2">২৪,০০০</td>
                                 <td className="border px-4 py-2">৪৮,০০০</td>
@@ -59,7 +59,7 @@ export default function DPS_Scheme() {
                                 <td className="border px-4 py-2">৯৬,০০০</td>
                                 <td className="border px-4 py-2">১,২০,০০০</td>
                             </tr>
-                            <tr className="hover:bg-gray-100">
+                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">৩,০০০</td>
                                 <td className="border px-4 py-2">৩৬,০০০</td>
                                 <td className="border px-4 py-2">৭২,০০০</td>
@@ -67,7 +67,7 @@ export default function DPS_Scheme() {
                                 <td className="border px-4 py-2">১,৪৪,০০০</td>
                                 <td className="border px-4 py-2">১,৮০,০০০</td>
                             </tr>
-                            <tr className="hover:bg-gray-100">
+                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">৪,০০০</td>
                                 <td className="border px-4 py-2">৪৮,০০০</td>
                                 <td className="border px-4 py-2">৯৬,০০০</td>
@@ -75,7 +75,7 @@ export default function DPS_Scheme() {
                                 <td className="border px-4 py-2">১,৯২,০০০</td>
                                 <td className="border px-4 py-2">২,৪০,০০০</td>
                             </tr>
-                            <tr className="hover:bg-gray-100">
+                            <tr className="hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">৫,০০০</td>
                                 <td className="border px-4 py-2">৬০,০০০</td>
                                 <td className="border px-4 py-2">১,২০,০০০</td>
@@ -83,7 +83,7 @@ export default function DPS_Scheme() {
                                 <td className="border px-4 py-2">২,৪০,০০০</td>
                                 <td className="border px-4 py-2">৩,০০,০০০</td>
                             </tr>
-                            <tr className="bg-gray-50 font-semibold hover:bg-gray-100">
+                            <tr className="bg-gray-50 font-semibold hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600">
                                 <td className="border px-4 py-2">
                                     মুনাফার হার
                                 </td>

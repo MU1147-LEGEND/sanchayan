@@ -287,21 +287,21 @@ const MemberForm1 = () => {
                     />
                 </div>
                 <div>
-                    <h4 className="text-sm md:text-2xl font-bold text-center drop-shadow-lg tracking-wide">
+                    <h4 className="text-sm md:text-2xl text-black dark:text-gray-300 font-bold text-center drop-shadow-lg tracking-wide">
                         ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি সমাজ উন্নয়ন সংস্থা।
                     </h4>
                 </div>
                 <div className="w-1/4 m-auto text-left">
-                    <h2 className="text-4xl font-extrabold text-emerald-600 drop-shadow-lg ">
+                    <h2 className="text-4xl font-extrabold text-emerald-600 dark:text-emerald-500 drop-shadow-lg ">
                         সঞ্চয়ন
                     </h2>
-                    <p className="text-[0.5rem] font-bold text-left text-wrap">
+                    <p className="text-[0.5rem] text-black dark:text-gray-300 font-bold text-left text-wrap">
                         মাল্টিপারপাস <br /> কো-অপারেটিভ সোসাইটি।
                     </p>
                 </div>
             </div>
             <div className="hidden lg:block w-11/12 m-auto text-center ">
-                <p className="text-center text-orange-900 text-sm font-semibold">
+                <p className="text-center text-orange-900 dark:text-orange-300 text-sm font-semibold">
                     "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
                     করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
                 </p>
@@ -323,14 +323,14 @@ const MemberForm1 = () => {
                             </h1>
                         </div>
                         <div>
-                            <p className="text-[0.5rem] font-bold text-center text-wrap">
+                            <p className="text-[0.5rem] font-bold text-center text-wrap text-black dark:text-gray-300">
                                 মাল্টিপারপাস <br /> কো-অপারেটিভ সোসাইটি।
                             </p>
                         </div>
                     </div>
                 </div>
                 <div className="w-11/12 m-auto text-center ">
-                    <p className="text-center text-orange-900 text-sm font-semibold">
+                    <p className="text-center text-orange-900 dark:text-orange-300 text-sm font-semibold">
                         "আল্লাহ তায়ালা ব্যবসাকে হালাল করেছেন এবং সুদকে হারাম
                         করেছেন"। (সূরা আল-বাকারা, আয়াতঃ ২৭৫)
                     </p>
@@ -340,7 +340,7 @@ const MemberForm1 = () => {
             <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="p-6 max-w-4xl lg:w-[80%] mx-auto space-y-4 bg-white rounded-xl shadow-2xl border border-gray-100"
+                className="p-6 max-w-4xl lg:w-[80%] mx-auto space-y-4 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 rounded-xl shadow-2xl border border-gray-100"
             >
                 <span className="w-full block border-dashed border-b-3 mt-2 border-green-500"></span>
                 {isSubmitted ? (
@@ -449,7 +449,7 @@ const MemberForm1 = () => {
                             onChange={handleChange}
                             value={form.refarenceNumber}
                             placeholder="রেফারেন্স নম্বর"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                         />
                         <span className="w-full block border-dashed border-b-3 mt-2 border-black"></span>
                         <h3 className="text-md font-bold mt-4">
@@ -464,7 +464,7 @@ const MemberForm1 = () => {
                             value={form.nameBn}
                             onChange={handleChange}
                             placeholder="নাম (বাংলায়)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -476,7 +476,7 @@ const MemberForm1 = () => {
                             value={form.nameEn}
                             onChange={handleChange}
                             placeholder="Name (in English)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -488,7 +488,7 @@ const MemberForm1 = () => {
                             value={form.fatherNameEn}
                             onChange={handleChange}
                             placeholder="Father's Name (English)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -500,7 +500,7 @@ const MemberForm1 = () => {
                             value={form.motherNameEn}
                             onChange={handleChange}
                             placeholder="Mother's Name (English)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -511,7 +511,7 @@ const MemberForm1 = () => {
                             name="dob"
                             value={form.dob}
                             onChange={handleChange}
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
 
@@ -549,7 +549,7 @@ const MemberForm1 = () => {
                             value={form.religion}
                             onChange={handleChange}
                             placeholder="ধর্ম"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                         />
                         <label className="block font-semibold">
                             এনআইডি/জন্মনিবন্ধন নম্বর:
@@ -560,7 +560,7 @@ const MemberForm1 = () => {
                             value={form.nid}
                             onChange={handleChange}
                             placeholder="এনআইডি/জন্মনিবন্ধন নম্বর"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -572,7 +572,7 @@ const MemberForm1 = () => {
                             value={form.mobile}
                             onChange={handleChange}
                             placeholder="মোবাইল নম্বর"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">ইমেইল:</label>
@@ -582,7 +582,7 @@ const MemberForm1 = () => {
                             value={form.email}
                             onChange={handleChange}
                             placeholder="ইমেইল"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                         />
                         <label className="block font-semibold">
                             বর্তমান ঠিকানা:
@@ -592,7 +592,7 @@ const MemberForm1 = () => {
                             value={form.presentAddress}
                             onChange={handleChange}
                             placeholder="বর্তমান ঠিকানা"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         ></textarea>
                         <label className="block font-semibold">
@@ -603,7 +603,7 @@ const MemberForm1 = () => {
                             value={form.permanentAddress}
                             onChange={handleChange}
                             placeholder="স্থায়ী ঠিকানা"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         ></textarea>
                         <label className="block font-semibold">জাতীয়তা:</label>
@@ -613,7 +613,7 @@ const MemberForm1 = () => {
                             name="nationality"
                             value={form.nationality}
                             onChange={handleChange}
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -684,7 +684,7 @@ const MemberForm1 = () => {
                             value={form.nominee.nameBn}
                             onChange={handleChange}
                             placeholder="নাম (বাংলায়)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -696,7 +696,7 @@ const MemberForm1 = () => {
                             value={form.nominee.nameEn}
                             onChange={handleChange}
                             placeholder="Name (English)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -709,7 +709,7 @@ const MemberForm1 = () => {
                             value={form.nominee.fatherNameEn}
                             onChange={handleChange}
                             placeholder="Father's Name (English)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
 
@@ -722,7 +722,7 @@ const MemberForm1 = () => {
                             value={form.nominee.motherNameEn}
                             onChange={handleChange}
                             placeholder="Mother's Name (English)"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -734,7 +734,7 @@ const MemberForm1 = () => {
                             value={form.nominee.relation}
                             onChange={handleChange}
                             placeholder="Relation with Member"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -746,7 +746,7 @@ const MemberForm1 = () => {
                             name="nominee.dob"
                             value={form.nominee.dob}
                             onChange={handleChange}
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
 
@@ -785,7 +785,7 @@ const MemberForm1 = () => {
                             value={form.nominee.nid}
                             onChange={handleChange}
                             placeholder="এনআইডি/জন্মনিবন্ধন নম্বর"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         <label className="block font-semibold">
@@ -797,7 +797,7 @@ const MemberForm1 = () => {
                             value={form.nominee.mobile}
                             onChange={handleChange}
                             placeholder="মোবাইল নম্বর"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                         />
 
                         <label className="block font-semibold">
@@ -808,7 +808,7 @@ const MemberForm1 = () => {
                             value={form.nominee.presentAddress}
                             onChange={handleChange}
                             placeholder="বর্তমান ঠিকানা"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         ></textarea>
                         <label className="block font-semibold">
@@ -819,7 +819,7 @@ const MemberForm1 = () => {
                             value={form.nominee.permanentAddress}
                             onChange={handleChange}
                             placeholder="স্থায়ী ঠিকানা"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         ></textarea>
 
@@ -850,7 +850,7 @@ const MemberForm1 = () => {
                             }
                             onChange={handleChange}
                             placeholder="নমিনির স্বাক্ষর"
-                            className="w-full border p-2"
+                            className="w-full border p-2 dark-placeholder"
                             required
                         />
                         {/* animated checkbox agree terms and conditions */}
@@ -868,7 +868,7 @@ const MemberForm1 = () => {
                                     name="checkTerms"
                                 />
                                 <svg
-                                    className="z-50 w-4 h-4 text-black transition-all duration-300 -translate-x-4 translate-y-4 opacity-0 peer-checked:translate-x-0 peer-checked:translate-y-0 peer-checked:opacity-100"
+                                    className="z-50 w-4 h-4 text-black dark:text-white transition-all duration-300 -translate-x-4 translate-y-4 opacity-0 peer-checked:translate-x-0 peer-checked:translate-y-0 peer-checked:opacity-100"
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
@@ -920,7 +920,7 @@ const MemberForm1 = () => {
             {!user && (
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/5 backdrop-blur-[1.5px] flex flex-col items-center justify-center z-10 text-center p-6 rounded h-full ">
                     <div className="absolute top-0 left-0 right-0 bottom-0 h-[70vh] z-10 text-center p-6 rounded flex flex-col items-center justify-center">
-                        <p className="text-xl font-semibold mb-4 text-red-600">
+                        <p className="text-xl font-semibold mb-4 text-red-600 dark:text-red-400">
                             You must login to fill the form
                         </p>
                         <button
@@ -934,12 +934,12 @@ const MemberForm1 = () => {
             )}
             {/* if user exists and submitted form */}
             {alreadySubmitted && (
-                <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen">
-                    <p className="text-xl font-semibold mb-4 text-red-600">
+                <div className="fixed inset-0 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm flex flex-col items-center justify-center z-10 text-center p-6 rounded h-screen">
+                    <p className="text-xl font-semibold mb-4 text-red-600 dark:text-red-400">
                         আপনি একটি ফর্ম জমা দিয়েছেন। আপনার তথ্য পরিবর্তন করতে
                         সাপোর্ট টিমের সাথে যোগাযোগ করুন। ধন্যবাদ!
                     </p>
-                    <p className="my-4"> সাপোর্টঃ +8801747337534</p>
+                    <p className="my-4 dark:text-gray-300"> সাপোর্টঃ +8801747337534</p>
                     <button
                         onClick={() => navigate("/login")}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"

@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NavLink = ({ linkTitle, handleClick }) => {
     const location = useLocation();
@@ -27,10 +27,15 @@ const NavLink = ({ linkTitle, handleClick }) => {
     useEffect(() => {
         if (buttonRef.current) {
             if (isActive) {
-                buttonRef.current.classList.add("text-blue-600", "font-bold");
+                buttonRef.current.classList.add(
+                    "text-blue-600",
+                    "dark:text-blue-400",
+                    "font-bold"
+                );
             } else {
                 buttonRef.current.classList.remove(
                     "text-blue-600",
+                    "dark:text-blue-400",
                     "font-bold"
                 );
             }
@@ -46,7 +51,7 @@ const NavLink = ({ linkTitle, handleClick }) => {
         <button
             ref={buttonRef}
             type="button"
-            className="navlink-btn hover:text-gray-500 transition-colors cursor-pointer bg-transparent border-none p-0"
+            className="navlink-btn hover:text-gray-500 dark:hover:text-gray-400 transition-colors cursor-pointer bg-transparent border-none p-0 text-gray-700 dark:text-gray-300"
             onClick={handleButtonClick}
         >
             {linkTitle}

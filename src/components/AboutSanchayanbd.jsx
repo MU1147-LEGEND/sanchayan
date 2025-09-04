@@ -1,11 +1,11 @@
 const AboutSanchayanbd = () => {
     return (
         <>
-            <p className="text-lg text-gray-700 mb-4">
-                “আল্লাহ তা’য়ালা ব্যবসায়কে হালাল করেছেন এবং সুদকে হারাম করেছেন”
+            <p className="text-lg mb-4 transition-colors duration-300 text-gray-700 dark:text-gray-300">
+                "আল্লাহ তা'য়ালা ব্যবসায়কে হালাল করেছেন এবং সুদকে হারাম করেছেন"
                 । (সূরা বাকারাহ্ আয়াত নং—২৭৫)।
             </p>
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-lg mb-4 transition-colors duration-300 text-gray-700 dark:text-gray-300">
                 ইসলামী শরীয়াহ্ মোতাবেক ব্যবসায় কার্য পরিচালনা করা,
                 বিনিয়োগকারী প্রত্যেক সদস্যের অর্থনৈতিক ও সামাজিক মর্যাদা
                 বৃদ্ধিকরা, সমাজের উন্নয়ন সাধন করা, ইসলামী শিক্ষা ও সংস্কৃতির
@@ -18,4 +18,5 @@ const AboutSanchayanbd = () => {
         </>
     );
 };
+
 export default AboutSanchayanbd;

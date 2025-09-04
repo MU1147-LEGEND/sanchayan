@@ -1,0 +1,90 @@
+.embla {
+    max-width: 95vw;
+    margin: auto;
+    --slide-height: 20rem;
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+}
+.embla__viewport {
+    overflow: hidden;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+}
+
+.embla__viewport:active {
+    cursor: grabbing;
+}
+.embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+}
+.embla__slide__number {
+    border-radius: 1.5rem;
+    font-size: 4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--slide-height);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+}
+
+.embla__slide__number:active {
+    cursor: grabbing;
+}
+
+/* progress */
+.embla__progress {
+    border-radius: 1rem;
+    background-color: rgba(229, 231, 235, 0.8);
+    position: relative;
+    height: 0.8rem;
+    width: 16rem;
+    max-width: 90%;
+    overflow: hidden;
+    margin: 1.5rem auto 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.embla__progress__bar {
+    background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%);
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    border-radius: 1rem;
+}
+.embla__progress {
+    transition: opacity 0.3s ease-in-out;
+    margin: 1.5rem auto 0;
+}
+.embla__progress--hidden {
+    opacity: 0;
+}
+.embla__progress__bar {
+    animation-name: autoplay-progress;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+.embla__progress--hidden .embla__progress__bar {
+    animation-play-state: paused;
+}
+@keyframes autoplay-progress {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(100%, 0, 0);
+    }
+}

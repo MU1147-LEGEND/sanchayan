@@ -1,7 +1,9 @@
 import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
-import H1 from "./custom-tags/H1";
 import AboutSanchayanbd from "./AboutSanchayanbd";
+import H1 from "./custom-tags/H1";
+import "./embla-carousel/embla.css";
+import EmblaCarousel from "./embla-carousel/EmblaCarousel";
 
 const Home = () => {
     const images = [
@@ -26,28 +28,40 @@ const Home = () => {
     ];
     const auth = getAuth();
     const user = auth.currentUser;
+
+    const OPTIONS = { loop: true };
+    const SLIDES = images.map((_, index) => index);
+
     return (
-        <div className="min-h-screen flex flex-col pb-8">
+        <div className="min-h-screen flex flex-col pb-8 bg-white dark:bg-gray-900">
             {/* Hero Section */}
-            <div className="bg-gradient-to-br from-green-100 to-green-300 py-20 px-6 text-center">
+            <div className="py-20 px-6 text-center bg-gradient-to-br from-green-100 to-green-300 dark:from-gray-800 dark:to-gray-900">
                 <H1>সঞ্চয়ন</H1>
-                <p className="text-lg md:text-xl text-green-800 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-green-800 dark:text-green-300 max-w-3xl mx-auto">
                     ইসলামী শরীয়াহ্ ভিত্তিক পরিচালিত একটি সমাজ উন্নয়ন সংস্থা।
                 </p>
                 <div className="mt-8 flex justify-center gap-4 flex-wrap">
-                    <button>
+                    <button
+                        onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                        }
+                    >
                         <Link
                             to="/registration-form"
-                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                            className="px-6 py-3 rounded-lg bg-green-600 dark:bg-green-700 text-white hover:bg-green-700 dark:hover:bg-green-600 transition-all duration-300"
                         >
                             সদস্য হোন
                         </Link>
                     </button>
 
-                    <button>
+                    <button
+                        onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                        }
+                    >
                         <Link
                             to="/userdashboard"
-                            className="bg-white text-green-700 border border-green-600 px-6 py-3 rounded-lg hover:bg-green-100 transition"
+                            className="px-6 py-3 rounded-lg border bg-white dark:bg-gray-800 text-green-700 dark:text-green-300 border-green-600 dark:border-green-700 hover:bg-green-100 dark:hover:bg-gray-700 transition-all duration-300"
                         >
                             {user ? "ড্যাশবোর্ডে যান" : "লগইন করুন"}
                         </Link>
@@ -56,40 +70,24 @@ const Home = () => {
             </div>
 
             {/* Gallery Section */}
-            <div className="bg-gray-100 py-12 px-6">
-                {/* <H1>আমাদের কিছু মুহূর্ত</H1> */}
-                <div>
-                    {/* <p className="text-center text-gray-600 mb-6">
-                        আমাদের সদস্যদের সঞ্চয় ও ঋণ কার্যক্রমের কিছু ছবি। সঞ্চয় ও
-                        ঋণের মাধ্যমে আমরা একসাথে একটি শক্তিশালী আর্থিক ভিত্তি
-                        গড়ে তুলতে কাজ করছি।
-                    </p> */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {images.map((image) => (
-                            <div
-                                key={image.id}
-                                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
-                            >
-                                <img
-                                    src={image.src}
-                                    alt={image.alt}
-                                    className="w-full h-56 object-cover"
-                                />
-                                <div className="p-4">
-                                    <h3 className="text-xl font-semibold text-gray-700 text-center">
-                                        {image.title}
-                                    </h3>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <div className="py-12 px-6 transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
+                {/* carousel */}
+                <EmblaCarousel
+                    slides={SLIDES}
+                    options={OPTIONS}
+                    images={images}
+                />
+
                 {/* filler */}
                 <div className="text-center mt-8">
-                    <button>
+                    <button
+                        onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                        }
+                    >
                         <Link
                             to="/gallery"
-                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                            className="px-6 py-3 rounded-lg transition-all duration-300 bg-green-600 dark:bg-green-700 text-white hover:bg-green-700 dark:hover:bg-green-600"
                         >
                             আরও দেখুন
                         </Link>
@@ -98,14 +96,18 @@ const Home = () => {
             </div>
 
             {/* About Section */}
-            <div className="py-16 px-6 bg-white text-center">
+            <div className="py-16 px-6 text-center transition-colors duration-300 bg-white dark:bg-gray-900">
                 <H1>আমাদের সম্পর্কে</H1>
                 <AboutSanchayanbd />
                 <div className="text-center mt-8">
-                    <button>
+                    <button
+                        onClick={() =>
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                        }
+                    >
                         <Link
                             to="/about"
-                            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+                            className="px-6 py-3 rounded-lg transition-all duration-300 bg-green-600 dark:bg-green-700 text-white hover:bg-green-700 dark:hover:bg-green-600"
                         >
                             বিস্তারিত দেখুন
                         </Link>

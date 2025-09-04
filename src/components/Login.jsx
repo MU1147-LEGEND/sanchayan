@@ -70,9 +70,9 @@ export default function Login() {
     if (user) return <Navigate to="/dashboard" />;
     // If user is not logged in, show the login form
     return (
-        <div className="min-h-[70vh] w-full flex flex-col items-center justify-center bg-gray-100">
+        <div className="min-h-[70vh] w-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 my-12">
             <div className="w-full max-w-md p-4">
-                <h1 className="text-3xl font-bold text-center mb-4">
+                <h1 className="text-3xl font-bold text-center mb-4 dark:text-gray-300">
                     Sanchayan লগইন
                 </h1>
 
@@ -118,14 +118,14 @@ export default function Login() {
                 {loginMethod === "email" ? (
                     <form
                         onSubmit={handleEmailLogin}
-                        className="bg-white p-6 rounded shadow-md"
+                        className="bg-white dark:bg-gray-700 p-6 rounded shadow-md"
                     >
                         <input
                             type="email"
                             placeholder="ইমেইল"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full p-2 border rounded mb-4"
+                            className="w-full p-2 border rounded mb-4 dark-placeholder dark:text-gray-300 dark:border-gray-600"
                             required
                         />
                         <input
@@ -133,7 +133,7 @@ export default function Login() {
                             placeholder="পাসওয়ার্ড"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-2 border rounded mb-4"
+                            className="w-full p-2 border rounded mb-4 dark-placeholder dark:text-gray-300 dark:border-gray-600"
                             required
                         />
                         <button
@@ -143,13 +143,17 @@ export default function Login() {
                             লগইন
                         </button>
                         <span className="flex mt-4 items-center justify-center">
-                            <hr className="w-1/3" />
-                            <span className="w-1/3 text-center">অথবা</span>
-                            <hr className="w-1/3" />
+                            <hr className="w-1/3 dark:border-gray-500" />
+                            <span className="w-1/3 text-center dark:text-gray-300">
+                                অথবা
+                            </span>
+                            <hr className="w-1/3 dark:border-gray-500" />
                         </span>
-                        <Link to='/signup'
+                        <Link
+                            to="/signup"
+                            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                             // onClick={() => navigate("/signup")}
-                            
+
                             className="block text-center w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-2"
                         >
                             সাইন আপ করুন
@@ -210,11 +214,11 @@ export default function Login() {
                 </div>
             </div>
 
-            <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-center py-2">
+            {/* <footer className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white text-center py-2">
                 <p>
                     © {new Date().getFullYear()} Sanchayan. All rights reserved.
                 </p>
-            </footer>
+            </footer> */}
         </div>
     );
 }

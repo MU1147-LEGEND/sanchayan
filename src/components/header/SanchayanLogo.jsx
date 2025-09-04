@@ -17,6 +17,7 @@ const SanchayanLogo = ({ place = "header" }) => {
                 });
                 buttons[0].classList.add("text-blue-600", "font-bold");
                 navigate("/");
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }}
         >
             <img className="w-24 inline" src={siteLogo} alt="site logo" />
