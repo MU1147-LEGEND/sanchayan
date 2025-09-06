@@ -17,6 +17,7 @@ import { ThemeProvider } from "./components/ThemeContext";
 import UserDashboard from "./components/UserDashboard";
 import Withdraw from "./components/Withdraw";
 import WithdrawHistory from "./components/WithdrawHistory";
+import SignatureField from "./SignatureCanvas";
 
 const App = () => {
     return (
@@ -67,6 +68,10 @@ const App = () => {
 
                             {/* Fallback */}
                             <Route path="*" element={<ErrorPage />} />
+                            <Route
+                                path="/signature"
+                                element={<SignatureField />}
+                            />
                         </Route>
                     </Routes>
                 </HashRouter>

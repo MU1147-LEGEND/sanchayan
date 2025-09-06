@@ -89,6 +89,10 @@ const MemberForm1 = () => {
         ],
     };
 
+    // ===== Signature field states =====
+    const [showSignatureModal, setShowSignatureModal] = useState(false); // modal open/close
+    const [isDrawing, setIsDrawing] = useState(false); // drawing চলছে কি না
+
     useEffect(() => {
         if (user) {
             setForm((prev) => ({
@@ -636,43 +640,185 @@ const MemberForm1 = () => {
                             />
                         )}
 
-                        <label className="block font-semibold">
-                            স্বাক্ষর (ছবি) - Width:300px, Height:200px:
+                        {/* Signature Field */}
+                        <label className="block font-semibold mb-1">
+                            স্বাক্ষর (Canvas):
                         </label>
-                        <input
-                            type="file"
-                            name="signature"
-                            onChange={(e) => {
-                                // validate image size, required size 300x200
-                                const file = e.target.files[0];
-                                if (file) {
-                                    const img = new Image();
-                                    img.src = URL.createObjectURL(file);
-                                    img.onload = () => {
-                                        if (
-                                            img.width !== 300 ||
-                                            img.height !== 200
-                                        ) {
-                                            alert(
-                                                "Invalid image size. Please upload an image of size 300x200."
-                                            );
-                                            e.target.value = null;
-                                            return;
-                                        }
-                                        handleUpload(e, "signature");
-                                    };
-                                }
+                        <div
+                            className="border rounded-md p-2 cursor-pointer bg-white"
+                            onClick={() => {
+                                setShowSignatureModal(true);
+                                document.body.style.overflow = "hidden";
+                                setTimeout(() => {
+                                    const canvas =
+                                        document.getElementById(
+                                            "signature-canvas"
+                                        );
+                                    if (canvas) {
+                                        const ctx = canvas.getContext("2d");
+                                        ctx.clearRect(
+                                            0,
+                                            0,
+                                            canvas.width,
+                                            canvas.height
+                                        );
+                                    }
+                                }, 50);
                             }}
-                            className="w-full border p-2"
-                            required
-                        />
-                        {form.signature && (
-                            <img
-                                src={form.signature}
-                                alt="স্বাক্ষর"
-                                className="w-[100px] h-[50px] object-cover mt-2"
-                            />
+                        >
+                            {form.signature ? (
+                                <img
+                                    src={form.signature}
+                                    alt="স্বাক্ষর"
+                                    className="w-[100px] h-[50px] object-cover"
+                                />
+                            ) : (
+                                <span className="text-gray-400">
+                                    Click to sign
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Signature Modal */}
+                        {showSignatureModal && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <div className="bg-white rounded-lg p-4 w-[90%] max-w-md">
+                                    <h2 className="text-lg font-medium mb-2">
+                                        Sign Below
+                                    </h2>
+                                    <canvas
+                                        id="signature-canvas"
+                                        width={300}
+                                        height={200}
+                                        className="border border-gray-400 rounded-md bg-white touch-none"
+                                        onMouseDown={(e) => {
+                                            const canvas = e.target;
+                                            const ctx = canvas.getContext("2d");
+                                            ctx.beginPath();
+                                            ctx.moveTo(
+                                                e.nativeEvent.offsetX,
+                                                e.nativeEvent.offsetY
+                                            );
+                                            setIsDrawing(true);
+                                        }}
+                                        onMouseMove={(e) => {
+                                            if (!isDrawing) return;
+                                            const canvas = e.target;
+                                            const ctx = canvas.getContext("2d");
+                                            ctx.lineWidth = 2;
+                                            ctx.lineCap = "round";
+                                            ctx.strokeStyle = "black";
+                                            ctx.lineTo(
+                                                e.nativeEvent.offsetX,
+                                                e.nativeEvent.offsetY
+                                            );
+                                            ctx.stroke();
+                                        }}
+                                        onMouseUp={() => setIsDrawing(false)}
+                                        onMouseLeave={() => setIsDrawing(false)}
+                                        onTouchStart={(e) => {
+                                            e.preventDefault();
+                                            const canvas = e.target;
+                                            const rect =
+                                                canvas.getBoundingClientRect();
+                                            const ctx = canvas.getContext("2d");
+                                            ctx.beginPath();
+                                            ctx.moveTo(
+                                                e.touches[0].clientX -
+                                                    rect.left,
+                                                e.touches[0].clientY - rect.top
+                                            );
+                                            setIsDrawing(true);
+                                        }}
+                                        onTouchMove={(e) => {
+                                            e.preventDefault();
+                                            if (!isDrawing) return;
+                                            const canvas = e.target;
+                                            const rect =
+                                                canvas.getBoundingClientRect();
+                                            const ctx = canvas.getContext("2d");
+                                            ctx.lineWidth = 2;
+                                            ctx.lineCap = "round";
+                                            ctx.strokeStyle = "black";
+                                            ctx.lineTo(
+                                                e.touches[0].clientX -
+                                                    rect.left,
+                                                e.touches[0].clientY - rect.top
+                                            );
+                                            ctx.stroke();
+                                        }}
+                                        onTouchEnd={() => setIsDrawing(false)}
+                                    />
+                                    <div className="flex justify-end gap-2 mt-3">
+                                        <button
+                                            onClick={() => {
+                                                const canvas =
+                                                    document.getElementById(
+                                                        "signature-canvas"
+                                                    );
+                                                const ctx =
+                                                    canvas.getContext("2d");
+                                                ctx.clearRect(
+                                                    0,
+                                                    0,
+                                                    canvas.width,
+                                                    canvas.height
+                                                );
+                                            }}
+                                            className="px-3 py-1 bg-red-500 text-white rounded-md"
+                                        >
+                                            Clear
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                const canvas =
+                                                    document.getElementById(
+                                                        "signature-canvas"
+                                                    );
+                                                canvas.toBlob((blob) => {
+                                                    // random name for signature pic
+                                                    const fileName = `signature_${Date.now()}.png`;
+                                                    // create fake event for handleUpload
+                                                    const file = new File(
+                                                        [blob],
+                                                        fileName,
+                                                        {
+                                                            type: "image/png",
+                                                        }
+                                                    );
+                                                    const fakeEvent = {
+                                                        target: {
+                                                            files: [file],
+                                                        },
+                                                    };
+                                                    handleUpload(
+                                                        fakeEvent,
+                                                        "signature"
+                                                    );
+                                                });
+                                                setShowSignatureModal(false);
+                                                document.body.style.overflow =
+                                                    "auto";
+                                            }}
+                                            className="px-3 py-1 bg-green-600 text-white rounded-md"
+                                        >
+                                            Done
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setShowSignatureModal(false);
+                                                document.body.style.overflow =
+                                                    "auto";
+                                            }}
+                                            className="px-3 py-1 bg-gray-400 text-white rounded-md"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         )}
+
                         <span className="w-full block border-dashed border-b-3 mt-2 border-black"></span>
                         <h3 className="text-lg font-bold mt-4">নমিনির তথ্য</h3>
                         <label className="block font-semibold">
@@ -939,7 +1085,10 @@ const MemberForm1 = () => {
                         আপনি একটি ফর্ম জমা দিয়েছেন। আপনার তথ্য পরিবর্তন করতে
                         সাপোর্ট টিমের সাথে যোগাযোগ করুন। ধন্যবাদ!
                     </p>
-                    <p className="my-4 dark:text-gray-300"> সাপোর্টঃ +8801747337534</p>
+                    <p className="my-4 dark:text-gray-300">
+                        {" "}
+                        সাপোর্টঃ +8801747337534
+                    </p>
                     <button
                         onClick={() => navigate("/login")}
                         className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer active:translate-y-0.5"

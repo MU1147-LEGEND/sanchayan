@@ -22,10 +22,10 @@ const Contact = () => {
                 <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
                     ফোন:{" "}
                     <a
-                        href="tel:+8801535736189"
+                        href="tel:+8801535796189"
                         className="text-blue-600 dark:text-blue-300 hover:underline"
                     >
-                        +880 1537-36189
+                        +88 015 35-796 189
                     </a>
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
