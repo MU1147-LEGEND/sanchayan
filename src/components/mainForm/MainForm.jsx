@@ -642,7 +642,7 @@ const MemberForm1 = () => {
 
                         {/* Signature Field */}
                         <label className="block font-semibold mb-1">
-                            স্বাক্ষর (Canvas):
+                            স্বাক্ষর:
                         </label>
                         <div
                             className="border rounded-md p-2 cursor-pointer bg-white"
@@ -674,7 +674,7 @@ const MemberForm1 = () => {
                                 />
                             ) : (
                                 <span className="text-gray-400">
-                                    Click to sign
+                                    স্বাক্ষর করতে এখানে ক্লিক করুন
                                 </span>
                             )}
                         </div>
@@ -684,7 +684,7 @@ const MemberForm1 = () => {
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                                 <div className="bg-white rounded-lg p-4 w-[90%] max-w-md">
                                     <h2 className="text-lg font-medium mb-2">
-                                        Sign Below
+                                        স্বাক্ষর করুন
                                     </h2>
                                     <canvas
                                         id="signature-canvas"
@@ -818,6 +818,8 @@ const MemberForm1 = () => {
                                 </div>
                             </div>
                         )}
+
+                        {/* Signature Field End */}
 
                         <span className="w-full block border-dashed border-b-3 mt-2 border-black"></span>
                         <h3 className="text-lg font-bold mt-4">নমিনির তথ্য</h3>
