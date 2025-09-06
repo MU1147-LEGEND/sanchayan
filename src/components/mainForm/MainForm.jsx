@@ -235,13 +235,27 @@ const MemberForm1 = () => {
         }
     };
 
-    // { handle uploading image
+    //  handle uploading image
     const handleUpload = async (e, fieldName) => {
+        // Safely prevent default behavior and event bubbling only if methods exist
+        if (e && typeof e.preventDefault === 'function') {
+            e.preventDefault();
+        }
+        if (e && typeof e.stopPropagation === 'function') {
+            e.stopPropagation();
+        }
+
         const file = e.target.files[0];
+
+        // Check if file is selected
+        if (!file) {
+            return;
+        }
+
         const formData = new FormData();
         formData.append("image", file);
 
-        const apiKey = "65d02a3a04552785c182ff19885d6f2d"; // replace with your key
+        const apiKey = "65d02a3a04552785c182ff19885d6f2d"; // imgbb api key
 
         try {
             const res = await fetch(
@@ -271,11 +285,20 @@ const MemberForm1 = () => {
                     }));
                 }
             } else {
-                alert("❌ Upload failed!");
+                console.error("Upload failed:", data);
+                // Use a less intrusive error notification instead of alert
+                setError("❌ Upload failed! Please try again.");
+                // Clear error after 3 seconds
+                setTimeout(() => setError(null), 3000);
             }
         } catch (err) {
             console.error("Upload error:", err);
-            alert("❌ Upload error");
+            // Use a less intrusive error notification instead of alert
+            setError(
+                "❌ Upload error! Please check your connection and try again."
+            );
+            // Clear error after 3 seconds
+            setTimeout(() => setError(null), 3000);
         }
     };
 
@@ -629,6 +652,7 @@ const MemberForm1 = () => {
                             onChange={(e) => {
                                 handleUpload(e, "photo");
                             }}
+                            accept="image/*"
                             className="w-full border p-2"
                             required
                         />
@@ -980,6 +1004,7 @@ const MemberForm1 = () => {
                             onChange={(e) => {
                                 handleUpload(e, "nominee.photo");
                             }}
+                            accept="image/*"
                             className="w-full border p-2"
                         />
                         {form.nominee.photo && (

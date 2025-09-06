@@ -111,6 +111,7 @@ const UserDashboard = () => {
         subMemberType,
         email,
         mobile,
+        monthlySavings,
         accountNumber,
         memberType,
         photo,
@@ -159,6 +160,10 @@ const UserDashboard = () => {
                     <strong>সদস্যের ধরন:</strong> {memberType}
                     {" > "}
                     {subMemberType}
+                </p>
+
+                <p>
+                    <strong>মাসিক সঞ্চয়:</strong> ৳{monthlySavings || "0.00"}
                 </p>
                 <p>
                     <strong>জন্ম তারিখ:</strong> {dob}

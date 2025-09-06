@@ -319,6 +319,9 @@ const Dashboard = () => {
                                 {selectedMember?.subMemberType}
                             </p>
                             <p>
+                                <strong>মাসিক সঞ্চয়:</strong> ৳{selectedMember.monthlySavings || "0.00"}
+                            </p>
+                            <p>
                                 <strong>পিতা:</strong>{" "}
                                 {selectedMember.fatherNameEn}
                             </p>
@@ -398,7 +401,7 @@ const Dashboard = () => {
                                         style={{ marginTop: "10px" }}
                                     />
                                     <button
-                                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 dark:hover:bg-green-700 dark:text-gray-300"
+                                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 dark:hover:bg-green-700 dark:text-gray-900"
                                         style={{ marginTop: "10px" }}
                                         onClick={() => {
                                             handleAddBalanceToUser();
