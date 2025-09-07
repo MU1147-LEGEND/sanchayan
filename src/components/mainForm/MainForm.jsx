@@ -255,8 +255,8 @@ const MemberForm1 = () => {
         const formData = new FormData();
         formData.append("image", file);
 
-        const apiKey = "65d02a3a04552785c182ff19885d6f2d"; // imgbb api key
-
+        const apiKey = import.meta.env.VITE_IMGBB_A_P_I; // imgbb api key (for Vite)
+        console.log(apiKey);
         try {
             const res = await fetch(
                 `https://api.imgbb.com/1/upload?key=${apiKey}`,
@@ -775,7 +775,9 @@ const MemberForm1 = () => {
                                     />
                                     <div className="flex justify-end gap-2 mt-3">
                                         <button
-                                            onClick={() => {
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.preventDefault();
                                                 const canvas =
                                                     document.getElementById(
                                                         "signature-canvas"
