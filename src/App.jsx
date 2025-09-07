@@ -69,7 +69,7 @@ const App = () => {
                             {/* Fallback */}
                             <Route path="*" element={<ErrorPage />} />
                             <Route
-                                path="/signature"
+                                path="/signature-dev"
                                 element={<SignatureField />}
                             />
                         </Route>
